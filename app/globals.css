@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -63,4 +65,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.light-shadow{
+  box-shadow: 0 0 0 1px color(display-p3 .0572 .0889 .1628/.1),0 2px 4px 0 color(display-p3 0 0 0/.06);
 }

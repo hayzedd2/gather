@@ -5,47 +5,22 @@ import { FieldType } from "@/types/type";
 import React from "react";
 import FormPreview from "./FormPreview";
 import ConfigPanel from "./ConfigPanel";
+import AddField from "./AddField";
+import FormFields from "./FormFields";
 
 const FormBuilder = () => {
-  const { addField, fields } = useFormBuilder();
+  const { fields } = useFormBuilder();
   const [selectedField, setSelectedField] = React.useState<string | null>(null);
-  const handleAddField = (type: FieldType) => {
-    addField({
-      type,
-      label: `New ${type} field`,
-      required: false,
-      placeholder: "",
-    });
-  };
-
-  const fieldsToAdd: FieldType[] = ["email", "number", "text", "select"];
   return (
-    <div className="flex ">
-      <div className="flex flex-col gap-2">
+    <div className="flex gap-4">
+      <div className="flex flex-col gap-2 basis-[50%]">
         <div className="flex flex-col gap-2">
-          {fieldsToAdd.map((f, i) => {
-            return (
-              <div key={i}>
-                <button onClick={() => handleAddField(f)}>Add {f} field</button>
-              </div>
-            );
-          })}
+          <AddField />
+          <FormFields />
         </div>
-        {fields.map((f) => {
-          return (
-            <div key={f.id} className="flex w-full gap-2">
-              <p>{f.label}</p>
-              <button onClick={() => setSelectedField(f.id)}>
-                Show config
-              </button>
-              <button>Delete</button>
-            </div>
-          );
-        })}
+
+        <ConfigPanel />
       </div>
-      {selectedField && (
-        <ConfigPanel field={fields.find((f) => f.id === selectedField)} />
-      )}
       <FormPreview />
     </div>
   );

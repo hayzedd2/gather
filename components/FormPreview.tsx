@@ -8,7 +8,7 @@ const FormPreview = () => {
   }
 
   return (
-    <div>
+    <div className="basis-[50%]">
       {fields.map((f) => (
         <div key={f.id}>
           <label htmlFor={f.label}>{f.label}</label>

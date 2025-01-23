@@ -1,7 +1,14 @@
-import { FormField } from "@/types/type";
+import { useFormBuilder } from "@/hooks/useFormBuilder";
+import { useSelectedFieldStore } from "@/store/useSelectedFieldStore";
 import React from "react";
 
-const ConfigPanel = ({ field }: { field: FormField | undefined }) => {
+const ConfigPanel = () => {
+  const selectedField = useSelectedFieldStore((state) => state.selectedField);
+  const fields = useFormBuilder((state) => state.fields);
+  if (!selectedField) {
+    return null;
+  }
+  const field = fields.find((f) => f.id === selectedField);
   return (
     <div>
       <h1>Config panel</h1>

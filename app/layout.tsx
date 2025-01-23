@@ -1,20 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Newsreader } from "next/font/google";
 import "./globals.css";
+import About from "@/components/About";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const newsReader = Newsreader({
+  variable: "--font-news-reader",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: "Query",
-  description: "Build your form.",
+  description: "Build your form and collect your response.",
 };
 
 export default function RootLayout({
@@ -24,10 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <main className="max-w-[1350px] mx-auto px-4 py-3">{children}</main>
+      <body className={`${newsReader.className} antialiased`}>
+        <main className="max-w-[1200px] mx-auto px-4 py-5">
+          <About />
+          {children}
+        </main>
       </body>
     </html>
   );
