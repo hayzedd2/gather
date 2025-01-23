@@ -13,7 +13,7 @@ const AddField = () => {
       placeholder: "",
     });
   };
-  const fieldsToAdd: FieldType[] = ["email", "number", "text", "select"];
+  const fieldsToAdd: FieldType[] = ["email", "number", "text", "select","textarea"];
   return (
     <div className="flex flex-col gap-3 p-4 rounded-lg light-shadow">
       <h3 className="text-[1.3rem] font-[500]">Add form fields</h3>

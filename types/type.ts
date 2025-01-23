@@ -1,9 +1,10 @@
-export type FieldType = "text" | "number" | "email" | "select";
+export type FieldType = "text" | "number" | "email" | "select" | "textarea";
 
 export interface FormField {
   id: string;
   type: FieldType;
   label: string;
+  description?:string;
   placeholder?: string;
   required: boolean;
   options?: string[];
