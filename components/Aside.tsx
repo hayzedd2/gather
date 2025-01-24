@@ -9,7 +9,7 @@ import {
   SidebarLink,
   SidebarLinks,
 } from "@/components/Sidebar";
-import { ChartNoAxesColumn, NotebookText } from "lucide-react";
+import { ChartNoAxesColumn, NotebookText, Settings, Workflow, CircleHelp, ChartCandlestick } from "lucide-react";
 import { SidebarLinksT } from "@/types/type";
 
 const links: SidebarLinksT[] = [
@@ -19,9 +19,29 @@ const links: SidebarLinksT[] = [
     href: "/",
   },
   {
+    icon: <ChartCandlestick size={16} />,
+    label: "Responses",
+    href: "/responses",
+  },
+  {
     icon: <ChartNoAxesColumn size={16} />,
     label: "Analytics",
     href: "/analytics",
+  },
+  {
+    icon: <Workflow size={16} />,
+    label: "Integrations",
+    href: "/integrations",
+  },
+  {
+    icon: <Settings size={16} />,
+    label: "Settings",
+    href: "/settings",
+  },
+  {
+    icon: <CircleHelp size={16} />,
+    label: "Help",
+    href: "/help",
   },
 ];
 
