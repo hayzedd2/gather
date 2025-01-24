@@ -1,21 +1,34 @@
+"use client";
+
 import { useFormBuilder } from "@/hooks/useFormBuilder";
 import { useSelectedFieldStore } from "@/store/useSelectedFieldStore";
 import React from "react";
 import { Input } from "./ui/input";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
-
+import { useKeys } from "use-keys-bindings";
 const ConfigPanel = () => {
   const selectedField = useSelectedFieldStore((state) => state.selectedField);
   const fields = useFormBuilder((state) => state.fields);
   const updateField = useFormBuilder((s) => s.updateField);
+  const [option, setOption] = React.useState("");
+  const options: string[] = [];
+  useKeys({
+    keys: ["s"],
+    callback: () => {
+      options.push(option);
+      setOption("");
+    },
+  });
   if (!selectedField) {
     return null;
   }
+
   const field = fields.find((f) => f.id === selectedField);
   if (!field) {
     return null;
   }
+  
 
   return (
     <div className="p-4 rounded-lg light-shadow flex-col flex gap-2">
@@ -50,7 +63,7 @@ const ConfigPanel = () => {
           <Label htmlFor="required">Required</Label>
         </div>
         <div>
-        <Label htmlFor="fieldPlaceholder">Type - ({field.type})</Label>
+          <Label htmlFor="fieldPlaceholder">Type - ({field.type})</Label>
         </div>
         {/* {field.type === "text" && (
           <>
@@ -141,17 +154,15 @@ const ConfigPanel = () => {
             />
           </div>
         )} */}
+        {options.map((o)=> <>{o}</>)}
         {field.type === "select" && (
           <div>
             <Label htmlFor="options">Options (comma-separated)</Label>
             <Input
               id="options"
-              value={field.options?.join(", ") || ""}
+              value={field.options?.join(", ") || option}
               onChange={(e) => {
-                const options = e.target.value
-                  .split(",")
-                  .map((o) => o.trim())
-                  .filter((o) => o !== "");
+                setOption(e.target.value);
                 updateField(field.id, { options });
               }}
             />

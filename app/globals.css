@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+li{
+  list-style: none;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -69,4 +71,19 @@
 
 .light-shadow{
   box-shadow: 0 0 0 1px color(display-p3 .0572 .0889 .1628/.1),0 2px 4px 0 color(display-p3 0 0 0/.06);
+}
+
+.dotted-right{
+  background-position: 100%;
+  background-repeat:repeat-y ;
+}
+.dotted-up{
+  background-position: top;
+  background-repeat: repeat-x;
+  background-size: 100% 1px;
+}
+
+.dotted{
+  background-image: linear-gradient(#ccc 33%, hsla(0, 0%, 100%, 0) 0);
+  background-size: 1px 4px;
 }
