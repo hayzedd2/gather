@@ -17,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { authClient, signUp } from "@/lib/auth-client";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,9 +29,36 @@ const RegisterForm = () => {
       password: "",
     },
   });
+  const payLoad = {
+    email: "z@email.com",
+    password: "alhameen",
+    name: "test",
+    image: "https://example.com/image.png",
+  };
 
-  const signUp = async (data: z.infer<typeof RegisterSchema>) => {
-    console.log("Sign up data", data);
+  const handleSignUp = async (formData: z.infer<typeof RegisterSchema>) => {
+    try {
+      console.log(formData);
+      const { data, error } = await signUp.email(
+        {
+          email: "test@example.com",
+          password: "password1234",
+          name: "test",
+          image: "https://example.com/image.png",
+        },
+        {
+          onSuccess: () => {
+            console.log("Sign up success");
+          },
+          onError: (ctx) => {
+            console.log(payLoad);
+            console.log("Sign up error", ctx);
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <CardWrapper
@@ -45,7 +73,7 @@ const RegisterForm = () => {
         <Form {...form}>
           <form
             className="flex flex-col gap-3"
-            onSubmit={form.handleSubmit(signUp)}
+            onSubmit={form.handleSubmit(handleSignUp)}
             autoComplete="off"
           >
             <FormField
