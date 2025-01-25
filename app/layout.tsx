@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Newsreader } from "next/font/google";
 import "./globals.css";
-import Aside from "@/components/Aside";
 
 const newsReader = Newsreader({
   variable: "--font-news-reader",
@@ -21,12 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${newsReader.className} antialiased`}>
-        <div className="flex">
-          <Aside />
-          <main className="flex-1 p-4 min-h-screen max-w-7xl mx-auto">
-            {children}
-          </main>
-        </div>
+        {children}
       </body>
     </html>
   );

@@ -9,7 +9,14 @@ import {
   SidebarLink,
   SidebarLinks,
 } from "@/components/Sidebar";
-import { ChartNoAxesColumn, NotebookText, Settings, Workflow, CircleHelp, ChartCandlestick } from "lucide-react";
+import {
+  ChartNoAxesColumn,
+  NotebookText,
+  Settings,
+  Workflow,
+  CircleHelp,
+  ChartCandlestick,
+} from "lucide-react";
 import { SidebarLinksT } from "@/types/type";
 
 const links: SidebarLinksT[] = [
