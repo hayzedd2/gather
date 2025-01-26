@@ -32,3 +32,13 @@ export interface SidebarLinksT {
     label:string
     href:string
 }
+
+export interface UserObject{
+  id: string;
+  email: string;
+  emailVerified: boolean;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  image?: string | null | undefined | undefined;
+}

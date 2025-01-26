@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useFormState = () => {
+export const useFormHelpers = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);

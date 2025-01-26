@@ -17,7 +17,8 @@ import {
   CircleHelp,
   ChartCandlestick,
 } from "lucide-react";
-import { SidebarLinksT } from "@/types/type";
+import { SidebarLinksT, UserObject } from "@/types/type";
+import { UserMenu } from "./UserMenu";
 
 const links: SidebarLinksT[] = [
   {
@@ -51,8 +52,10 @@ const links: SidebarLinksT[] = [
     href: "/help",
   },
 ];
-
-const Aside = () => {
+interface AsideProps {
+  user: UserObject;
+}
+const Aside = ({ user }: AsideProps) => {
   const pathname = usePathname();
   return (
     <Sidebar>
@@ -76,7 +79,9 @@ const Aside = () => {
           })}
         </SidebarLinks>
       </SidebarContent>
-      <SidebarFooter>Footer</SidebarFooter>
+      <SidebarFooter>
+        <UserMenu user={user} />
+      </SidebarFooter>
     </Sidebar>
   );
 };

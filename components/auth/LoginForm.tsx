@@ -18,10 +18,21 @@ import {
   FormMessage,
 } from "../ui/form";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { useFormHelpers } from "@/hooks/useFormHelpers";
+import { SvgLoading } from "../SvgLoading";
+import { FormError } from "../FormError";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const isPending = false;
+  const {
+    error,
+    setError,
+    loading: isPending,
+    setLoading,
+    resetState,
+  } = useFormHelpers();
+  const router = useRouter();
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -37,11 +48,20 @@ const LoginForm = () => {
         email,
         password,
         fetchOptions: {
-          onSuccess(context) {
-            console.log("Sign up success", context);
+          onResponse: () => {
+            setLoading(false);
+          },
+          onRequest: () => {
+            resetState();
+            setLoading(true);
+          },
+          onSuccess() {
+            setLoading(false);
+            router.push("/dashboard");
           },
           onError: (ctx) => {
-            console.log("Sign up error", ctx);
+            setLoading(false);
+            setError(ctx.error.message);
           },
         },
       });
@@ -126,13 +146,12 @@ const LoginForm = () => {
               disabled={isPending}
               className="w-full shadow-md"
             >
-              {/* {isPending && <SvgLoading />} */}
+              {isPending && <SvgLoading />}
               <p className="mt-[0.2rem]"> Sign In</p>
             </Button>
-            {/* {isError && <FormError message={error.message} />}
-            {isSuccess && <FormSuccess message={data.message} />} */}
           </form>
         </Form>
+        {error && <FormError message={error} />}
       </div>
     </CardWrapper>
   );

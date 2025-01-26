@@ -18,10 +18,13 @@ import {
   FormMessage,
 } from "../ui/form";
 import { authClient, signUp } from "@/lib/auth-client";
+import { useFormHelpers } from "@/hooks/useFormHelpers";
+import { useRouter } from "next/navigation";
+import { FormError } from "../FormError";
+import { SvgLoading } from "../SvgLoading";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const isPending = false;
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -29,24 +32,39 @@ const RegisterForm = () => {
       password: "",
     },
   });
+  const { error, setError, loading, setLoading, resetState } = useFormHelpers();
+  const router = useRouter();
 
   const handleSignUp = async (values: z.infer<typeof RegisterSchema>) => {
     try {
       await signUp.email(
-         { email: values.email, password: values.password, name: "test",callbackURL: "/dashboard", },
         {
-          onSuccess(context) {
-            console.log("Sign up success", context);
+          email: values.email,
+          password: values.password,
+          name: "test",
+          callbackURL: "/dashboard",
+        },
+        {
+          onResponse: () => {
+            setLoading(false);
+          },
+          onRequest: () => {
+            resetState();
+            setLoading(true);
+          },
+          onSuccess() {
+            setLoading(false);
+            router.push("/dashboard");
           },
           onError: (ctx) => {
-            console.log("Sign up error", ctx);
+            setLoading(false);
+            setError(ctx.error.message);
           },
         }
       );
     } catch (error) {
-      if (error instanceof Error) {
-        console.log("Error: ", error.stack);
-      }
+      console.log(error);
+      setError("Something went wrong");
     }
   };
   return (
@@ -72,7 +90,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email*</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isPending} />
+                    <Input {...field} disabled={loading} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,7 +108,7 @@ const RegisterForm = () => {
                       <div className="relative">
                         <Input
                           {...field}
-                          disabled={isPending}
+                          disabled={loading}
                           type={showPassword ? "text" : "password"}
                           className="pr-10"
                         />
@@ -111,7 +129,7 @@ const RegisterForm = () => {
                           </span>
                         </Button>
                       </div>
-                      <p className="mt-1 mb-3 text-regular font-[500] text-[13px]">
+                      <p className="mt-1 text-regular font-[500] text-[13px]">
                         Must be at least 8 characters.
                       </p>
                     </div>
@@ -123,16 +141,15 @@ const RegisterForm = () => {
 
             <Button
               type="submit"
-              disabled={isPending}
+              disabled={loading}
               className="w-full shadow-md"
             >
-              {/* {isPending && <SvgLoading />} */}
+              {loading && <SvgLoading />}
               <p className="mt-[0.2rem]"> Sign Up</p>
             </Button>
-            {/* {isError && <FormError message={error.message} />}
-            {isSuccess && <FormSuccess message={data.message} />} */}
           </form>
         </Form>
+        {error && <FormError message={error} />}
       </div>
     </CardWrapper>
   );
