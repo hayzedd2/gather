@@ -1,7 +1,12 @@
+import FormBuilder from "@/components/FormBuilder";
 import React from "react";
 
 const page = () => {
-  return <div>Dashboard page</div>;
+  return (
+    <div>
+      <FormBuilder />
+    </div>
+  );
 };
 
 export default page;

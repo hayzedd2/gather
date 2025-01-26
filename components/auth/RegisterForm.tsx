@@ -29,35 +29,24 @@ const RegisterForm = () => {
       password: "",
     },
   });
-  const payLoad = {
-    email: "z@email.com",
-    password: "alhameen",
-    name: "test",
-    image: "https://example.com/image.png",
-  };
 
-  const handleSignUp = async (formData: z.infer<typeof RegisterSchema>) => {
+  const handleSignUp = async (values: z.infer<typeof RegisterSchema>) => {
     try {
-      console.log(formData);
-      const { data, error } = await signUp.email(
+      await signUp.email(
+         { email: values.email, password: values.password, name: "test",callbackURL: "/dashboard", },
         {
-          email: "test@example.com",
-          password: "password1234",
-          name: "test",
-          image: "https://example.com/image.png",
-        },
-        {
-          onSuccess: () => {
-            console.log("Sign up success");
+          onSuccess(context) {
+            console.log("Sign up success", context);
           },
           onError: (ctx) => {
-            console.log(payLoad);
             console.log("Sign up error", ctx);
           },
         }
       );
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Error: ", error.stack);
+      }
     }
   };
   return (

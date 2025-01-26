@@ -1,10 +1,13 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { Button } from "../ui/button";
 
 export const Socials = ({ type }: { type: "up" | "in" }) => {
-  const onClick = (provider: "google" | "github") => {
-    console.log(provider);
+  const signInWithGoogle = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
   };
   return (
     <div className="w-full flex items-center justify-center">
@@ -12,7 +15,7 @@ export const Socials = ({ type }: { type: "up" | "in" }) => {
         variant={"outline"}
         className="w-full flex items-center"
         size={"lg"}
-        onClick={() => onClick("google")}
+        onClick={signInWithGoogle}
       >
         <svg
           stroke="currentColor"

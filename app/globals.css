@@ -87,3 +87,8 @@ li{
   background-image: linear-gradient(#ccc 33%, hsla(0, 0%, 100%, 0) 0);
   background-size: 1px 4px;
 }
+
+.dotted-left{
+  background-position: 0;
+  background-repeat: repeat-y;
+}

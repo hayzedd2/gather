@@ -2,12 +2,11 @@ import { useFormBuilder } from "@/hooks/useFormBuilder";
 import { useSelectedFieldStore } from "@/store/useSelectedFieldStore";
 import { FilePenLine, Trash } from "lucide-react";
 
-
 const FormFields = () => {
   const { fields, deleteField } = useFormBuilder();
   const { setSelectedField, selectedField } = useSelectedFieldStore();
   return (
-    <div className="p-4 rounded-lg light-shadow flex-col flex gap-2">
+    <div className="rounded-lg flex-col flex gap-2">
       <h3 className="text-[1.3rem] font-[500]">Form fields</h3>
       <div className="flex flex-col ">
         {fields.map((f) => {

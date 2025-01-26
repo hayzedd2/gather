@@ -17,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { authClient } from "@/lib/auth-client";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,8 +30,24 @@ const LoginForm = () => {
     },
   });
 
-  const signUp = async (data: z.infer<typeof RegisterSchema>) => {
-    console.log("Sign up data", data);
+  const handleLogin = async (values: z.infer<typeof RegisterSchema>) => {
+    try {
+      const { email, password } = values;
+      await authClient.signIn.email({
+        email,
+        password,
+        fetchOptions: {
+          onSuccess(context) {
+            console.log("Sign up success", context);
+          },
+          onError: (ctx) => {
+            console.log("Sign up error", ctx);
+          },
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <CardWrapper
@@ -45,7 +62,7 @@ const LoginForm = () => {
         <Form {...form}>
           <form
             className="flex flex-col gap-3"
-            onSubmit={form.handleSubmit(signUp)}
+            onSubmit={form.handleSubmit(handleLogin)}
             autoComplete="off"
           >
             <FormField

@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarComponentProps> = ({ children, className }) => {
         bg-[#FAFAFA] 
         h-screen 
         top-0 
-        relative 
+        sticky 
         hidden 
         md:flex 
         flex-col
