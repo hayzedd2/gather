@@ -19,6 +19,7 @@ import { useKeys } from "use-keys-bindings";
 import { useSelectedFieldStore } from "@/store/useSelectedFieldStore";
 import { motion } from "motion/react";
 import GetIconType from "@/helpers/GetIconType";
+import EmptyFormPreview from "./EmptyFormPreview";
 const ConfigPanel = () => {
   const { selectedField, setSelectedField } = useSelectedFieldStore();
   const fields = useFormBuilder((state) => state.fields);
@@ -64,6 +65,9 @@ const ConfigPanel = () => {
       icon: <WrapText size={20} />,
     },
   ];
+  if (fields.length == 0) {
+    return <EmptyFormPreview />;
+  }
 
   return (
     <div className="p-4 rounded-lg  flex-col flex gap-2 pb-14">
@@ -74,7 +78,9 @@ const ConfigPanel = () => {
             <div
               key={i}
               className={`${
-                !selectedField || selectedField != field.id ? "p-3" : "py-8 px-4"
+                !selectedField || selectedField != field.id
+                  ? "p-3"
+                  : "py-8 px-4"
               } flex flex-col w-full bg-white   rounded-lg`}
             >
               <div

@@ -27,9 +27,17 @@ const FormPreview = () => {
   };
   return (
     <div className="basis-[50%]">
-      <h3 className="text-[1.3rem] font-[500] mb-4">Form preview</h3>
+      <div className="font-[500] flex items-center gap-2 text-[1.3rem] text-regular">
+        {/* <Settings /> */}
+        <div className="flex flex-col">
+          <h4>Form preview</h4>
+          <p className="text-subtle font-[500] text-[14px]">
+            See how your form would look in real time
+          </p>
+        </div>
+      </div>
 
-      <div className="space-y-4">
+      <div className="max-w-2xl mx-auto bg-white p-4 rounded-lg my-5">
         {fields.map((field) => (
           <div key={field.id} className="space-y-2">
             <Label htmlFor={field.id}>
@@ -64,7 +72,9 @@ const FormPreview = () => {
         ))}
       </div>
       {fields.length > 0 && (
-        <Button className="my-4" onClick={handleGenerate}>Generate shareable link</Button>
+        <Button className="my-4" onClick={handleGenerate}>
+          Generate shareable link
+        </Button>
       )}
       {shareablelink && <SharedLink link={shareablelink} />}
     </div>

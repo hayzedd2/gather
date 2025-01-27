@@ -1,12 +1,22 @@
-import * as z from "zod"
+import * as z from "zod";
 
 export const RegisterSchema = z.object({
-    email: z.string().email({
-      message: "Email is required",
-    }),
-   
-    password: z.string().min(7, {
-      message: "Minimum of 8 is characters required",
-    }),
-  });
-  
+  email: z.string().email({
+    message: "Email is required",
+  }),
+
+  password: z.string().min(7, {
+    message: "Minimum of 8 is characters required",
+  }),
+});
+
+export const FormSettingsSchema = z.object({
+  title: z.string().min(1, {
+    message: "Form title is required",
+  }),
+  description: z.string().min(1, {
+    message: "Form description is required",
+  }),
+  buttonCtaText: z.string().optional(),
+  saveAsTemplate: z.boolean().optional(),
+});

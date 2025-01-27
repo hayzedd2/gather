@@ -6,15 +6,18 @@ import AddField from "./AddField";
 import FormControlTab from "./FormControlTab";
 import FormActions from "./FormActions";
 import { viewT } from "@/types/type";
+import FormSettings from "./FormSettings";
 
 const FormBuilder = () => {
   const [view, setView] = React.useState<viewT>("configure");
   return (
-    <div className="flex min-h-screen relative">
-      <div className="w-full flex-1 bg-[#fafafa]">
+    <div className="flex min-h-screen">
+      <div className="w-full  flex  flex-col  flex-1 bg-[#fafafa] relative">
         <FormControlTab view={view} setView={setView} />
         <div className="max-w-2xl p-6 mx-auto w-full ">
-          {view == "configure" ? <ConfigPanel /> : <FormPreview />}
+          {view == "configure" && <ConfigPanel />}
+          {view == "preview" && <FormPreview />}
+          {view == "settings" && <FormSettings />}
         </div>
         <FormActions />
       </div>
