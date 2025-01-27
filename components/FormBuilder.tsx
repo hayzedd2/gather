@@ -7,18 +7,16 @@ import FormFields from "./FormFields";
 
 const FormBuilder = () => {
   return (
-    <div className="flex  min-h-screen gap-10">
-      <div className="flex-1 p-6">
-        <FormPreview />
+    <div className="flex min-h-screen">
+     <div className="w-full flex-1 bg-[#FAFAFA]  ">
+     <div className="max-w-xl p-6 mx-auto w-full ">
+        {/* <FormFields/> */}
+        <ConfigPanel />
       </div>
-      <div className="flex">
-        <div className="flex bg-[#FAFAFA]  p-4 flex-col gap-4 w-[20rem] dotted dotted-left ">
-          <FormFields />
-          <ConfigPanel />
-        </div>
-        <div className="flex  bg-[#FAFAFA]  p-4 flex-col gap-4 w-[20rem] dotted dotted-left ">
-          <AddField />
-        </div>
+     </div>
+
+      <div className="flex  bg-[#FAFAFA] top-0 h-screen  p-4 flex-col sticky gap-4 w-[20rem] dotted dotted-left ">
+        <AddField />
       </div>
     </div>
   );

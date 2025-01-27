@@ -1,16 +1,28 @@
 "use client";
-
-import { useFormBuilder } from "@/hooks/useFormBuilder";
-import { useSelectedFieldStore } from "@/store/useSelectedFieldStore";
 import React from "react";
+import { useFormBuilder } from "@/hooks/useFormBuilder";
+import { FieldType } from "@/types/type";
+import { Button } from "./ui/button";
+import {
+  Delete,
+  FileDigit,
+  FileText,
+  List,
+  MailPlus,
+  Trash2,
+  Type,
+  WrapText,
+} from "lucide-react";
 import { Input } from "./ui/input";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { useKeys } from "use-keys-bindings";
+import { useSelectedFieldStore } from "@/store/useSelectedFieldStore";
 const ConfigPanel = () => {
-  const selectedField = useSelectedFieldStore((state) => state.selectedField);
+  const {selectedField,setSelectedField} = useSelectedFieldStore();
   const fields = useFormBuilder((state) => state.fields);
-  const updateField = useFormBuilder((s) => s.updateField);
+  const [openField, setOpenField] = React.useState<number | null>(null);
+  const { updateField, deleteField } = useFormBuilder();
   const [option, setOption] = React.useState("");
   const options: string[] = [];
   useKeys({
@@ -20,154 +32,101 @@ const ConfigPanel = () => {
       setOption("");
     },
   });
-  if (!selectedField) {
-    return null;
-  }
-
-  const field = fields.find((f) => f.id === selectedField);
-  if (!field) {
-    return null;
-  }
-  
+  const fieldsToAdd = [
+    {
+      key: "text",
+      label: "Text",
+      about: "Single text field",
+      icon: <Type size={20} />,
+    },
+    {
+      key: "email",
+      label: "Email",
+      about: "Single email field",
+      icon: <MailPlus size={20} />,
+    },
+    {
+      key: "number",
+      label: "Numeric",
+      about: "Accepts only numbers",
+      icon: <FileDigit size={20} />,
+    },
+    {
+      key: "select",
+      label: "Select from List",
+      about: "Select options from a list",
+      icon: <List size={20} />,
+    },
+    {
+      key: "textarea",
+      label: "Text area",
+      about: "Multiple lines of text",
+      icon: <WrapText size={20} />,
+    },
+  ];
 
   return (
-    <div className="p-4 rounded-lg light-shadow flex-col flex gap-2">
+    <div className="p-4 rounded-lg  flex-col flex gap-2">
       <h3 className="text-[1.3rem] font-[500]">Form configuration</h3>
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="fieldLabel">Label</Label>
-          <Input
-            id="fieldLabel"
-            value={field.label}
-            onChange={(e) => updateField(field.id, { label: e.target.value })}
-          />
-        </div>
-        <div>
-          <Label htmlFor="fieldPlaceholder">Placeholder</Label>
-          <Input
-            id="fieldPlaceholder"
-            value={field.placeholder || ""}
-            onChange={(e) =>
-              updateField(field.id, { placeholder: e.target.value })
-            }
-          />
-        </div>
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="required"
-            checked={field.required}
-            onCheckedChange={(checked) =>
-              updateField(field.id, { required: checked })
-            }
-          />
-          <Label htmlFor="required">Required</Label>
-        </div>
-        <div>
-          <Label htmlFor="fieldPlaceholder">Type - ({field.type})</Label>
-        </div>
-        {/* {field.type === "text" && (
-          <>
-            <div>
-              <Label htmlFor="minLength">Min Length</Label>
-              <Input
-                id="minLength"
-                type="number"
-                value={field.validation?.minLength || ""}
-                onChange={(e) =>
-                  updateField(field.id, {
-                    validation: {
-                      ...field.validation,
-                      minLength: Number.parseInt(e.target.value) || undefined,
-                    },
-                  })
-                }
-              />
+      <div className="flex flex-col gap-4">
+        {fields.map((field, i) => {
+          return (
+            <div
+              key={i}
+              className="flex flex-col w-full bg-white px-4 py-8 rounded-lg "
+            >
+              <div className="flex w-full justify-between cursor-pointer items-center" onClick={()=>setSelectedField(field.id)}>
+                <div className="flex gap-2 items-center">
+                  <div className="icon-holder bg-[#F0F0F0] text-[#464646] rounded-sm p-[6px]">
+                    <FileText color="black" size={16} />
+                  </div>
+                  <p className="text-[13px] font-[500] mt-[4px]">
+                    {field.label}
+                  </p>
+                </div>
+                <div className="flex gap-3">
+                  <p className="text-[13px] font-[500]">Mark as required</p>
+                  <Switch />
+                </div>
+              </div>
+              {/* settings */}
+              {selectedField && selectedField == field.id && (
+                <div className="rounded-lg bg-[#FcFcFc] space-y-3 px-4 py-5 mt-4">
+                  <div>
+                    <Label htmlFor="fieldLabel">Label</Label>
+                    <Input
+                      id="fieldLabel"
+                      value={field.label}
+                      onChange={(e) =>
+                        updateField(field.id, { label: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="fieldPlaceholder">Placeholder</Label>
+                    <Input
+                      id="fieldPlaceholder"
+                      value={field.placeholder || ""}
+                      onChange={(e) =>
+                        updateField(field.id, { placeholder: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+              {/* controls */}
+              <div className="flex w-full  justify-between items-start mt-4">
+                <button
+                  onClick={() => deleteField(field.id)}
+                  className="icon-holder  bg-[#F0F0F0] text-[#464646] rounded-sm p-[6px]"
+                >
+                  <Trash2 color="#ef4444" size={16} />
+                </button>
+                <Button size={"sm"} onClick={()=> setSelectedField("empty")}>Done</Button>
+              </div>
             </div>
-            <div>
-              <Label htmlFor="maxLength">Max Length</Label>
-              <Input
-                id="maxLength"
-                type="number"
-                value={field.validation?.maxLength || ""}
-                onChange={(e) =>
-                  updateField(field.id, {
-                    validation: {
-                      ...field.validation,
-                      maxLength: Number.parseInt(e.target.value) || undefined,
-                    },
-                  })
-                }
-              />
-            </div>
-          </>
-        )} */}
-        {field.type === "number" && (
-          <>
-            <div>
-              <Label htmlFor="min">Min Value</Label>
-              <Input
-                id="min"
-                type="number"
-                value={field.validation?.min || ""}
-                onChange={(e) =>
-                  updateField(field.id, {
-                    validation: {
-                      ...field.validation,
-                      min: Number.parseInt(e.target.value) || undefined,
-                    },
-                  })
-                }
-              />
-            </div>
-            <div>
-              <Label htmlFor="max">Max Value</Label>
-              <Input
-                id="max"
-                type="number"
-                value={field.validation?.max || ""}
-                onChange={(e) =>
-                  updateField(field.id, {
-                    validation: {
-                      ...field.validation,
-                      max: Number.parseInt(e.target.value) || undefined,
-                    },
-                  })
-                }
-              />
-            </div>
-          </>
-        )}
-        {/* {field.type === "email" && (
-          <div>
-            <Label htmlFor="pattern">Email Pattern</Label>
-            <Input
-              id="pattern"
-              value={field.validation?.pattern || ""}
-              onChange={(e) =>
-                updateField(field.id, {
-                  validation: {
-                    ...field.validation,
-                    pattern: e.target.value || undefined,
-                  },
-                })
-              }
-            />
-          </div>
-        )} */}
-        {options.map((o)=> <>{o}</>)}
-        {field.type === "select" && (
-          <div>
-            <Label htmlFor="options">Options (comma-separated)</Label>
-            <Input
-              id="options"
-              value={field.options?.join(", ") || option}
-              onChange={(e) => {
-                setOption(e.target.value);
-                updateField(field.id, { options });
-              }}
-            />
-          </div>
-        )}
+          );
+        })}
       </div>
     </div>
   );

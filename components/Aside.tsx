@@ -24,7 +24,7 @@ const links: SidebarLinksT[] = [
   {
     icon: <NotebookText size={16} />,
     label: "Forms",
-    href: "/",
+    href: "/dashboard",
   },
   {
     icon: <ChartCandlestick size={16} />,
