@@ -3,6 +3,7 @@ import { FieldType } from "@/types/type";
 import React from "react";
 import { Button } from "./ui/button";
 import { FileDigit, List, MailPlus, Type, WrapText } from "lucide-react";
+import GetIconType from "@/helpers/GetIconType";
 
 const AddField = () => {
   const addField = useFormBuilder((state) => state.addField);
@@ -58,8 +59,8 @@ const AddField = () => {
               onClick={() => handleAddField(f.key as FieldType)}
               className="flex items-center gap-3"
             >
-              <div className="icon-holder bg-[#F0F0F0] text-[#464646] rounded-sm p-2">
-                {f.icon}
+              <div className="icon-holder bg-[#FcFcFc]  rounded-sm p-2">
+                <GetIconType type={f.key as FieldType} />
               </div>
               <div className="flex flex-col items-start">
                 <h6 className="font-[600] text-[15px] text-[#464646]">

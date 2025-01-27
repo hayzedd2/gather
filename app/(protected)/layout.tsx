@@ -15,7 +15,7 @@ const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
     if (!isPending && !session) {
       router.push("/login");
     }
-  }, [isPending, session, router]);
+  }, [isPending, session]);
 
   if (isPending) {
     return <div>Loading...</div>;

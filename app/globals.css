@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-li{
+li {
   list-style: none;
 }
 @layer base {
   :root {
+    --tw-text-opacity: 1;
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -31,7 +32,7 @@ li{
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -57,7 +58,7 @@ li{
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
 @layer base {
@@ -69,15 +70,16 @@ li{
   }
 }
 
-.light-shadow{
-  box-shadow: 0 0 0 1px color(display-p3 .0572 .0889 .1628/.1),0 2px 4px 0 color(display-p3 0 0 0/.06);
+.light-shadow {
+  box-shadow: 0 0 0 1px color(display-p3 0.0572 0.0889 0.1628/.1),
+    0 2px 4px 0 color(display-p3 0 0 0/0.06);
 }
 
-.dotted-right{
+.dotted-right {
   background-position: 100%;
-  background-repeat:repeat-y ;
+  background-repeat: repeat-y;
 }
-.dotted-up{
+.dotted-up {
   background-position: top;
   background-repeat: repeat-x;
   background-size: 100% 1px;
@@ -95,12 +97,30 @@ li{
   }
 }
 
-.dotted{
+.dotted {
   background-image: linear-gradient(#ccc 33%, hsla(0, 0%, 100%, 0) 0);
   background-size: 1px 4px;
 }
 
-.dotted-left{
+.dotted-left {
   background-position: 0;
   background-repeat: repeat-y;
+}
+
+.icon-green {
+
+  color: rgb(16 185 129 / var(--tw-text-opacity));
+}
+.icon-red{
+  color: rgb(239 68 68 / var(--tw-text-opacity))
+}
+.icon-blue{
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
+.icon-yellow{
+  color: rgb(245 158 11 / var(--tw-text-opacity));
+}
+.icon-purple{
+  color: rgb(99 102 241 / var(--tw-text-opacity));
 }

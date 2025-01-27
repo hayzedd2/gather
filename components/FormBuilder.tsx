@@ -9,7 +9,7 @@ const FormBuilder = () => {
   return (
     <div className="flex min-h-screen">
      <div className="w-full flex-1 bg-[#FAFAFA]  ">
-     <div className="max-w-xl p-6 mx-auto w-full ">
+     <div className="max-w-2xl p-6 mx-auto w-full ">
         {/* <FormFields/> */}
         <ConfigPanel />
       </div>

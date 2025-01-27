@@ -47,22 +47,22 @@ export function UserMenu({ user }: UserMenuProps) {
       >
         <button
           disabled={loading}
-          className="w-full rounded-md p-1  bg-[#F0F0F0] text-[#18181B] flex justify-between items-center "
+          className="w-full rounded-md p-[6px]  bg-[#F0F0F0] text-[#18181B] flex justify-between items-center "
         >
           <div className="flex gap-2 items-center">
             <div
-              className="w-10 h-10 rounded-md"
+              className="w-8 h-8 rounded-md"
               style={{
-                background: generateGradient(4),
+                background: generateGradient(10),
               }}
             ></div>
             <div className="flex flex-col text-wrap items-start">
-              <h5 className="capitalize font-[500] text-[15px]">
+              <h5 className="capitalize font-[500] text-[14px]">
                 {user.name.length > 15
                   ? user.name.slice(0, 15).concat("...")
                   : user.name}
               </h5>
-              <h6 className="text-subtle text-wrap text-[14px] mt-[-5px]">
+              <h6 className="text-subtle text-wrap text-[13px] mt-[-5px]">
                 {user.email.length > 15
                   ? user.email.slice(0, 15).concat("...")
                   : user.email}
