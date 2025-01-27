@@ -3,15 +3,7 @@ import React from "react";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
 import { FieldType } from "@/types/type";
 import { Button } from "./ui/button";
-import {
-  FileDigit,
-  FileText,
-  List,
-  MailPlus,
-  Trash2,
-  Type,
-  WrapText,
-} from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Input } from "./ui/input";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
@@ -20,6 +12,8 @@ import { useSelectedFieldStore } from "@/store/useSelectedFieldStore";
 import { motion } from "motion/react";
 import GetIconType from "@/helpers/GetIconType";
 import EmptyFormPreview from "./EmptyFormPreview";
+import { FormDescription } from "./ui/form";
+import { Textarea } from "./ui/textarea";
 const ConfigPanel = () => {
   const { selectedField, setSelectedField } = useSelectedFieldStore();
   const fields = useFormBuilder((state) => state.fields);
@@ -33,45 +27,20 @@ const ConfigPanel = () => {
       setOption("");
     },
   });
-  const fieldsToAdd = [
-    {
-      key: "text",
-      label: "Text",
-      about: "Single text field",
-      icon: <Type size={20} />,
-    },
-    {
-      key: "email",
-      label: "Email",
-      about: "Single email field",
-      icon: <MailPlus size={20} />,
-    },
-    {
-      key: "number",
-      label: "Numeric",
-      about: "Accepts only numbers",
-      icon: <FileDigit size={20} />,
-    },
-    {
-      key: "select",
-      label: "Select from List",
-      about: "Select options from a list",
-      icon: <List size={20} />,
-    },
-    {
-      key: "textarea",
-      label: "Text area",
-      about: "Multiple lines of text",
-      icon: <WrapText size={20} />,
-    },
-  ];
   if (fields.length == 0) {
     return <EmptyFormPreview />;
   }
 
   return (
     <div className="p-4 rounded-lg  flex-col flex gap-2 pb-14">
-      <h3 className="text-[1.3rem] font-[500]">Form configuration</h3>
+      <div className="font-[500] flex items-center gap-2 text-[1.3rem] text-regular">
+        <div className="flex flex-col">
+          <h4>Form configuration</h4>
+          <p className="text-subtle font-[500] text-[14px]">
+           Configure your form to your taste
+          </p>
+        </div>
+      </div>
       <div className="flex flex-col gap-3">
         {fields.map((field, i) => {
           return (
@@ -116,26 +85,19 @@ const ConfigPanel = () => {
                     className="flex gap-3"
                   >
                     <p className="text-[13px] font-[500]">Mark as required</p>
-                    <Switch />
+                    <Switch
+                      value={field.required}
+                      onCheckedChange={(checked) =>
+                        updateField(field.id, { required: checked })
+                      }
+                    />
                   </motion.div>
                 )}
               </div>
               {/* settings */}
               {selectedField && selectedField == field.id && (
-                <motion.div
-                  initial={{
-                    height: 0,
-                  }}
-                  animate={{
-                    height: "auto",
-                  }}
-                  exit={{
-                    height: 0,
-                  }}
-                  transition={{
-                    duration: 0.35,
-                    ease: "easeInOut",
-                  }}
+                <div
+
                 >
                   <motion.div
                     initial={{
@@ -157,7 +119,7 @@ const ConfigPanel = () => {
                     className="rounded-lg bg-[#FcFcFc] space-y-3 px-4 py-5 mt-4"
                   >
                     <div>
-                      <Label htmlFor="fieldLabel">Label</Label>
+                      <Label htmlFor="fieldLabel">Label*</Label>
                       <Input
                         id="fieldLabel"
                         value={field.label}
@@ -176,6 +138,18 @@ const ConfigPanel = () => {
                         }
                       />
                     </div>
+                    <div>
+                      <Label htmlFor="fieldDescription">Description</Label>
+                      <Textarea
+                        id="fieldDescription"
+                        className="rezise-none"
+                        value={field.description}
+                        onChange={(e) =>
+                          updateField(field.id, { description: e.target.value })
+                        }
+                      />
+                      {/* <FormDescription>Add a field description</FormDescription> */}
+                    </div>
                   </motion.div>
                   <div className="flex w-full  justify-between items-start mt-4">
                     <button
@@ -191,7 +165,7 @@ const ConfigPanel = () => {
                       Done
                     </Button>
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
           );

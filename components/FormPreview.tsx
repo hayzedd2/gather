@@ -10,10 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "./ui/button";
 import { generateShareableLink } from "@/helpers/generateShareableLink";
 import { useState } from "react";
-import SharedLink from "./SharedLink";
+
 
 const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);
@@ -28,7 +27,6 @@ const FormPreview = () => {
   return (
     <div className="basis-[50%]">
       <div className="font-[500] flex items-center gap-2 text-[1.3rem] text-regular">
-        {/* <Settings /> */}
         <div className="flex flex-col">
           <h4>Form preview</h4>
           <p className="text-subtle font-[500] text-[14px]">
@@ -37,7 +35,7 @@ const FormPreview = () => {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto bg-white p-4 rounded-lg my-5">
+      <div className="max-w-2xl mx-auto space-y-3 bg-white p-4 rounded-lg my-5">
         {fields.map((field) => (
           <div key={field.id} className="space-y-2">
             <Label htmlFor={field.id}>
@@ -68,15 +66,10 @@ const FormPreview = () => {
                 {...field.validation}
               />
             )}
+            {field.description && <p className="text-[0.8rem] text-muted-foreground">{field.description}</p>}
           </div>
         ))}
       </div>
-      {fields.length > 0 && (
-        <Button className="my-4" onClick={handleGenerate}>
-          Generate shareable link
-        </Button>
-      )}
-      {shareablelink && <SharedLink link={shareablelink} />}
     </div>
   );
 };
