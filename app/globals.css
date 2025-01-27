@@ -75,15 +75,8 @@ li {
     0 2px 4px 0 color(display-p3 0 0 0/0.06);
 }
 
-.dotted-right {
-  background-position: 100%;
-  background-repeat: repeat-y;
-}
-.dotted-up {
-  background-position: top;
-  background-repeat: repeat-x;
-  background-size: 100% 1px;
-}
+
+
 .spinner-fast {
   animation: rotate-fast 0.55s linear infinite;
 }
@@ -101,11 +94,28 @@ li {
   background-image: linear-gradient(#ccc 33%, hsla(0, 0%, 100%, 0) 0);
   background-size: 1px 4px;
 }
-
+.dotted-right {
+  background-position: 100%;
+  background-repeat: repeat-y;
+}
 .dotted-left {
   background-position: 0;
   background-repeat: repeat-y;
 }
+.dotted-up {
+  background-image: linear-gradient(to right, #ccc 33%, hsla(0, 0%, 100%, 0) 0);
+  background-size: 4px 1px;
+  background-repeat: repeat-x;
+  background-position: 0 0;
+}
+
+.dotted-down {
+  background-image: linear-gradient(to right, #ccc 33%, hsla(0, 0%, 100%, 0) 0);
+  background-size: 4px 1px; 
+  background-repeat: repeat-x;
+  background-position: 0 100%; 
+}
+
 
 .icon-green {
 

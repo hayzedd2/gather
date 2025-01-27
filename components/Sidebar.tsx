@@ -78,7 +78,7 @@ const SidebarFooter: React.FC<SidebarComponentProps> = ({
   children,
   className,
 }) => (
-  <div className={`w-full p-4 border-top dotted-up mt-auto ${className}`}>
+  <div className={`w-full  p-4  mt-auto ${className}`}>
     {children}
   </div>
 );

@@ -66,7 +66,7 @@ const ConfigPanel = () => {
   ];
 
   return (
-    <div className="p-4 rounded-lg  flex-col flex gap-2">
+    <div className="p-4 rounded-lg  flex-col flex gap-2 pb-14">
       <h3 className="text-[1.3rem] font-[500]">Form configuration</h3>
       <div className="flex flex-col gap-3">
         {fields.map((field, i) => {
@@ -75,7 +75,7 @@ const ConfigPanel = () => {
               key={i}
               className={`${
                 !selectedField || selectedField != field.id ? "p-3" : "py-8 px-4"
-              } flex flex-col w-full bg-white   rounded-lg `}
+              } flex flex-col w-full bg-white   rounded-lg`}
             >
               <div
                 className="flex w-full justify-between cursor-pointer items-center"

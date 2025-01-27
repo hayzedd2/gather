@@ -42,3 +42,10 @@ export interface UserObject{
   updatedAt: Date;
   image?: string | null | undefined | undefined;
 }
+
+
+export type viewT = "preview" | "configure" | "settings";
+export interface ViewProps {
+  view: viewT;
+  setView: React.Dispatch<React.SetStateAction<viewT>>;
+}
