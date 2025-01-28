@@ -26,7 +26,6 @@ const FormBuilder = () => {
 
   const onPublishForm = () => {
     validateAllFields()
-    console.log("Form published!");
     if (fields.length == 0) {
       toast.warning("Add at least one form field");
       return;
@@ -38,8 +37,12 @@ const FormBuilder = () => {
       );
       return;
     }
+    const payLoad = {
+      fields,
+      ...validData.data
+    }
     // send fields and form settings to db
-    console.log(settingFields);
+    console.log(payLoad);
   };
   return (
     <div className="flex min-h-screen">

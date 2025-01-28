@@ -34,7 +34,6 @@ const ConfigPanel = () => {
         toast.warning(`Label was empty, set to "Untitled Field"`);
       }
     }
-
     setSelectedField(newSelectedFieldId);
   };
 

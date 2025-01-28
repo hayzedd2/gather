@@ -10,20 +10,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { generateShareableLink } from "@/helpers/generateShareableLink";
-import { useState } from "react";
-
+import { useSettingsFormStore } from "@/store/useSettingsFormStore";
+import { Button } from "./ui/button";
 
 const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);
-  const [shareablelink, setShareableLink] = useState<string | null>(null);
+  const settingsFields = useSettingsFormStore((s) => s.settingFields);
   if (fields.length === 0) {
     return <EmptyFormPreview />;
   }
-  const handleGenerate = () => {
-    const link = generateShareableLink();
-    setShareableLink(link);
-  };
+
   return (
     <div>
       <div className="font-[500] flex items-center gap-2 text-[1.3rem] text-regular">
@@ -36,6 +32,10 @@ const FormPreview = () => {
       </div>
 
       <div className="max-w-2xl mx-auto space-y-3 bg-white p-4 rounded-lg my-5">
+       <div className="form-header flex flex-col mb-6">
+       <h3 className="text-[1.7rem] font-[600]">{settingsFields.title}</h3>
+       <h5 className="text-muted-foreground  text-[14px] mt-[-3px]">{settingsFields.description}</h5>
+       </div>
         {fields.map((field) => (
           <div key={field.id} className="space-y-2">
             <Label htmlFor={field.id}>
@@ -66,9 +66,14 @@ const FormPreview = () => {
                 {...field.validation}
               />
             )}
-            {field.description && <p className="text-[0.8rem] text-muted-foreground">{field.description}</p>}
+            {field.description && (
+              <p className="text-[0.8rem] text-muted-foreground">
+                {field.description}
+              </p>
+            )}
           </div>
         ))}
+        <Button className="w-full">{!settingsFields.buttonCtaText ? "Submit" : settingsFields.buttonCtaText}</Button>
       </div>
     </div>
   );
