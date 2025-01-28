@@ -25,7 +25,7 @@ const FormPreview = () => {
     setShareableLink(link);
   };
   return (
-    <div className="basis-[50%]">
+    <div>
       <div className="font-[500] flex items-center gap-2 text-[1.3rem] text-regular">
         <div className="flex flex-col">
           <h4>Form preview</h4>

@@ -22,18 +22,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
 import { Switch } from "./ui/switch";
+import { FormSettingsControllerProps } from "@/types/type";
+import { useSettingsFormStore } from "@/store/useSettingsFormStore";
 
 const FormSettingsForm = () => {
+  const { saveFields, settingFields } = useSettingsFormStore();
   const form = useForm<z.infer<typeof FormSettingsSchema>>({
     resolver: zodResolver(FormSettingsSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      buttonCtaText: "",
-      saveAsTemplate: false,
-    },
+    defaultValues: settingFields,
   });
+
   const onSubmit = (values: z.infer<typeof FormSettingsSchema>) => {
+    saveFields(values);
     console.log("Form submitted", values);
   };
   return (
@@ -57,7 +57,11 @@ const FormSettingsForm = () => {
                 <FormItem>
                   <FormLabel>Form title*</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter  form title.." {...field} />
+                    <Input
+                      //   value={settingFields?.title}
+                      placeholder="Enter  form title.."
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     Tell your users the name of the form they are filling.
@@ -74,6 +78,7 @@ const FormSettingsForm = () => {
                   <FormLabel>Form description</FormLabel>
                   <FormControl>
                     <Textarea
+                      //   value={settingFields?.description}
                       className="resize-none"
                       placeholder="Enter form description.."
                       {...field}
@@ -94,7 +99,11 @@ const FormSettingsForm = () => {
                 <FormItem>
                   <FormLabel>Button CTA text*</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g Submit complaint" {...field} />
+                    <Input
+                      //   value={settingFields?.buttonCtaText}
+                      placeholder="e.g Submit complaint"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     Enter a well-descriptive button text, telling your users

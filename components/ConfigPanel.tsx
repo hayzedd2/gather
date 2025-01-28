@@ -14,33 +14,30 @@ import GetIconType from "@/helpers/GetIconType";
 import EmptyFormPreview from "./EmptyFormPreview";
 import { FormDescription } from "./ui/form";
 import { Textarea } from "./ui/textarea";
+import { useSettingsFormStore } from "@/store/useSettingsFormStore";
 const ConfigPanel = () => {
   const { selectedField, setSelectedField } = useSelectedFieldStore();
   const fields = useFormBuilder((state) => state.fields);
   const { updateField, deleteField } = useFormBuilder();
   const [option, setOption] = React.useState("");
   const options: string[] = [];
-  useKeys({
-    keys: ["s"],
-    callback: () => {
-      options.push(option);
-      setOption("");
-    },
-  });
+  const { settingFields } = useSettingsFormStore();
+
   if (fields.length == 0) {
     return <EmptyFormPreview />;
   }
 
   return (
-    <div className="p-4 rounded-lg  flex-col flex gap-2 pb-14">
+    <div className="rounded-lg  flex-col flex gap-2 pb-14">
       <div className="font-[500] flex items-center gap-2 text-[1.3rem] text-regular">
         <div className="flex flex-col">
           <h4>Form configuration</h4>
           <p className="text-subtle font-[500] text-[14px]">
-           Configure your form to your taste
+            Configure your form to your taste
           </p>
         </div>
       </div>
+      {settingFields?.title}
       <div className="flex flex-col gap-3">
         {fields.map((field, i) => {
           return (
@@ -86,7 +83,7 @@ const ConfigPanel = () => {
                   >
                     <p className="text-[13px] font-[500]">Mark as required</p>
                     <Switch
-                      value={field.required}
+                      checked={field.required}
                       onCheckedChange={(checked) =>
                         updateField(field.id, { required: checked })
                       }
@@ -96,9 +93,7 @@ const ConfigPanel = () => {
               </div>
               {/* settings */}
               {selectedField && selectedField == field.id && (
-                <div
-
-                >
+                <div>
                   <motion.div
                     initial={{
                       opacity: 0,
@@ -132,6 +127,7 @@ const ConfigPanel = () => {
                       <Label htmlFor="fieldPlaceholder">Placeholder</Label>
                       <Input
                         id="fieldPlaceholder"
+                        required
                         value={field.placeholder || ""}
                         onChange={(e) =>
                           updateField(field.id, { placeholder: e.target.value })

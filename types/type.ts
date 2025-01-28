@@ -6,7 +6,7 @@ export interface FormField {
   id: string;
   type: FieldType;
   label: string;
-  description?:string;
+  description?: string;
   placeholder?: string;
   required: boolean;
   options?: string[];
@@ -26,14 +26,13 @@ export interface FormBuilderState {
   deleteField: (id: string) => void;
 }
 
-
 export interface SidebarLinksT {
-    icon:React.ReactNode;
-    label:string
-    href:string
+  icon: React.ReactNode;
+  label: string;
+  href: string;
 }
 
-export interface UserObject{
+export interface UserObject {
   id: string;
   email: string;
   emailVerified: boolean;
@@ -43,9 +42,25 @@ export interface UserObject{
   image?: string | null | undefined | undefined;
 }
 
-
 export type viewT = "preview" | "configure" | "settings";
 export interface ViewProps {
   view: viewT;
   setView: React.Dispatch<React.SetStateAction<viewT>>;
+}
+
+export interface FormSettingProps {
+  title: string;
+  description: string;
+  buttonCtaText?: string | undefined;
+  saveAsTemplate?: boolean | undefined;
+}
+
+export interface FormSettingsControllerProps {
+  setFormSettingValues: React.Dispatch<
+    React.SetStateAction<FormSettingProps | undefined>
+  >;
+}
+
+export interface FormActionProps {
+  onPublish: () => void;
 }
