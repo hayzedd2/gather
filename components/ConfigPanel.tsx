@@ -12,20 +12,31 @@ import { useSelectedFieldStore } from "@/store/useSelectedFieldStore";
 import { motion } from "motion/react";
 import GetIconType from "@/helpers/GetIconType";
 import EmptyFormPreview from "./EmptyFormPreview";
-import { FormDescription } from "./ui/form";
 import { Textarea } from "./ui/textarea";
-import { useSettingsFormStore } from "@/store/useSettingsFormStore";
+
+import { toast } from "sonner";
 const ConfigPanel = () => {
   const { selectedField, setSelectedField } = useSelectedFieldStore();
   const fields = useFormBuilder((state) => state.fields);
   const { updateField, deleteField } = useFormBuilder();
   const [option, setOption] = React.useState("");
   const options: string[] = [];
-  const { settingFields } = useSettingsFormStore();
 
   if (fields.length == 0) {
     return <EmptyFormPreview />;
   }
+  const handleFieldSelection = (newSelectedFieldId: string) => {
+    if (selectedField) {
+      const currentField = fields.find((field) => field.id === selectedField);
+
+      if (currentField && currentField.label.trim().length === 0) {
+        updateField(selectedField, { label: "Untitled Field" });
+        toast.warning(`Label was empty, set to "Untitled Field"`);
+      }
+    }
+
+    setSelectedField(newSelectedFieldId);
+  };
 
   return (
     <div className="rounded-lg  flex-col flex gap-2 pb-14">
@@ -37,7 +48,6 @@ const ConfigPanel = () => {
           </p>
         </div>
       </div>
-      {settingFields?.title}
       <div className="flex flex-col gap-3">
         {fields.map((field, i) => {
           return (
@@ -51,7 +61,7 @@ const ConfigPanel = () => {
             >
               <div
                 className="flex w-full justify-between cursor-pointer items-center"
-                onClick={() => setSelectedField(field.id)}
+                onClick={() => handleFieldSelection(field.id)}
               >
                 <div className="flex gap-2 items-center">
                   <div className="icon-holder bg-[#FcFcFc] text-[#464646] rounded-sm p-[6px]">
@@ -130,7 +140,9 @@ const ConfigPanel = () => {
                         required
                         value={field.placeholder || ""}
                         onChange={(e) =>
-                          updateField(field.id, { placeholder: e.target.value })
+                          updateField(field.id, {
+                            placeholder: e.target.value,
+                          })
                         }
                       />
                     </div>
@@ -141,7 +153,9 @@ const ConfigPanel = () => {
                         className="rezise-none"
                         value={field.description}
                         onChange={(e) =>
-                          updateField(field.id, { description: e.target.value })
+                          updateField(field.id, {
+                            description: e.target.value,
+                          })
                         }
                       />
                       {/* <FormDescription>Add a field description</FormDescription> */}
@@ -156,7 +170,15 @@ const ConfigPanel = () => {
                     </button>
                     <Button
                       size={"sm"}
-                      onClick={() => setSelectedField("empty")}
+                      onClick={() => {
+                        if (field.label.trim().length === 0) {
+                          updateField(field.id, { label: "Untitled Field" });
+                          toast.warning(
+                            "Label was empty, setting to 'Untitled Field'"
+                          );
+                        }
+                        setSelectedField("empty");
+                      }}
                     >
                       Done
                     </Button>

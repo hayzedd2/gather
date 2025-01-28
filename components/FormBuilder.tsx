@@ -9,16 +9,36 @@ import { viewT } from "@/types/type";
 import FormSettingsForm from "./FormSettingsForm";
 import { FormSettingsSchema } from "@/schema";
 import { useSettingsFormStore } from "@/store/useSettingsFormStore";
+import { toast } from "sonner";
+import { useFormBuilder } from "@/hooks/useFormBuilder";
 
 const FormBuilder = () => {
   const [view, setView] = React.useState<viewT>("configure");
   const settingFields = useSettingsFormStore((s) => s.settingFields);
+  const { fields, updateField } = useFormBuilder();
+  const validateAllFields = () => {
+    fields.forEach((field) => {
+      if (field.label.trim().length === 0) {
+        updateField(field.id, { label: "Untitled Field" });
+      }
+    });
+  };
+
   const onPublishForm = () => {
+    validateAllFields()
     console.log("Form published!");
+    if (fields.length == 0) {
+      toast.warning("Add at least one form field");
+      return;
+    }
     const validData = FormSettingsSchema.safeParse(settingFields);
     if (!validData.success) {
-      console.log("Missing setting fields");
+      toast.warning(
+        "Missing field in settings, please edit before you can proceed."
+      );
+      return;
     }
+    // send fields and form settings to db
     console.log(settingFields);
   };
   return (

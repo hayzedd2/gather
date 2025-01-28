@@ -5,7 +5,15 @@ export const useFormBuilder = create<FormBuilderState>((set) => ({
   fields: [],
   addField: (field) =>
     set((state) => ({
-      fields: [...state.fields, { ...field, id: crypto.randomUUID() }],
+      fields: [
+        ...state.fields,
+        {
+          ...field,
+          id: crypto.randomUUID(),
+          label:
+            field.label.trim().length == 0 ? "Untitled Field" : field.label,
+        },
+      ],
     })),
   updateField: (id, field) =>
     set((state) => ({

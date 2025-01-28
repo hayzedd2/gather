@@ -24,6 +24,7 @@ import { Textarea } from "./ui/textarea";
 import { Switch } from "./ui/switch";
 import { FormSettingsControllerProps } from "@/types/type";
 import { useSettingsFormStore } from "@/store/useSettingsFormStore";
+import { toast } from "sonner";
 
 const FormSettingsForm = () => {
   const { saveFields, settingFields } = useSettingsFormStore();
@@ -34,6 +35,7 @@ const FormSettingsForm = () => {
 
   const onSubmit = (values: z.infer<typeof FormSettingsSchema>) => {
     saveFields(values);
+    toast.success("Settings saved!")
     console.log("Form submitted", values);
   };
   return (
