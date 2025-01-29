@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterSchema } from "@/schema";
+import { LoginSchema } from "@/schema";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { CardWrapper } from "./CardWrapper";
@@ -17,7 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { authClient } from "@/lib/auth-client";
+import { signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useFormHelpers } from "@/hooks/useFormHelpers";
 import { SvgLoading } from "../SvgLoading";
@@ -33,18 +33,18 @@ const LoginForm = () => {
     resetState,
   } = useFormHelpers();
   const router = useRouter();
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const handleLogin = async (values: z.infer<typeof RegisterSchema>) => {
+  const handleLogin = async (values: z.infer<typeof LoginSchema>) => {
     try {
       const { email, password } = values;
-      await authClient.signIn.email({
+      await signIn.email({
         email,
         password,
         fetchOptions: {

@@ -17,7 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { authClient, signUp } from "@/lib/auth-client";
+import { signUp } from "@/lib/auth-client";
 import { useFormHelpers } from "@/hooks/useFormHelpers";
 import { useRouter } from "next/navigation";
 import { FormError } from "../FormError";
@@ -29,6 +29,7 @@ const RegisterForm = () => {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
+      name: "",
       password: "",
     },
   });
@@ -37,11 +38,12 @@ const RegisterForm = () => {
 
   const handleSignUp = async (values: z.infer<typeof RegisterSchema>) => {
     try {
+      const { email, password, name } = values;
       await signUp.email(
         {
-          email: values.email,
-          password: values.password,
-          name: "test",
+          email,
+          name,
+          password,
           callbackURL: "/dashboard",
         },
         {
@@ -89,6 +91,19 @@ const RegisterForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email*</FormLabel>
+                  <FormControl>
+                    <Input {...field} disabled={loading} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name*</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} />
                   </FormControl>

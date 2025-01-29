@@ -2,13 +2,19 @@
 
 import { authClient } from "@/lib/auth-client";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 export const Socials = ({ type }: { type: "up" | "in" }) => {
   const signInWithGoogle = async () => {
-    const data = await authClient.signIn.social({
+   const {data, error}=  await authClient.signIn.social({
       provider: "google",
+      callbackURL : "/dashboard"
     });
+    if(error){
+      toast.error("An error occured, please try again")
+    }
   };
+
   return (
     <div className="w-full flex items-center justify-center">
       <Button
