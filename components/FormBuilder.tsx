@@ -11,6 +11,7 @@ import { FormSettingsSchema } from "@/schema";
 import { useSettingsFormStore } from "@/store/useSettingsFormStore";
 import { toast } from "sonner";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
+import { useCreateform } from "@/hooks/useCreateForm";
 
 const FormBuilder = () => {
   const [view, setView] = React.useState<viewT>("configure");
@@ -23,9 +24,10 @@ const FormBuilder = () => {
       }
     });
   };
-
+  const { mutate, data, isPending, isSuccess, isError, error } =
+    useCreateform();
   const onPublishForm = () => {
-    validateAllFields()
+    validateAllFields();
     if (fields.length == 0) {
       toast.warning("Add at least one form field");
       return;
@@ -39,10 +41,22 @@ const FormBuilder = () => {
     }
     const payLoad = {
       fields,
-      ...validData.data
-    }
+      ...validData.data,
+    };
     // send fields and form settings to db
     console.log(payLoad);
+    try {
+      mutate(payLoad);
+      if (isError) {
+        toast.error(error.message);
+      }
+      if (isSuccess) {
+        toast.success("Your form has been published:)");
+      }
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div className="flex min-h-screen">
@@ -53,7 +67,7 @@ const FormBuilder = () => {
           {view == "preview" && <FormPreview />}
           {view == "settings" && <FormSettingsForm />}
         </div>
-        <FormActions onPublish={onPublishForm} />
+        <FormActions onPublish={onPublishForm} isPending={isPending} />
       </div>
       <div className="flex  bg-[#FAFAFA] top-0 h-screen  p-4 flex-col sticky gap-4 w-[20rem] dotted dotted-left ">
         <AddField />

@@ -52,15 +52,23 @@ export interface FormSettingProps {
   title: string;
   description: string;
   buttonCtaText?: string | undefined;
-  saveAsTemplate?: boolean | undefined;
+  saveAsTemplate: boolean;
 }
 
 export interface FormSettingsControllerProps {
   setFormSettingValues: React.Dispatch<
-    React.SetStateAction<FormSettingProps | undefined>
+    React.SetStateAction<FormSettingProps>
   >;
 }
 
 export interface FormActionProps {
   onPublish: () => void;
+  isPending: boolean
+}
+export interface FormPayloadProps {
+  title: string;
+  description: string;
+  buttonCtaText?: string | undefined;
+  saveAsTemplate: boolean;
+  fields: FormField[];
 }

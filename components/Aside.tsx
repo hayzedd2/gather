@@ -16,15 +16,21 @@ import {
   Workflow,
   CircleHelp,
   ChartCandlestick,
+  LayoutDashboard,
 } from "lucide-react";
 import { SidebarLinksT, UserObject } from "@/types/type";
 import { UserMenu } from "./UserMenu";
 
 const links: SidebarLinksT[] = [
   {
+    icon: <LayoutDashboard size={16} />,
+    label: "Dashboard",
+    href: "/dashboard",
+  },
+  {
     icon: <NotebookText size={16} />,
     label: "Forms",
-    href: "/dashboard",
+    href: "/forms",
   },
   {
     icon: <ChartCandlestick size={16} />,
@@ -73,7 +79,7 @@ const Aside = ({ user }: AsideProps) => {
                 icon={l.icon}
                 href={l.href}
                 label={l.label}
-                active={pathname == l.href}
+                active={pathname.startsWith(l.href)}
               />
             );
           })}

@@ -31,5 +31,5 @@ export const FormSettingsSchema = z.object({
     message: "Form description is required",
   }),
   buttonCtaText: z.string().optional(),
-  saveAsTemplate: z.boolean().optional(),
+  saveAsTemplate: z.boolean(),
 });
