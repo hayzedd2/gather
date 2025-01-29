@@ -56,14 +56,12 @@ export interface FormSettingProps {
 }
 
 export interface FormSettingsControllerProps {
-  setFormSettingValues: React.Dispatch<
-    React.SetStateAction<FormSettingProps>
-  >;
+  setFormSettingValues: React.Dispatch<React.SetStateAction<FormSettingProps>>;
 }
 
 export interface FormActionProps {
   onPublish: () => void;
-  isPending: boolean
+  isPending: boolean;
 }
 export interface FormPayloadProps {
   title: string;
@@ -71,4 +69,13 @@ export interface FormPayloadProps {
   buttonCtaText?: string | undefined;
   saveAsTemplate: boolean;
   fields: FormField[];
+}
+
+export interface FormResponseProps {
+  id: string;
+  title: string;
+  description: string;
+  buttonText: string;
+  formConfig: [];
+  _count: Record<"submissions", number>;
 }

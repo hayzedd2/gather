@@ -31,3 +31,33 @@ export const POST = async (req: NextRequest) => {
     return Response.json({ message: "Something went wrong" }, { status: 500 });
   }
 };
+
+export const GET = async () => {
+  try {
+    const sessions = await auth.api.getSession({ headers: await headers() });
+    if (!sessions) {
+      return Response.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const formsWithSubmissionCounts = await prismaDb.form.findMany({
+      where: { userId: sessions.user.id },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        buttonText: true,
+        formConfig: true,
+        _count: {
+          select: {
+            submissions: true,
+          },
+        },
+      },
+    });
+    console.log(formsWithSubmissionCounts)
+    return Response.json(formsWithSubmissionCounts, { status: 200 });
+  } catch (err) {
+    console.log(err);
+    return Response.json({ message: "Something went wrong" }, { status: 500 });
+  }
+};

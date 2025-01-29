@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 export const useCreateform = () => {
   return useMutation({
     mutationFn: async (values: FormPayloadProps) => {
-      const response = await fetch("/api/form", {
+      const response = await fetch("/api/forms", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,7 +1,5 @@
-import FormBuilder from "@/components/FormBuilder";
-import SingleForm from "@/components/SingleForm";
+import MyForms from "@/components/MyForms";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import React from "react";
 
@@ -14,19 +12,12 @@ const page = () => {
           <h6 className="mt-[-4px]">Manage your forms and submissions.</h6>
         </div>
         <div>
-         <Link href={'/forms/new'}> <Button>Create new form</Button></Link>
+          <Link href={"/forms/new"}>
+            <Button>Create new form</Button>
+          </Link>
         </div>
       </div>
-      <div className="search flex mt-8 gap-1 flex-col">
-        <p className="text-muted-foreground text-[14px] font-[500]">
-          Search for a form
-        </p>
-        <Input placeholder="Customer complaint form" />
-      </div>
-      <div className=" forms mt-4">
-        <SingleForm />
-        <SingleForm />
-      </div>
+      <MyForms />
     </div>
   );
 };
