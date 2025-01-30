@@ -15,7 +15,7 @@ export function SingleFormOptions({ id }: SingleFormOptionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="rounded-md p-[5px] light-shadow">
+        <div className="rounded-md cursor-pointer p-[5px] light-shadow">
           <Ellipsis size={16} />
         </div>
       </DropdownMenuTrigger>

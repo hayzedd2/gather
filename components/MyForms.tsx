@@ -5,6 +5,7 @@ import { useGetForms } from "@/hooks/useGetForms";
 import React from "react";
 import EmptyFormsList from "./EmptyFormsList";
 import { useRouter, useSearchParams } from "next/navigation";
+import { FormSkeletonLoader } from "./FormSkeletonLoader";
 
 const MyForms = () => {
   const { data: forms, isPending } = useGetForms();
@@ -20,15 +21,13 @@ const MyForms = () => {
   }, [search]);
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <FormSkeletonLoader />;
   }
   if (!forms || forms.length === 0) {
     return <EmptyFormsList />;
   }
-  const filteredForms = React.useMemo(
-    () =>
-      forms.filter((f) => f.title.toLowerCase().includes(search.toLowerCase())),
-    [forms, search]
+  const filteredForms = forms.filter((f) =>
+    f.title.toLowerCase().includes(search.toLowerCase())
   );
   return (
     <>
@@ -38,6 +37,7 @@ const MyForms = () => {
         </p>
         <Input
           placeholder="Customer complaint form"
+          value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
