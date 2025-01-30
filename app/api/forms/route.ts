@@ -1,3 +1,4 @@
+import { getFormByTitle } from "@/data/form";
 import { auth } from "@/lib/auth";
 import { prismaDb } from "@/lib/db";
 import { headers } from "next/headers";
@@ -13,6 +14,13 @@ export const POST = async (req: NextRequest) => {
     const { fields, title, description, buttonCtaText } = reqBody;
     if (!fields || !title || !description) {
       return Response.json({ message: "Missing fields" }, { status: 400 });
+    }
+    const formExistsByTitle = await getFormByTitle(title);
+    if (formExistsByTitle) {
+      return Response.json(
+        { message: "Form title already exists, please use a different one" },
+        { status: 200 }
+      );
     }
     const buttonText = buttonCtaText?.trim() || "Submit";
     const form = await prismaDb.form.create({
@@ -54,7 +62,7 @@ export const GET = async () => {
         },
       },
     });
-    console.log(formsWithSubmissionCounts)
+    console.log(formsWithSubmissionCounts);
     return Response.json(formsWithSubmissionCounts, { status: 200 });
   } catch (err) {
     console.log(err);

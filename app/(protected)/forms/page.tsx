@@ -6,7 +6,7 @@ import React from "react";
 const page = () => {
   return (
     <div className="p-4 py-10 max-w-3xl mx-auto">
-      <div className="w-full items-start flex justify-between ">
+      <div className="w-full  flex justify-between items-center ">
         <div className="flex flex-col">
           <h3 className="font-[600] text-[1.6rem]">Your forms</h3>
           <h6 className="mt-[-4px]">Manage your forms and submissions.</h6>

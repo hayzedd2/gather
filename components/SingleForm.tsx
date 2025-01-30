@@ -4,8 +4,9 @@ import { SingleFormOptions } from "./SingleFormOptions";
 interface SingleFormProps {
   title: string;
   _count: Record<"submissions", number>;
+  id: string;
 }
-const SingleForm = ({ title, _count }: SingleFormProps) => {
+const SingleForm = ({ title, _count, id }: SingleFormProps) => {
   return (
     <div className="dotted-down cursor-pointer hover:bg-[#fafafa]  p-3">
       <div className="flex items-center justify-between">
@@ -23,7 +24,7 @@ const SingleForm = ({ title, _count }: SingleFormProps) => {
             </p>
           </div>
         </div>
-        <SingleFormOptions />
+        <SingleFormOptions id={id} />
       </div>
     </div>
   );

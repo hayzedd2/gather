@@ -24,8 +24,7 @@ const FormBuilder = () => {
       }
     });
   };
-  const { mutate, data, isPending, isSuccess, isError, error } =
-    useCreateform();
+  const { mutate, isPending } = useCreateform();
   const onPublishForm = () => {
     validateAllFields();
     if (fields.length == 0) {
@@ -47,13 +46,6 @@ const FormBuilder = () => {
     console.log(payLoad);
     try {
       mutate(payLoad);
-      if (isError) {
-        toast.error(error.message);
-      }
-      if (isSuccess) {
-        toast.success("Your form has been published:)");
-      }
-      console.log(data);
     } catch (err) {
       console.log(err);
     }

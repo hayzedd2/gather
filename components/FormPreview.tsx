@@ -73,7 +73,9 @@ const FormPreview = () => {
             )}
           </div>
         ))}
-        <Button className="w-full">{!settingsFields.buttonCtaText ? "Submit" : settingsFields.buttonCtaText}</Button>
+       <div className="w-full justify-end flex">
+       <Button>{!settingsFields.buttonCtaText ? "Submit" : settingsFields.buttonCtaText}</Button>
+       </div>
       </div>
     </div>
   );

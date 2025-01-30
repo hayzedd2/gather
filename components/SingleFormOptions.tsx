@@ -8,7 +8,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function SingleFormOptions() {
+interface SingleFormOptionsProps {
+  id: string;
+}
+export function SingleFormOptions({ id }: SingleFormOptionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
