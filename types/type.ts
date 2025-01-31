@@ -24,6 +24,8 @@ export interface FormBuilderState {
   addField: (field: Omit<FormField, "id">) => void;
   updateField: (id: string, field: Partial<FormField>) => void;
   deleteField: (id: string) => void;
+  resetFields:()=>void
+  setFields: (newFields: FormField[])=>void
 }
 
 export interface SidebarLinksT {

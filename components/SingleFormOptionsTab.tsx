@@ -71,7 +71,7 @@ const SingleFormOptionsTab = ({ id }: SingleFormOptionsTabProps) => {
                 : ""
             } px-3 py-2   text-[14px]  text-regular`}
             key={i}
-            href={`${id}${t.href}`}
+            href={`/forms/${id}${t.href}`}
           >
             {t.label}
           </Link>

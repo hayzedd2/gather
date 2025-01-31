@@ -16,7 +16,7 @@ import { useCreateform } from "@/hooks/useCreateForm";
 const FormBuilder = () => {
   const [view, setView] = React.useState<viewT>("configure");
   const settingFields = useSettingsFormStore((s) => s.settingFields);
-  const { fields, updateField } = useFormBuilder();
+  const { fields, updateField, resetFields } = useFormBuilder();
   const validateAllFields = () => {
     fields.forEach((field) => {
       if (field.label.trim().length === 0) {
@@ -46,6 +46,7 @@ const FormBuilder = () => {
     console.log(payLoad);
     try {
       mutate(payLoad);
+      resetFields();
     } catch (err) {
       console.log(err);
     }

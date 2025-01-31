@@ -3,6 +3,8 @@ import { FormBuilderState } from "@/types/type";
 
 export const useFormBuilder = create<FormBuilderState>((set) => ({
   fields: [],
+  resetFields: () => set({ fields: [] }),
+  setFields: (newFields) => set({ fields: newFields }),
   addField: (field) =>
     set((state) => ({
       fields: [

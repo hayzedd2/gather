@@ -1,9 +1,12 @@
+
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
 import { ChevronLeft } from "lucide-react";
 import SingleFormOptionsTab from "./SingleFormOptionsTab";
 import { getRelativeTime } from "@/helpers/getRelativeTime";
+import SharedLink from "./SharedLink";
+import { generateShareableLink } from "@/helpers/generateShareableLink";
 
 type FormResponseProps = {
   form: {
@@ -39,6 +42,7 @@ const SingleFormHeader = ({ form }: FormResponseProps) => {
               {getRelativeTime(form.updatedAt.toDateString())}
             </p>
           </div>
+          <SharedLink link={generateShareableLink(form.id)} />
         </div>
         <div className="flex gap-3 items-center">
           <Button variant={"outline"}>View</Button>
