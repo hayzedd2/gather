@@ -19,7 +19,7 @@ export const POST = async (req: NextRequest) => {
     if (formExistsByTitle) {
       return Response.json(
         { message: "Form title already exists, please use a different one" },
-        { status: 200 }
+        { status: 500 }
       );
     }
     const buttonText = buttonCtaText?.trim() || "Submit";

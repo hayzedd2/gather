@@ -1,19 +1,21 @@
-"use client";
-
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
 import { ChevronLeft } from "lucide-react";
 import SingleFormOptionsTab from "./SingleFormOptionsTab";
-import { useGetSingleForm } from "@/hooks/useGetSingleForm";
-import { FormSkeletonLoader } from "./FormSkeletonLoader";
 import { getRelativeTime } from "@/helpers/getRelativeTime";
 
-const SingleFormHeader = ({ id }: { id: string }) => {
-  const { data: form, isPending } = useGetSingleForm(id);
-  if (isPending) {
-    return <FormSkeletonLoader />;
-  }
+type FormResponseProps = {
+  form: {
+    id: string;
+    title: string;
+    updatedAt: Date;
+    _count: {
+      submissions: number;
+    };
+  } | null;
+};
+const SingleFormHeader = ({ form }: FormResponseProps) => {
   if (!form) {
     return <div>Empty form</div>;
   }
@@ -34,7 +36,7 @@ const SingleFormHeader = ({ id }: { id: string }) => {
               0 views
             </p>
             <p className="text-muted-foreground text-[15px] font-[500]">
-              {getRelativeTime(form.updatedAt)}
+              {getRelativeTime(form.updatedAt.toDateString())}
             </p>
           </div>
         </div>
@@ -43,7 +45,7 @@ const SingleFormHeader = ({ id }: { id: string }) => {
           <Button>Edit form</Button>
         </div>
       </div>
-      <SingleFormOptionsTab id={id} />
+      <SingleFormOptionsTab id={form.id} />
     </div>
   );
 };
