@@ -71,11 +71,15 @@ export interface FormPayloadProps {
   fields: FormField[];
 }
 
+
 export interface FormResponseProps {
   id: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
   title: string;
   description: string;
-  buttonText: string;
+  buttonText: string | null;
   formConfig: [];
   _count: Record<"submissions", number>;
 }

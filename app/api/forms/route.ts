@@ -23,7 +23,7 @@ export const POST = async (req: NextRequest) => {
       );
     }
     const buttonText = buttonCtaText?.trim() || "Submit";
-    const form = await prismaDb.form.create({
+    const createdForm = await prismaDb.form.create({
       data: {
         userId: sessions.user.id,
         title,
@@ -32,8 +32,7 @@ export const POST = async (req: NextRequest) => {
         formConfig: fields,
       },
     });
-    console.log(form);
-    return Response.json(form, { status: 200 });
+    return Response.json(createdForm, { status: 200 });
   } catch (err) {
     console.log(err);
     return Response.json({ message: "Something went wrong" }, { status: 500 });
