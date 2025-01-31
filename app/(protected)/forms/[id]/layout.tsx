@@ -35,8 +35,11 @@ const SingleFormLayout = async ({
       },
     },
   });
+  if(!form){
+    return <>Empty form!!! no childs</>
+  }
   return (
-    <div className="max-w-3xl mx-auto py-10">
+    <div className="max-w-5xl mx-auto py-10">
       <SingleFormHeader  form={form}  />
       {children}
     </div>

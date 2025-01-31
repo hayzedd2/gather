@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
@@ -16,12 +15,9 @@ type FormResponseProps = {
     _count: {
       submissions: number;
     };
-  } | null;
+  };
 };
 const SingleFormHeader = ({ form }: FormResponseProps) => {
-  if (!form) {
-    return <div>Empty form</div>;
-  }
   return (
     <div>
       <Link href={"/forms"} className="my-6 gap-1 px-3 flex items-center">
@@ -42,12 +38,17 @@ const SingleFormHeader = ({ form }: FormResponseProps) => {
               {getRelativeTime(form.updatedAt.toDateString())}
             </p>
           </div>
-          <SharedLink link={generateShareableLink(form.id)} />
+         
         </div>
-        <div className="flex gap-3 items-center">
-          <Button variant={"outline"}>View</Button>
+       <div className="flex flex-col gap-1">
+       <SharedLink link={generateShareableLink(form.id)} />
+       <div className="flex gap-3 items-center justify-end ">
+          <Link href={generateShareableLink(form.id)}>
+            <Button variant={"outline"}>View</Button>
+          </Link>
           <Button>Edit form</Button>
         </div>
+       </div>
       </div>
       <SingleFormOptionsTab id={form.id} />
     </div>

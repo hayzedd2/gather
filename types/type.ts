@@ -24,8 +24,8 @@ export interface FormBuilderState {
   addField: (field: Omit<FormField, "id">) => void;
   updateField: (id: string, field: Partial<FormField>) => void;
   deleteField: (id: string) => void;
-  resetFields:()=>void
-  setFields: (newFields: FormField[])=>void
+  resetFields: () => void;
+  setFields: (newFields: FormField[]) => void;
 }
 
 export interface SidebarLinksT {
@@ -73,7 +73,6 @@ export interface FormPayloadProps {
   fields: FormField[];
 }
 
-
 export interface FormResponseProps {
   id: string;
   createdAt: string;
@@ -83,5 +82,10 @@ export interface FormResponseProps {
   description: string;
   buttonText: string | null;
   formConfig: [];
+  _count: Record<"submissions", number>;
+}
+
+export interface GetFormSubmissionProps {
+  formConfig: FormField[];
   _count: Record<"submissions", number>;
 }
