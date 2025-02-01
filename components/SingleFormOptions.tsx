@@ -10,23 +10,43 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React from "react";
 import Modal from "./Modal";
+import { Button } from "./ui/button";
+import { useDeleteForm } from "@/hooks/useDeleteForm";
+import { SvgLoading } from "./SvgLoading";
+import { toast } from "sonner";
 
 interface SingleFormOptionsProps {
   id: string;
 }
 export function SingleFormOptions({ id }: SingleFormOptionsProps) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const { mutate: deleteEvent, isPending, isSuccess } = useDeleteForm(id);
+  const handleDelete = () => {
+    try {
+      deleteEvent();
+     
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  if(isSuccess){
+    toast.success("Form deleted!")
+  }
   return (
     <>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <p>This is the modal content!</p>
-        <div className="mt-4 flex justify-end">
-          <button
-            onClick={() => setIsModalOpen(false)}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-          >
-            Close
-          </button>
+        <h5 className="text-[1.2rem] font-[500]"> Are you sure?</h5>
+        <p className="text-muted-foreground mt-1 font-[500] text-[14px]">
+          Are you sure you want to delete this form? This would delete all data
+          related to this form.
+        </p>
+        <div className="mt-4 flex gap-3 justify-end">
+          <Button onClick={() => setIsModalOpen(false)} variant={"outline"}>
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} disabled={isPending} variant={"destructive"}>
+            {isPending && <SvgLoading />}Delete form
+          </Button>
         </div>
       </Modal>
       <DropdownMenu>

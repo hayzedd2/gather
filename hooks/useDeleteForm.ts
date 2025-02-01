@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useDeleteForm = (id: number) => {
+export const useDeleteForm = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async () => {

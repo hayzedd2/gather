@@ -1,5 +1,4 @@
 "use client";
-import { X } from "lucide-react";
 import React from "react";
 
 interface ModalProps {
@@ -22,17 +21,8 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
           className={`bg-white rounded-lg light-shadow w-full max-w-md relative `}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between items-center p-4 border-b">
-            <button
-              onClick={onClose}
-              className="p-1 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              <X size={20} />
-            </button>
-          </div>
-
-          {/* Content */}
-          <div className="p-4">{children}</div>
+         
+          <div className="p-6">{children}</div>
         </div>
       </div>
     </>
