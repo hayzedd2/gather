@@ -4,15 +4,16 @@ import React from "react";
 import { Button } from "./ui/button";
 import { FileDigit, List, MailPlus, Type, WrapText } from "lucide-react";
 import GetIconType from "@/helpers/GetIconType";
+import { createDefaultValues } from "@/helpers/createDefaultValues";
 
 const AddField = () => {
   const addField = useFormBuilder((state) => state.addField);
   const handleAddField = (type: FieldType) => {
+    const defaultValues = createDefaultValues(type);
     addField({
+      ...defaultValues,
       type,
-      label: `New ${type} field`,
-      required: false,
-      placeholder: "",
+      label: `New ${type} Field`
     });
   };
 
@@ -45,6 +46,18 @@ const AddField = () => {
       key: "textarea",
       label: "Text area",
       about: "Multiple lines of text",
+      icon: <WrapText size={20} />,
+    },
+    {
+      key: "checkbox-group",
+      label: "Checkbox",
+      about: "Add echc",
+      icon: <WrapText size={20} />,
+    },
+    {
+      key: "radio-group",
+      label: "Radio",
+      about: "Add echc",
       icon: <WrapText size={20} />,
     },
   ];

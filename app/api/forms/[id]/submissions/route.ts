@@ -28,6 +28,7 @@ export const GET = async (
         },
       },
     });
+    console.log(getFormSubmissions)
     return Response.json(getFormSubmissions, { status: 200 });
   } catch (err) {
     console.log(err);

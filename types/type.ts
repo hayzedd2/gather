@@ -1,23 +1,85 @@
 import React from "react";
 
-export type FieldType = "text" | "number" | "email" | "select" | "textarea";
-
-export interface FormField {
+export interface BaseField {
   id: string;
-  type: FieldType;
   label: string;
   description?: string;
-  placeholder?: string;
   required: boolean;
-  options?: string[];
+}
+
+export interface TextField extends BaseField {
+  type: "text";
+  placeholder?: string;
   validation?: {
     minLength?: number;
     maxLength?: number;
-    min?: number;
-    max?: number;
     pattern?: string;
   };
 }
+
+export interface NumberField extends BaseField {
+  type: "number";
+  placeholder?: string;
+  validation?: {
+    min?: number;
+    max?: number;
+  };
+}
+
+export interface EmailField extends BaseField {
+  type: "email";
+  placeholder?: string;
+}
+
+export interface SelectField extends BaseField {
+  type: "select";
+  placeholder: string;
+  options: Array<{
+    label: string;
+    value: string;
+  }>;
+  multiple?: boolean;
+}
+
+export interface CheckboxGroupField extends BaseField {
+  type: "checkbox-group";
+  options: Array<{
+    label: string;
+    value: string;
+  }>;
+  validation?: {
+    minSelected?: number;
+    maxSelected?: number;
+  };
+}
+
+export interface RadioGroupField extends BaseField {
+  type: "radio-group";
+  options: Array<{
+    label: string;
+    value: string;
+  }>;
+}
+
+export interface TextareaField extends BaseField {
+  type: "textarea";
+  placeholder?: string;
+  validation?: {
+    minLength?: number;
+    maxLength?: number;
+  };
+}
+
+export type FormField =
+  | TextField
+  | NumberField
+  | EmailField
+  | SelectField
+  | CheckboxGroupField
+  | RadioGroupField
+  | TextareaField;
+
+export type FieldType = FormField["type"];
 
 export interface FormBuilderState {
   fields: FormField[];

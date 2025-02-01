@@ -26,6 +26,8 @@ const GetIconType = ({ type, size }: IconTypeProps) => {
       return <List size={size ? size : 20} className="icon-yellow" />;
     case "textarea":
       return <WrapText size={size ? size : 20} className="icon-purple" />;
+      default:
+        return <FileType size={20}/>
   }
 };
 
