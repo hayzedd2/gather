@@ -13,58 +13,51 @@ const AddField = () => {
     addField({
       ...defaultValues,
       type,
-      label: `New ${type} Field`
+      label: `New ${type} Field`,
     });
   };
-
   const fieldsToAdd = [
     {
       key: "text",
       label: "Text",
-      about: "Single text field",
-      icon: <Type size={20} />,
+      about: "Single-line input",
     },
     {
       key: "email",
       label: "Email",
-      about: "Single email field",
-      icon: <MailPlus size={20} />,
+      about: "Email input field",
     },
     {
       key: "number",
-      label: "Numeric",
-      about: "Accepts only numbers",
-      icon: <FileDigit size={20} />,
+      label: "Number",
+      about: "Only numbers allowed",
     },
     {
       key: "select",
-      label: "Select from List",
-      about: "Select options from a list",
-      icon: <List size={20} />,
+      label: "Dropdown",
+      about: "Choose from a list",
     },
     {
       key: "textarea",
-      label: "Text area",
-      about: "Multiple lines of text",
-      icon: <WrapText size={20} />,
+      label: "Textarea",
+      about: "Multi-line input",
     },
     {
       key: "checkbox-group",
       label: "Checkbox",
-      about: "Add echc",
-      icon: <WrapText size={20} />,
+      about: "Multiple selections",
     },
     {
       key: "radio-group",
       label: "Radio",
-      about: "Add echc",
-      icon: <WrapText size={20} />,
+      about: "Single selection",
     },
   ];
+
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="text-[1.3rem] font-[500] mb-3">Add form fields</h3>
-      <div className="flex gap-5 flex-col">
+      <h3 className="text-[1.2rem] font-[600]">Add form fields</h3>
+      <div className="flex gap-5 mt-3 flex-col">
         {fieldsToAdd.map((f) => {
           return (
             <button
@@ -72,7 +65,7 @@ const AddField = () => {
               onClick={() => handleAddField(f.key as FieldType)}
               className="flex items-center gap-3"
             >
-              <div className="icon-holder bg-[#FcFcFc]  rounded-sm p-2">
+              <div className="icon-holder  rounded-sm p-1">
                 <GetIconType type={f.key as FieldType} />
               </div>
               <div className="flex flex-col items-start">

@@ -49,7 +49,7 @@ const FormSettingsForm = () => {
           </p>
         </div>
       </div>
-      <div className="max-w-2xl mx-auto bg-white p-4 rounded-lg my-5">
+      <div className="max-w-2xl mx-auto bg-white p-5 rounded-lg my-5">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <FormField

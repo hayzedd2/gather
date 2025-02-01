@@ -1,11 +1,15 @@
 import { FieldType } from "@/types/type";
 import React from "react";
 import {
+  AtSign,
+  Binary,
+  CircleCheckBig,
   FileDigit,
   FileText,
   FileType,
   List,
   MailPlus,
+  SquareCheck,
   Type,
   WrapText,
 } from "lucide-react";
@@ -17,17 +21,21 @@ interface IconTypeProps {
 const GetIconType = ({ type, size }: IconTypeProps) => {
   switch (type) {
     case "email":
-      return <MailPlus size={size ? size : 20} className="icon-green" />;
+      return <AtSign size={size ? size : 18} className="icon-green" />;
     case "text":
-      return <FileText size={size ? size : 20} className="icon-red" />;
+      return <FileText size={size ? size : 18} className="icon-red" />;
     case "number":
-      return <FileDigit size={size ? size : 20} className="icon-blue" />;
+      return <Binary size={size ? size : 18} className="icon-blue" />;
     case "select":
-      return <List size={size ? size : 20} className="icon-yellow" />;
+      return <List size={size ? size : 18} className="icon-yellow" />;
     case "textarea":
-      return <WrapText size={size ? size : 20} className="icon-purple" />;
-      default:
-        return <FileType size={20}/>
+      return <WrapText size={size ? size : 18} className="icon-purple" />;
+    case "checkbox-group":
+      return <CircleCheckBig size={size ? size : 18} className="icon-cyan" />;
+    case "radio-group":
+      return <SquareCheck size={size ? size : 18} className="icon-pink" />;
+    default:
+      return <FileType size={18} />;
   }
 };
 

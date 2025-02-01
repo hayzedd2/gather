@@ -1,12 +1,14 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
+import { CircleSlash } from "lucide-react";
 
 const EmptyFormsList = () => {
   return (
     <section className="h-full flex min-h-[80vh] items-center  justify-center w-full">
       <div className="flex flex-col gap-5 w-full items-center justify-center">
-        <svg
+        <CircleSlash size={64}/> 
+        {/* <svg
           width="200"
           height="200"
           viewBox="0 0 214 219"
@@ -103,12 +105,12 @@ const EmptyFormsList = () => {
               ></rect>
             </clipPath>
           </defs>
-        </svg>
+        </svg> */}
         <div className="flex flex-col gap-2 items-center">
           <h2 className="font-[500] text-muted-foreground text-[15px] text-center">
             You haven't created any form at this time.
           </h2>
-          <Link href={"/form/new"}>
+          <Link href={"/forms/new"}>
             <Button>Create new form</Button>
           </Link>
         </div>

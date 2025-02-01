@@ -134,3 +134,22 @@ li {
 .icon-purple{
   color: rgb(99 102 241 / var(--tw-text-opacity));
 }
+.icon-orange {
+  color: rgb(249 115 22 / var(--tw-text-opacity));
+}
+
+.icon-teal {
+  color: rgb(20 184 166 / var(--tw-text-opacity));
+}
+
+.icon-pink {
+  color: rgb(236 72 153 / var(--tw-text-opacity));
+}
+
+.icon-indigo {
+  color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+
+.icon-cyan {
+  color: rgb(6 182 212 / var(--tw-text-opacity));
+}

@@ -6,7 +6,7 @@ import { SvgLoading } from "./SvgLoading";
 
 const FormActions = ({ onPublish, isPending }: FormActionProps) => {
   return (
-    <div className="w-full sticky bottom-0 z-10 dotted-up mt-auto bg-white p-4">
+    <div className="w-full sticky bottom-0 z-10  mt-auto bg-[#fafafa] p-4">
       <div className="flex w-full justify-end">
         <Button onClick={onPublish} type="submit" disabled={isPending}>
           {isPending && <SvgLoading />}

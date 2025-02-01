@@ -21,17 +21,20 @@ interface SingleFormOptionsProps {
 export function SingleFormOptions({ id }: SingleFormOptionsProps) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const { mutate: deleteEvent, isPending, isSuccess } = useDeleteForm(id);
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
       deleteEvent();
-     
     } catch (err) {
       console.log(err);
     }
   };
-  if(isSuccess){
-    toast.success("Form deleted!")
-  }
+  React.useEffect(() => {
+    if (isSuccess) {
+      setIsModalOpen(false);
+      toast.success("Form deleted!");
+    }
+  }, [isSuccess]);
+
   return (
     <>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -39,13 +42,19 @@ export function SingleFormOptions({ id }: SingleFormOptionsProps) {
         <p className="text-muted-foreground mt-1 font-[500] text-[14px]">
           Are you sure you want to delete this form? This would delete all data
           related to this form.
+          {isModalOpen ? "true" : "false"}
         </p>
         <div className="mt-4 flex gap-3 justify-end">
           <Button onClick={() => setIsModalOpen(false)} variant={"outline"}>
             Cancel
           </Button>
-          <Button onClick={handleDelete} disabled={isPending} variant={"destructive"}>
-            {isPending && <SvgLoading />}Delete form
+          <Button
+            onClick={handleDelete}
+            disabled={isPending}
+            variant={"destructive"}
+          >
+            {isPending && <SvgLoading />}
+            <span className="mt-[3px]">Delete form</span>
           </Button>
         </div>
       </Modal>

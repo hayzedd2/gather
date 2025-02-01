@@ -24,7 +24,7 @@ const FormBuilder = () => {
       }
     });
   };
-  const { mutate, isPending } = useCreateform();
+  const { mutate, isPending, isSuccess } = useCreateform();
   const onPublishForm = () => {
     validateAllFields();
     if (fields.length == 0) {
@@ -46,11 +46,14 @@ const FormBuilder = () => {
     console.log(payLoad);
     try {
       mutate(payLoad);
-      resetFields();
+
     } catch (err) {
       console.log(err);
     }
   };
+  React.useEffect(()=>{
+    resetFields();
+  },[isSuccess])
   return (
     <div className="flex min-h-screen">
       <div className="w-full  flex  flex-col  flex-1 bg-[#fafafa] relative">

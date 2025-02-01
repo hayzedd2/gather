@@ -28,10 +28,10 @@ const FormControlTab = ({ view, setView }: ViewProps) => {
   ];
 
   return (
-    <div className="p-4 z-10 dotted-down w-full sticky top-0 bg-white dotted flex items-center justify-center">
+    <div className="p-4 z-10  w-full sticky top-0 bg-[#fafafa]  flex items-center justify-center">
       <div
         ref={divRef}
-        className="p-[6px] rounded-md gap-3  flex bg-[#fafafa] relative"
+        className="p-[6px] rounded-lg gap-3  flex bg-white relative"
       >
         <div
           className="absolute top-[6px] bottom-[6px] transition-all duration-300 ease-in-out r rounded-md bg-white light-shadow"

@@ -17,6 +17,7 @@ import {
   CircleHelp,
   ChartCandlestick,
   LayoutDashboard,
+  NotepadTextDashed,
 } from "lucide-react";
 import { SidebarLinksT, UserObject } from "@/types/type";
 import { UserMenu } from "./UserMenu";
@@ -51,6 +52,11 @@ const links: SidebarLinksT[] = [
     icon: <Settings size={16} />,
     label: "Settings",
     href: "/settings",
+  },
+  {
+    icon: <NotepadTextDashed size={16} />,
+    label: "Templates",
+    href: "/templates",
   },
   {
     icon: <CircleHelp size={16} />,

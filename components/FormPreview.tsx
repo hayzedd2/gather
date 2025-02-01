@@ -77,7 +77,7 @@ const FormPreview = () => {
 
       case "checkbox-group":
         return (
-          <div className="space-y-2">
+          <div className="space-y-2 ">
             {field.options.map((option) => (
               <div key={option.value} className="flex items-center space-x-3">
                 <Checkbox id={`${field.id}-${option.value}`} />
@@ -130,7 +130,7 @@ const FormPreview = () => {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto space-y-3 bg-white p-4 rounded-lg my-5">
+      <div className="max-w-2xl mx-auto space-y-3 bg-white p-5 rounded-lg my-5">
         <div className="form-header flex flex-col mb-6">
           <h3 className="text-[1.7rem] font-[600]">{settingsFields.title}</h3>
           <h5 className="text-muted-foreground  text-[14px] mt-[-3px]">

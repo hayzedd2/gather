@@ -62,8 +62,6 @@ const OptionsEditor = ({
         {field.options.map((option, index) => (
           <motion.div
             key={option.value}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2"
           >
             <GripVertical size={16} className="text-gray-400" />
@@ -211,19 +209,21 @@ const ConfigPanel = () => {
                 <div className="icon-holder bg-[#FcFcFc] text-[#464646] rounded-sm p-[6px]">
                   <GetIconType type={field.type as FieldType} />
                 </div>
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                <p
                   className="text-[13px] font-[500] mt-[4px]"
                 >
                   {field.label || "Untitled Field"}
-                </motion.p>
+                </p>
               </div>
 
               {selectedField === field.id && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration:0.35,
+                    ease:"easeInOut"
+                  }}
                   className="flex gap-3 items-center"
                 >
                   <p className="text-[13px] font-[500]">Required</p>
@@ -238,10 +238,7 @@ const ConfigPanel = () => {
             </div>
 
             {selectedField === field.id && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
+              <div
                 className="mt-4"
               >
                 <div className="rounded-lg bg-[#FcFcFc] space-y-4 px-4 py-5">
@@ -305,7 +302,7 @@ const ConfigPanel = () => {
                     Done
                   </Button>
                 </div>
-              </motion.div>
+              </div>
             )}
           </div>
         ))}

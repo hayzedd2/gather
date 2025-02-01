@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FormResponseProps } from "@/types/type";
 export const useGetSingleForm = (id: string) => {
   return useQuery<FormResponseProps>({
-    queryKey: ["myforms", id],
+    queryKey: ["form", id],
     queryFn: async () => {
       const res = await fetch(`/api/forms/${id}`);
       if (!res.ok) {
