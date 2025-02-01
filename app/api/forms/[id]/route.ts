@@ -29,9 +29,33 @@ export async function GET(
         },
       },
     });
-    console.log(form)
     return Response.json(form, { status: 200 });
   } catch (error: any) {
+    return Response.json({ message: "Something went wrong" }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const sessions = await auth.api.getSession({ headers: await headers() });
+    if (!sessions) {
+      return Response.json({ message: "Unauthorized" }, { status: 401 });
+    }
+    const id = (await params).id;
+    if (!id) {
+      return Response.json({ message: "Form ID is required" }, { status: 400 });
+    }
+    await prismaDb.form.delete({
+      where: {
+        userId: sessions.user.id,
+        id,
+      },
+    });
+    return Response.json({ status: 200 });
+  } catch (err) {
     return Response.json({ message: "Something went wrong" }, { status: 500 });
   }
 }

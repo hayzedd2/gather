@@ -79,10 +79,10 @@ const FormPreview = () => {
         return (
           <div className="space-y-2">
             {field.options.map((option) => (
-              <div key={option.value} className="flex items-center space-x-2">
+              <div key={option.value} className="flex items-center space-x-3">
                 <Checkbox id={`${field.id}-${option.value}`} />
                 <Label
-                  className="mt-[3px]"
+                  className="mt-[4px]"
                   htmlFor={`${field.id}-${option.value}`}
                 >
                   {option.label}

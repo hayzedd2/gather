@@ -55,7 +55,7 @@ const FormBuilder = () => {
     <div className="flex min-h-screen">
       <div className="w-full  flex  flex-col  flex-1 bg-[#fafafa] relative">
         <FormControlTab view={view} setView={setView} />
-        <div className="max-w-2xl p-6 mx-auto w-full ">
+        <div className="max-w-[40rem] p-6 mx-auto w-full ">
           {view == "configure" && <ConfigPanel />}
           {view == "preview" && <FormPreview />}
           {view == "settings" && <FormSettingsForm />}
