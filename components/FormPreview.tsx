@@ -141,7 +141,7 @@ const FormPreview = () => {
           {fields.map((field) => (
             <div key={field.id} className="space-y-2">
               <Label htmlFor={field.id}>
-                {field.label}
+              {field.label || "Untitled Field"}
                 {field.required && (
                   <span className="text-destructive ml-1">*</span>
                 )}
