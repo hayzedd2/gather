@@ -79,6 +79,15 @@ export type FormField =
   | RadioGroupField
   | TextareaField;
 
+export type FormFieldT =
+  | TextField
+  | NumberField
+  | EmailField
+  | SelectField
+  | CheckboxGroupField
+  | RadioGroupField
+  | TextareaField;
+
 export type FieldType = FormField["type"];
 
 export interface FormBuilderState {
@@ -151,3 +160,4 @@ export interface GetFormSubmissionProps {
   formConfig: FormField[];
   _count: Record<"submissions", number>;
 }
+
