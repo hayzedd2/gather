@@ -33,7 +33,7 @@ export interface EmailField extends BaseField {
 
 export interface SelectField extends BaseField {
   type: "select";
-  placeholder: string;
+  placeholder?: string;
   options: Array<{
     label: string;
     value: string;

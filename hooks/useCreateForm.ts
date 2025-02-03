@@ -21,10 +21,11 @@ export const useCreateform = () => {
       }
       return response.json();
     },
-    onSuccess: async () => {
+    onSuccess: async (data) => {
+      console.log("Success data", data);
       toast.success("Your form was published sucessfully:)");
-      router.push('/forms')
-    //   invalidate forms query
+      router.push(`/forms/${data.id}/submissions`);
+      //   invalidate forms query
     },
     onError(error) {
       toast.error(error.message);
