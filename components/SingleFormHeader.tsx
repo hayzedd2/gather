@@ -31,24 +31,20 @@ const SingleFormHeader = ({ form }: FormResponseProps) => {
             <p className="text-muted-foreground text-[15px] font-[500]">
               {form._count.submissions} submissions
             </p>
-            <p className="text-muted-foreground text-[15px] font-[500]">
-              0 views
-            </p>
+
             <p className="text-muted-foreground text-[15px] font-[500]">
               {getRelativeTime(form.updatedAt.toDateString())}
             </p>
           </div>
-         
         </div>
-       <div className="flex flex-col gap-1">
-       <SharedLink link={generateShareableLink(form.id)} />
-       <div className="flex gap-3 items-center justify-end ">
-          <Link href={generateShareableLink(form.id)}>
-            <Button variant={"outline"}>View</Button>
-          </Link>
-          <Button>Edit form</Button>
+        <div className="flex flex-col gap-1">
+          <SharedLink link={generateShareableLink(form.id)} />
+          <div className="flex gap-3 items-center justify-end ">
+            <Link href={generateShareableLink(form.id)}>
+              <Button variant={"outline"}>Edit form</Button>
+            </Link>
+          </div>
         </div>
-       </div>
       </div>
       <SingleFormOptionsTab id={form.id} />
     </div>

@@ -39,24 +39,29 @@ export const GET = async (
       return Response.json({ message: "Form not found" }, { status: 404 });
     }
     const submissionsCount = formDetails._count.submissions;
-    const formLabels = (formDetails.formConfig as unknown as FormFieldT[]).map(
+    const labels = (formDetails.formConfig as unknown as FormFieldT[]).map(
       (field) => field.label
     );
     const submissions = formDetails.submissions.map((submission: any) => {
       const submissionData: Record<string, string | string[]> = {};
       (formDetails.formConfig as unknown as FormFieldT[]).forEach((field) => {
-        submissionData[field.label] = submission.data[field.id] || "";
-        if("options" in field){
-          console.log(field.options)
+        const fieldValue = submission.data[field.id];
+        if ("options" in field) {
+          const option = field.options.find(
+            (option) => option.value === fieldValue
+          );
+          submissionData[field.label] = option ? option.label : fieldValue;
+        } else {
+          submissionData[field.label] = fieldValue;
         }
       });
-      
+
       return {
         ...submissionData,
       };
     });
     const returnedPayload = {
-      labels: formLabels,
+      labels,
       submissionsCount,
       submissions,
     };

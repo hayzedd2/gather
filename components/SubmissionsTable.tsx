@@ -11,51 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetSingleFormSubmissions } from "@/hooks/useGetSingleFormSubmissions";
-
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { Button } from "./ui/button";
 
 export function SubmissionsTable({ id }: { id: string }) {
   const { data: submissions, isPending } = useGetSingleFormSubmissions(id);
@@ -66,36 +22,31 @@ export function SubmissionsTable({ id }: { id: string }) {
     return <div>Empty submissions</div>;
   }
   return (
-    <div className="mt-2">
+    <div className="mt-1">
+      <div className="flex w-full gap-2 mb-2 justify-end  items-end">
+        <Button variant={"outline"}>Download csv</Button>
+        <Button>Download json</Button>
+      </div>
       <Table>
         <TableCaption>
-          You have submissions
+          You have {submissions.submissionsCount} responses
         </TableCaption>
         <TableHeader>
-          {/* <TableRow>
-            {submissions.formConfig.map((f, i) => {
-              return <TableHead key={i}>{f.label}</TableHead>;
+          <TableRow>
+            {submissions.labels.map((label, i) => {
+              return <TableHead key={i}>{label}</TableHead>;
             })}
-          </TableRow> */}
+          </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">
-                {invoice.totalAmount}
-              </TableCell>
+          {submissions.submissions.map((submission, i) => (
+            <TableRow key={i}>
+              {submissions.labels.map((label, j) => (
+                <TableCell key={j}>{submission[label] || ""}</TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
     </div>
   );

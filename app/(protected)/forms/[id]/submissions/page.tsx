@@ -7,7 +7,7 @@ export default async function Page({
 }) {
   const id = (await params).id;
   return (
-    <div>
+    <div> 
       <SubmissionsTable id={id} />
     </div>
   );
