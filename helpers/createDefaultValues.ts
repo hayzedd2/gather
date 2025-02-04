@@ -1,6 +1,6 @@
 import { FieldType } from "@/types/type";
 
-export const createDefaultValues = (type: FieldType)=> {
+export const createDefaultValues = (type: FieldType) => {
   const baseField = {
     required: false,
     description: "",
@@ -11,9 +11,7 @@ export const createDefaultValues = (type: FieldType)=> {
     case "radio-group":
       return {
         ...baseField,
-        options: [
-          { label: "Option 1", value: "option-1" },
-        ],
+        options: [{ label: "new option", value: crypto.randomUUID() }],
       };
 
     case "text":
