@@ -72,6 +72,7 @@ export function generateZodSchema(config: FormField[]) {
         break;
 
       case "select":
+      case "radio-group":
         fieldSchema = z.string();
         if (field.required) {
           fieldSchema = (fieldSchema as ZodString).min(
@@ -90,18 +91,7 @@ export function generateZodSchema(config: FormField[]) {
               message: "You have to select at least one item.",
             });
         }
-        
-        break;
-      case "radio-group":
-        fieldSchema = z
-          .string()
-          .refine(
-            (value) =>
-              field.options.some(
-                (opt: Record<string, string>) => opt.value === value
-              ),
-            `Please select a valid ${field.label || "option"}`
-          );
+
         break;
 
       default:

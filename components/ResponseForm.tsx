@@ -1,7 +1,7 @@
 "use client";
 import { createFormDefaultValues } from "@/helpers/createFormdefaultValues";
 import { generateZodSchema } from "@/helpers/generateZodSchema";
-import { FormFieldT } from "@/types/type";
+import { FormFieldT, FormResponseProps, ResponseFormProps } from "@/types/type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -26,103 +26,47 @@ import {
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { useSendFormResponse } from "@/hooks/useSendFormResponse";
+import { SvgLoading } from "./SvgLoading";
 
-const config: FormFieldT[] = [
-  {
-    id: "4edc0dca-2ef5-4ef5-8839-0e5401eb5d16",
-    type: "text",
-    label: "Name",
-    required: false,
-    description: "Tell us your name",
-    placeholder: "john doe",
-  },
-  {
-    id: "1bcaf118-7033-440f-ab1d-7e9633b83c8f",
-    type: "email",
-    label: "Email",
-    required: false,
-    description: "",
-    placeholder: "johndoe@mail.com",
-  },
-  {
-    id: "random-ends",
-    type: "textarea",
-    label: "Description",
-    required: true,
-    description: "Tell us about yourself",
-    placeholder: "",
-  },
-  {
-    id: "random-ends1",
-    type: "number",
-    label: "Age",
-    required: true,
-    description: "Tell us your age",
-    placeholder: "",
-  },
-  {
-    id: "6725c6d9-befc-4b95-8853-4c576bc2ba41",
-    type: "select",
-    label: "Service type",
-    options: [
-      {
-        label: "Haircut",
-        value: "option-1",
-      },
-      {
-        label: "Massage",
-        value: "option-c77c6096-6b13-42ed-86bb-4e9b4f80f60e",
-      },
-    ],
-    required: true,
-    description: "",
-  },
-  {
-    id: "hello",
-    type: "checkbox-group",
-    label: "Pick fruits",
-    description: "Select the fruits you will like us to add.",
-    options: [
-      {
-        label: "Pawpaw",
-        value: "pawpaw",
-      },
-      {
-        label: "Pineapple",
-        value: "pineapple",
-      },
-    ],
-    required: true,
-  },
-];
-const ResponseForm = () => {
-  const generatedSchema = generateZodSchema(config);
-  const defaultValues = createFormDefaultValues(config);
+const ResponseForm = ({
+  id,
+  buttonText,
+  title,
+  description,
+  formConfig,
+}: ResponseFormProps) => {
+  const generatedSchema = generateZodSchema(formConfig);
+  const defaultValues = createFormDefaultValues(formConfig);
+
   const form = useForm<z.infer<typeof generatedSchema>>({
     resolver: zodResolver(generatedSchema),
     defaultValues,
   });
-  const loading = false;
+
+  const { mutate, isPending: loading } = useSendFormResponse(id);
+
   const handleSubmit = (data: z.infer<typeof generatedSchema>) => {
-    console.log(generatedSchema.shape);
     const isValid = generatedSchema.safeParse(data);
     if (!isValid.success) {
       console.log(isValid.error.message);
     }
-    console.log("Data sent", data);
-    console.log(data);
+    try {
+      mutate(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div className="max-w-xl mx-auto w-full py-10">
       <div className="flex flex-col  mb-10">
-        <h4 className="text-[1.6rem] font-[600] ">Complaint form</h4>
-        <h6 className="font-[500] text-regular text-[1.1rem]">
-          Tell us about your complaint
-        </h6>
+        <h4 className="text-[1.6rem] font-[600] ">{title}</h4>
+        <h6 className="font-[500] text-regular text-[1.1rem]">{description}</h6>
       </div>
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
-          {config.map((c) => {
+          {formConfig.map((c) => {
             return (
               <div key={c.id}>
                 {["text", "number", "email"].includes(c.type) && (
@@ -188,6 +132,9 @@ const ResponseForm = () => {
                             })}
                           </SelectContent>
                         </Select>
+                        <FormDescription>
+                          {c.description && c.description}
+                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -281,11 +228,55 @@ const ResponseForm = () => {
                     )}
                   />
                 )}
+                {c.type == "radio-group" && (
+                  <FormField
+                    control={form.control}
+                    name={c.id}
+                    render={({ field }) => (
+                      <FormItem className="space-y-3">
+                        <FormLabel>
+                          {c.label}
+                          {c.required && "*"}
+                        </FormLabel>
+                        <FormControl>
+                          <RadioGroup
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            className="flex flex-col space-y-1"
+                          >
+                            {c.options.map((o, i) => {
+                              return (
+                                <FormItem
+                                  key={i}
+                                  className="flex items-center space-x-3 space-y-0"
+                                >
+                                  <FormControl>
+                                    <RadioGroupItem value={o.value} />
+                                  </FormControl>
+                                  <FormLabel className="font-normal pt-[3px]">
+                                    {o.label}
+                                  </FormLabel>
+                                </FormItem>
+                              );
+                            })}
+                          </RadioGroup>
+                        </FormControl>
+                        <FormDescription>
+                          {c.description && c.description}
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
               </div>
             );
           })}
           <div className="w-full justify-end flex">
-            <Button type="submit" >Submit</Button>
+            <Button type="submit" disabled={loading}>
+              {loading && <SvgLoading />}
+              <p className="mt-[0.2rem]">{buttonText}</p>
+            </Button>
           </div>
         </form>
       </Form>
@@ -305,7 +296,10 @@ const About = () => {
           form
         </p>
         <p className="text-regular text-[14px] font-[500]">
-          This form is powered by <a href="" className="underline underline-offset-2">Gather</a>
+          This form is powered by{" "}
+          <a href="" className="underline underline-offset-2">
+            Gather
+          </a>
         </p>
       </div>
     </div>

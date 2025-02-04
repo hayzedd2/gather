@@ -74,7 +74,7 @@ model Form {
   user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   title         String @unique
   description   String
-  buttonText    String?
+  buttonText    String
   formConfig    Json
   submissions   Submission[]
   createdAt     DateTime     @default(now())

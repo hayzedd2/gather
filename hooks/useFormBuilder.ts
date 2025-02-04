@@ -3,12 +3,9 @@ import { FormBuilderState, FormField } from "@/types/type";
 import { createDefaultValues } from "@/helpers/createDefaultValues";
 
 export const useFormBuilder = create<FormBuilderState>((set) => ({
-  fields: [],
-  
+  fields: [], 
   resetFields: () => set({ fields: [] }),
-  
   setFields: (newFields) => set({ fields: newFields }),
-
   addField: (field) => set((state) => {
     const defaultValues = createDefaultValues(field.type);
     const newField: FormField = {

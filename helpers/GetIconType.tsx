@@ -31,9 +31,9 @@ const GetIconType = ({ type, size }: IconTypeProps) => {
     case "textarea":
       return <WrapText size={size ? size : 18} className="icon-purple" />;
     case "checkbox-group":
-      return <CircleCheckBig size={size ? size : 18} className="icon-cyan" />;
-    case "radio-group":
       return <SquareCheck size={size ? size : 18} className="icon-pink" />;
+    case "radio-group":
+      return <CircleCheckBig size={size ? size : 18} className="icon-cyan" />;
     default:
       return <FileType size={18} />;
   }

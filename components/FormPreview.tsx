@@ -16,6 +16,7 @@ import { FormField } from "@/types/type";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { FormDescription, FormLabel } from "./ui/form";
 
 const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);
@@ -36,59 +37,50 @@ const FormPreview = () => {
             {...commonProps}
             type={field.type}
             placeholder={field.placeholder}
-            min={field.type === "number" ? field.validation?.min : undefined}
-            max={field.type === "number" ? field.validation?.max : undefined}
-            minLength={
-              field.type === "text" ? field.validation?.minLength : undefined
-            }
-            maxLength={
-              field.type === "text" ? field.validation?.maxLength : undefined
-            }
           />
         );
 
       case "textarea":
-        return (
-          <Textarea
-            {...commonProps}
-            placeholder={field.placeholder}
-            minLength={field.validation?.minLength}
-            maxLength={field.validation?.maxLength}
-          />
-        );
+        return <Textarea {...commonProps} placeholder={field.placeholder} />;
 
       case "select":
         return (
-          <Select>
-            <SelectTrigger>
-              <SelectValue
-                placeholder={field.placeholder || "Select an option"}
-              />
-            </SelectTrigger>
-            <SelectContent>
-              {field.options.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div>
+            {/* <FormLabel>{field.label}</FormLabel> */}
+            <Select>
+              <SelectTrigger>
+                <SelectValue
+                  placeholder={field.placeholder || "Select an option"}
+                />
+              </SelectTrigger>
+              <SelectContent>
+                {field.options.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {/* <FormDescription>{field.description}</FormDescription> */}
+          </div>
         );
 
       case "checkbox-group":
         return (
           <div className="space-y-2 ">
+            {/* <FormLabel>{field.id}</FormLabel> */}
             {field.options.map((option) => (
               <div key={option.value} className="flex items-center space-x-3">
                 <Checkbox id={`${field.id}-${option.value}`} />
                 <Label
-                  className="mt-[4px]"
+                  className="font-normal pt-[3px]"
                   htmlFor={`${field.id}-${option.value}`}
                 >
                   {option.label}
                 </Label>
               </div>
             ))}
+            {/* <FormDescription>{field.description}</FormDescription> */}
           </div>
         );
 
@@ -137,18 +129,16 @@ const FormPreview = () => {
             {settingsFields.description}
           </h5>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="space-y-4">
           {fields.map((field) => (
             <div key={field.id} className="space-y-2">
               <Label htmlFor={field.id}>
-              {field.label || "Untitled Field"}
+                {field.label || "Untitled Field"}
                 {field.required && (
                   <span className="text-destructive ml-1">*</span>
                 )}
               </Label>
-
               {renderField(field)}
-
               {field.description && (
                 <p className="text-[0.8rem] text-muted-foreground">
                   {field.description}
@@ -157,7 +147,6 @@ const FormPreview = () => {
             </div>
           ))}
         </div>
-
         <div className="w-full justify-end flex">
           <Button>
             {!settingsFields.buttonCtaText

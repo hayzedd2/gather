@@ -32,6 +32,7 @@ export interface EmailField extends BaseField {
 }
 
 export interface SelectField extends BaseField {
+  label: string;
   type: "select";
   placeholder?: string;
   options: Array<{
@@ -161,3 +162,10 @@ export interface GetFormSubmissionProps {
   _count: Record<"submissions", number>;
 }
 
+export interface ResponseFormProps {
+  id: string;
+  description: string;
+  title: string;
+  buttonText: string;
+  formConfig: FormField[];
+}

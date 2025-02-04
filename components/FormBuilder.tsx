@@ -42,7 +42,6 @@ const FormBuilder = () => {
       fields,
       ...validData.data,
     };
-    // send fields and form settings to db
     console.log(payLoad);
     try {
       mutate(payLoad);
