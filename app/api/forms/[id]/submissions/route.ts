@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { prismaDb } from "@/lib/db";
+import { FormFieldT } from "@/types/type";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
@@ -17,10 +18,16 @@ export const GET = async (
       return Response.json({ message: "Form ID is required" }, { status: 400 });
     }
 
-    const getFormSubmissions = await prismaDb.form.findUnique({
+    const formDetails = await prismaDb.form.findUnique({
       where: { userId: sessions.user.id, id },
       select: {
         formConfig: true,
+        submissions: {
+          select: {
+            data: true,
+            createdAt: true,
+          },
+        },
         _count: {
           select: {
             submissions: true,
@@ -28,7 +35,33 @@ export const GET = async (
         },
       },
     });
-    return Response.json(getFormSubmissions, { status: 200 });
+    if (!formDetails) {
+      return Response.json({ message: "Form not found" }, { status: 404 });
+    }
+    const submissionsCount = formDetails._count.submissions;
+    const formLabels = (formDetails.formConfig as unknown as FormFieldT[]).map(
+      (field) => field.label
+    );
+    const submissions = formDetails.submissions.map((submission: any) => {
+      const submissionData: Record<string, string | string[]> = {};
+      (formDetails.formConfig as unknown as FormFieldT[]).forEach((field) => {
+        submissionData[field.label] = submission.data[field.id] || "";
+        if("options" in field){
+          console.log(field.options)
+        }
+      });
+      
+      return {
+        ...submissionData,
+      };
+    });
+    const returnedPayload = {
+      labels: formLabels,
+      submissionsCount,
+      submissions,
+    };
+    console.log(returnedPayload);
+    return Response.json(returnedPayload, { status: 200 });
   } catch (err) {
     console.log(err);
     return Response.json({ message: "Something went wrong" }, { status: 500 });
@@ -52,7 +85,7 @@ export const POST = async (
         data: reqBody,
       },
     });
-    console.log(data)
+    console.log(data);
     return Response.json(
       { message: "succesfully submitted form" },
       { status: 200 }

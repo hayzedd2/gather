@@ -158,8 +158,11 @@ export interface FormResponseProps {
 }
 
 export interface GetFormSubmissionProps {
-  formConfig: FormField[];
-  _count: Record<"submissions", number>;
+  labels: string[];
+  submissionsCount: number;
+  submissions: {
+    [x: string]: string | string[];
+  }[];
 }
 
 export interface ResponseFormProps {

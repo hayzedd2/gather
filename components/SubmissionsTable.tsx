@@ -69,14 +69,14 @@ export function SubmissionsTable({ id }: { id: string }) {
     <div className="mt-2">
       <Table>
         <TableCaption>
-          You have {submissions._count.submissions} submissions
+          You have submissions
         </TableCaption>
         <TableHeader>
-          <TableRow>
+          {/* <TableRow>
             {submissions.formConfig.map((f, i) => {
               return <TableHead key={i}>{f.label}</TableHead>;
             })}
-          </TableRow>
+          </TableRow> */}
         </TableHeader>
         <TableBody>
           {invoices.map((invoice) => (

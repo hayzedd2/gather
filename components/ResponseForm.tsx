@@ -1,7 +1,7 @@
 "use client";
 import { createFormDefaultValues } from "@/helpers/createFormdefaultValues";
 import { generateZodSchema } from "@/helpers/generateZodSchema";
-import { FormFieldT, FormResponseProps, ResponseFormProps } from "@/types/type";
+import { ResponseFormProps } from "@/types/type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -29,6 +29,7 @@ import { Button } from "./ui/button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { useSendFormResponse } from "@/hooks/useSendFormResponse";
 import { SvgLoading } from "./SvgLoading";
+import { toast } from "sonner";
 
 const ResponseForm = ({
   id,
@@ -55,6 +56,7 @@ const ResponseForm = ({
     try {
       mutate(data);
     } catch (err) {
+      toast.error("Something went wrong");
       console.log(err);
     }
   };
@@ -289,7 +291,7 @@ export default ResponseForm;
 
 const About = () => {
   return (
-    <div className="w-full items-center justify-center ">
+    <div className="w-full mt-4 items-center justify-center ">
       <div className="max-w-[300px] mx-auto flex gap-1 flex-col text-center my-5">
         <p className="text-muted-foreground text-[14px] font-[500]">
           *Never submit passwords or credit card related information throuh this

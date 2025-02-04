@@ -16,7 +16,7 @@ const OptionsEditor = ({
   const addOption = () => {
     const newOption = {
       label: `Option ${field.options.length + 1}`,
-      value: `option-${crypto.randomUUID()}`,
+      value: `option-${field.options.length + 1}`,
     };
     updateField(field.id, { options: [...field.options, newOption] });
   };
@@ -25,6 +25,10 @@ const OptionsEditor = ({
     const newOptions = field.options.map((opt, i) =>
       i === index ? { ...opt, label } : opt
     );
+    if(field.options.some((o)=> o.value == label)){
+        alert("NOOO")
+        return
+    }
     updateField(field.id, { options: newOptions });
   };
 
