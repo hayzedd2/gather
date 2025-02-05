@@ -4,16 +4,16 @@ import { getCountryData, TCountryCode } from "countries-list";
 
 const CountryAnalytics = () => {
   return (
-    <div className="px-1 py-2 flex flex-col gap-1 rounded-md border max-w-[300px]">
+    <div className="px-1 py-2 flex flex-col gap-1 rounded-md border max-w-[250px]">
       <div className="header dotted-down py-2 px-2 flex justify-between items-center">
         <h6 className="text-[0.9rem] text-regular font-[500]">Countries</h6>
         <h5 className="text-[0.9rem] text-subtle font-[500]">Visitors</h5>
       </div>
       <div className="mt-2">
-        <SingleCountry countryCode="NG" countryPercentage={46} />
-        <SingleCountry countryCode="US" countryPercentage={24} />
-        <SingleCountry countryCode="AR" countryPercentage={16} />
-        <SingleCountry countryCode="AL" countryPercentage={4} />
+        <SingleCountry countryCode="NG" count={4} />
+        <SingleCountry countryCode="US" count={2} />
+        <SingleCountry countryCode="AR" count={3} />
+        <SingleCountry countryCode="AL" count={1} />
       </div>
     </div>
   );
@@ -23,13 +23,13 @@ export default CountryAnalytics;
 
 interface SingleCountryProps {
   countryCode: string;
-  countryPercentage: number;
+  count: number;
 }
-const SingleCountry = ({
-  countryCode,
-  countryPercentage,
-}: SingleCountryProps) => {
+const SingleCountry = ({ countryCode, count }: SingleCountryProps) => {
   const countryName = getCountryData(countryCode as TCountryCode);
+  const calcPercentage = (count: number, totalSubmissions: number) => {
+    return Math.floor((count / totalSubmissions) * 100);
+  };
   return (
     <div className="flex items-center hover:bg-[#fafafa] py-1 px-2 rounded-md justify-between">
       <div className="flex gap-2">
@@ -44,8 +44,8 @@ const SingleCountry = ({
           {countryName.name}
         </p>
       </div>
-      <p className="text-[0.875rem]  font-[500] text-muted-foreground ">
-        {countryPercentage}%
+      <p className="text-[0.875rem]  font-[500] ">
+        {calcPercentage(count, 11)}%
       </p>
     </div>
   );

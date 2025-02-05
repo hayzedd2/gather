@@ -180,5 +180,5 @@ export interface CountryAnalyticsDataProps {
 
 export interface DailySubmissionsAnalyticsDataProps {
   date: string;
-  count: 1;
+  count: number;
 }
