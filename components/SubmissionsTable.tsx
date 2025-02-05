@@ -42,7 +42,11 @@ export function SubmissionsTable({ id }: { id: string }) {
           {submissions.submissions.map((submission, i) => (
             <TableRow key={i}>
               {submissions.labels.map((label, j) => (
-                <TableCell key={j}>{submission[label] || ""}</TableCell>
+                <TableCell key={j}>
+                  {Array.isArray(submission[label])
+                    ? submission[label].join(",")
+                    : submission[label] || ""}
+                </TableCell>
               ))}
             </TableRow>
           ))}

@@ -13,13 +13,14 @@ const tabOptions = [
     label: "Submissions",
   },
   {
-    href: "/integrations",
-    label: "Integrations",
-  },
-  {
     href: "/analytics",
     label: "Analytics",
   },
+  {
+    href: "/integrations",
+    label: "Integrations",
+  },
+
   {
     href: "/settings",
     label: "Settings",
