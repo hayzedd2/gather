@@ -172,3 +172,13 @@ export interface ResponseFormProps {
   buttonText: string;
   formConfig: FormField[];
 }
+
+export interface CountryAnalyticsDataProps {
+  country: string;
+  count: number;
+}
+
+export interface DailySubmissionsAnalyticsDataProps {
+  date: string;
+  count: 1;
+}

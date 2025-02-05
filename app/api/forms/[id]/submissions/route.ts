@@ -1,3 +1,4 @@
+import { updateAnalytics } from "@/data/analytics";
 import { auth } from "@/lib/auth";
 import { prismaDb } from "@/lib/db";
 import { FormFieldT } from "@/types/type";
@@ -65,7 +66,6 @@ export const GET = async (
       submissionsCount,
       submissions,
     };
-    console.log(returnedPayload);
     return Response.json(returnedPayload, { status: 200 });
   } catch (err) {
     console.log(err);
@@ -82,17 +82,23 @@ export const POST = async (
     if (!id) {
       return Response.json({ message: "Form ID is required" }, { status: 400 });
     }
-    const reqBody = await req.json();
-    console.log(reqBody);
-    const data = await prismaDb.submission.create({
-      data: {
-        formId: id,
-        data: reqBody,
-      },
+    const countryRes = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/ip`);
+    const { country = "Unknown" } = await countryRes.json();
+    await prismaDb.$transaction(async (tx) => {
+      const submission = await tx.submission.create({
+        data: {
+          formId: id,
+          data: await req.json(),
+          country,
+        },
+      });
+      console.log({ country });
+      await updateAnalytics(id, country);
+      return submission;
     });
-    console.log(data);
+
     return Response.json(
-      { message: "succesfully submitted form" },
+      { message: "Successfully submitted form" },
       { status: 200 }
     );
   } catch (error) {
