@@ -85,22 +85,20 @@ model Form {
 model Submission {
   id        String   @id @default(cuid())
   formId    String
-  data      Json
-  createdAt DateTime @default(now())
-  country   String?
   form      Form     @relation(fields: [formId], references: [id])
-
+  data      Json
+  country   String?
+  createdAt DateTime @default(now())
   @@index([formId])
 }
 
 model FormAnalytics {
-  id               String   @id
+  id               String   @id @default(cuid())
   formId           String   @unique
+  form             Form     @relation(fields: [formId], references: [id])
   totalSubmissions Int      @default(0)
+  countryData      Json
   dailySubmissions Json
-  countryCounts    Json
-  lastUpdated      DateTime
-  Form             Form     @relation(fields: [formId], references: [id])
-
+  lastUpdated      DateTime @updatedAt
   @@index([formId])
 }

@@ -48,10 +48,16 @@ export const GET = async (
       (formDetails.formConfig as unknown as FormFieldT[]).forEach((field) => {
         const fieldValue = submission.data[field.id];
         if ("options" in field) {
-          const option = field.options.find(
-            (option) => option.value === fieldValue
-          );
-          submissionData[field.label] = option ? option.label : fieldValue;
+          if (field.type === "checkbox-group") {
+            const selectedOptions = (fieldValue || []).map((value: string) => {
+              const option = field.options.find((option) => option.value === value);
+              return option ? option.label : value;
+            });
+            submissionData[field.label] = selectedOptions.length > 0 ? selectedOptions : [];
+          } else {
+            const option = field.options.find((option) => option.value === fieldValue);
+            submissionData[field.label] = option ? option.label : fieldValue;
+          }
         } else {
           submissionData[field.label] = fieldValue;
         }
@@ -84,15 +90,16 @@ export const POST = async (
     }
     const countryRes = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/ip`);
     const { country = "Unknown" } = await countryRes.json();
+    const data = await req.json()
+
     await prismaDb.$transaction(async (tx) => {
       const submission = await tx.submission.create({
         data: {
           formId: id,
-          data: await req.json(),
+          data,
           country,
         },
       });
-      console.log({ country });
       await updateAnalytics(id, country);
       return submission;
     });

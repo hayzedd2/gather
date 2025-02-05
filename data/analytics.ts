@@ -12,13 +12,13 @@ export const updateAnalytics = async (formId: string, country: string) => {
       data: {
         formId,
         totalSubmissions: 1,
-        countryCounts: [{ country, count: 1 }],
+        countryData: [{ country, count: 1 }],
         dailySubmissions: [{ date: today, count: 1 }],
       },
     });
   }
 
-  const countryData = [...(currentAnalytics.countryCounts as any[])];
+  const countryData = [...(currentAnalytics.countryData as any[])];
   const countryIndex = countryData.findIndex((item) => item.country == country);
   if (countryIndex >= 0) {
     countryData[countryIndex].count += 1;
@@ -39,8 +39,9 @@ export const updateAnalytics = async (formId: string, country: string) => {
     },
     data: {
       totalSubmissions: currentAnalytics.totalSubmissions + 1,
-      countryCounts: countryData,
+      countryData,
       dailySubmissions,
     },
   });
 };
+
