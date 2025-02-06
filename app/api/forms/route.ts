@@ -1,4 +1,4 @@
-import { getFormByTitle } from "@/data/form";
+import { getFormByTitle } from "@/actions/form";
 import { auth } from "@/lib/auth";
 import { prismaDb } from "@/lib/db";
 import { headers } from "next/headers";
@@ -56,6 +56,7 @@ export const GET = async () => {
         title: true,
         description: true,
         buttonText: true,
+        viewCount:true,
         formConfig: true,
         _count: {
           select: {

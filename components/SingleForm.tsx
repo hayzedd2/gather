@@ -8,12 +8,14 @@ interface SingleFormProps {
   submissionsCount: number;
   id: string;
   updatedAt: string;
+  viewCount: number;
 }
 const SingleForm = ({
   title,
   submissionsCount,
   id,
   updatedAt,
+  viewCount,
 }: SingleFormProps) => {
   return (
     <div className="dotted-down  hover:bg-[#fafafa]  p-3">
@@ -26,8 +28,8 @@ const SingleForm = ({
             <p className="text-muted-foreground text-[13px] font-[500]">
               {submissionsCount} submissions
             </p>
-            <p className="text-muted-foreground text-[13px] font-[500]">
-              0 views
+            <p className="text-muted-foreground  text-[13px] font-[500]">
+              {viewCount} <span>{viewCount != 1 ? "views" : "view"}</span>
             </p>
             <p className="text-muted-foreground text-[13px] font-[500]">
               {getRelativeTime(updatedAt)}

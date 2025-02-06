@@ -15,6 +15,7 @@ type FormResponseProps = {
     _count: {
       submissions: number;
     };
+    viewCount: number;
   };
 };
 const SingleFormHeader = ({ form }: FormResponseProps) => {
@@ -30,6 +31,10 @@ const SingleFormHeader = ({ form }: FormResponseProps) => {
           <div className="flex gap-4">
             <p className="text-muted-foreground text-[15px] font-[500]">
               {form._count.submissions} submissions
+            </p>
+            <p className="text-muted-foreground text-[15px] font-[500]">
+              {form.viewCount}{" "}
+              <span>{form.viewCount != 1 ? "views" : "view"}</span>
             </p>
 
             <p className="text-muted-foreground text-[15px] font-[500]">

@@ -31,6 +31,7 @@ const SingleFormLayout = async ({
       id: true,
       title: true,
       updatedAt: true,
+      viewCount:true,
       _count: {
         select: {
           submissions: true,

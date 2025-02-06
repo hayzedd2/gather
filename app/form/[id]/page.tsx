@@ -1,3 +1,4 @@
+import { IncrementView } from "@/actions/view";
 import ResponseForm from "@/components/ResponseForm";
 import { prismaDb } from "@/lib/db";
 import { FormField } from "@/types/type";
@@ -5,18 +6,21 @@ import React from "react";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
-  const form = await prismaDb.form.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      buttonText: true,
-      formConfig: true,
-    },
-  });
+  const [form] = await Promise.all([
+    prismaDb.form.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        buttonText: true,
+        formConfig: true,
+      },
+    }),
+    IncrementView(id),
+  ]);
   if (!form) {
     return <p>Could not find form...</p>;
   }

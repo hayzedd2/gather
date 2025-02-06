@@ -66,14 +66,15 @@ export default function AnalyticsChart({
                   axisLine={false}
                   padding={{ left: 30, right: 30 }}
                   tickMargin={15}
-                  tickFormatter={(value) =>
-                    new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    })
-                  }
+                  tickFormatter={(value) => {
+                    const date = new Date(value);
+                    return new Intl.DateTimeFormat('en-US', {
+                      hour: 'numeric',
+                      hour12: true
+                    }).format(date).replace(/^0/, '');
+                  }}
                 />
-                <YAxis tickMargin={20} tickLine={false} axisLine={false} />
+                <YAxis tickCount={3}  tickMargin={20} tickLine={false} axisLine={false} />
                 <ChartTooltip
                   cursor={false}
                   content={<ChartTooltipContent />}

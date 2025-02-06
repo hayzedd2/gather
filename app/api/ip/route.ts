@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+
 
 export const GET = async () => {
   const token = process.env.IP_ACCESS_TOKEN;

@@ -46,6 +46,7 @@ const MyForms = () => {
           filteredForms.map((f) => (
             <SingleForm
               id={f.id}
+              viewCount={f.viewCount}
               key={f.id}
               submissionsCount={f._count.submissions}
               title={f.title}

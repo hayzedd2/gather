@@ -1,4 +1,4 @@
-import { updateAnalytics } from "@/data/analytics";
+import { updateAnalytics } from "@/actions/analytics";
 import { auth } from "@/lib/auth";
 import { prismaDb } from "@/lib/db";
 import { FormFieldT } from "@/types/type";

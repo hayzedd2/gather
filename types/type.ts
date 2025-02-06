@@ -147,13 +147,12 @@ export interface FormPayloadProps {
 
 export interface FormResponseProps {
   id: string;
-  createdAt: string;
   updatedAt: string;
-  userId: string;
   title: string;
   description: string;
-  buttonText: string | null;
+  buttonText: string;
   formConfig: [];
+  viewCount:number
   _count: Record<"submissions", number>;
 }
 
