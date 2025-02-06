@@ -27,7 +27,10 @@ const SingleFormLayout = async ({
       userId: sessions.user.id,
       id,
     },
-    include: {
+    select: {
+      id: true,
+      title: true,
+      updatedAt: true,
       _count: {
         select: {
           submissions: true,
@@ -35,12 +38,12 @@ const SingleFormLayout = async ({
       },
     },
   });
-  if(!form){
-    return <>Empty form!!! no childs</>
+  if (!form) {
+    return <>Empty form!!! no childs</>;
   }
   return (
     <div className="max-w-5xl mx-auto py-10">
-      <SingleFormHeader  form={form}  />
+      <SingleFormHeader form={form} />
       {children}
     </div>
   );

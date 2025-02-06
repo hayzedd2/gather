@@ -1,47 +1,52 @@
 import { prismaDb } from "@/lib/db";
 
 export const updateAnalytics = async (formId: string, country: string) => {
-  const today = new Date().toISOString().split("T")[0];
-  const currentAnalytics = await prismaDb.formAnalytics.findUnique({
-    where: {
-      formId,
-    },
-  });
-  if (!currentAnalytics) {
-    return await prismaDb.formAnalytics.create({
-      data: {
+  const today = new Date();
+
+  await prismaDb.$transaction(async (tx) => {
+    const formAnalytics = await tx.formAnalytics.upsert({
+      where: { formId },
+      update: {
+        totalSubmissions: { increment: 1 },
+      },
+      create: {
         formId,
         totalSubmissions: 1,
-        countryData: [{ country, count: 1 }],
-        dailySubmissions: [{ date: today, count: 1 }],
       },
     });
-  }
 
-  const countryData = [...(currentAnalytics.countryData as any[])];
-  const countryIndex = countryData.findIndex((item) => item.country == country);
-  if (countryIndex >= 0) {
-    countryData[countryIndex].count += 1;
-  } else {
-    countryData.push({ country, count: 1 });
-  }
+    await tx.countryData.upsert({
+      where: {
+        formAnalyticsId_country: {
+          formAnalyticsId: formAnalytics.id,
+          country,
+        },
+      },
+      update: {
+        count: { increment: 1 },
+      },
+      create: {
+        formAnalyticsId: formAnalytics.id,
+        country,
+        count: 1,
+      },
+    });
 
-  const dailySubmissions = [...(currentAnalytics.dailySubmissions as any[])];
-  const todayIndex = dailySubmissions.findIndex((item) => item.date == today);
-  if (todayIndex >= 0) {
-    dailySubmissions[todayIndex].count += 1;
-  } else {
-    dailySubmissions.push({ date: today, count: 1 });
-  }
-  return await prismaDb.formAnalytics.update({
-    where: {
-      formId,
-    },
-    data: {
-      totalSubmissions: currentAnalytics.totalSubmissions + 1,
-      countryData,
-      dailySubmissions,
-    },
+    await tx.dailySubmissions.upsert({
+      where: {
+        formAnalyticsId_date: {
+          formAnalyticsId: formAnalytics.id,
+          date: today,
+        },
+      },
+      update: {
+        count: { increment: 1 },
+      },
+      create: {
+        formAnalyticsId: formAnalytics.id,
+        date: today,
+        count: 1,
+      },
+    });
   });
 };
-

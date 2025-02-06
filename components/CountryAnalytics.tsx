@@ -1,19 +1,28 @@
 import Image from "next/image";
 import React from "react";
 import { getCountryData, TCountryCode } from "countries-list";
+import { CountryAnalyticsDataProps } from "@/types/type";
 
-const CountryAnalytics = () => {
+interface Props {
+  data: CountryAnalyticsDataProps[];
+  totalSubmissions: number;
+}
+const CountryAnalytics = ({ data, totalSubmissions }: Props) => {
   return (
-    <div className="px-1 py-2 flex flex-col gap-1 rounded-md border max-w-[250px]">
+    <div className="px-1 mt-4 py-2 flex flex-col gap-1 rounded-md border w-full">
       <div className="header dotted-down py-2 px-2 flex justify-between items-center">
         <h6 className="text-[0.9rem] text-regular font-[500]">Countries</h6>
         <h5 className="text-[0.9rem] text-subtle font-[500]">Visitors</h5>
       </div>
       <div className="mt-2">
-        <SingleCountry countryCode="NG" count={4} />
-        <SingleCountry countryCode="US" count={2} />
-        <SingleCountry countryCode="AR" count={3} />
-        <SingleCountry countryCode="AL" count={1} />
+        {data.map((d, i) => (
+          <SingleCountry
+            totalSubmissions={totalSubmissions}
+            key={i}
+            countryCode={d.country}
+            count={d.count}
+          />
+        ))}
       </div>
     </div>
   );
@@ -24,10 +33,15 @@ export default CountryAnalytics;
 interface SingleCountryProps {
   countryCode: string;
   count: number;
+  totalSubmissions: number;
 }
-const SingleCountry = ({ countryCode, count }: SingleCountryProps) => {
+const SingleCountry = ({
+  countryCode,
+  count,
+  totalSubmissions,
+}: SingleCountryProps) => {
   const countryName = getCountryData(countryCode as TCountryCode);
-  const calcPercentage = (count: number, totalSubmissions: number) => {
+  const calcPercentage = (count: number) => {
     return Math.floor((count / totalSubmissions) * 100);
   };
   return (
@@ -45,7 +59,7 @@ const SingleCountry = ({ countryCode, count }: SingleCountryProps) => {
         </p>
       </div>
       <p className="text-[0.875rem]  font-[500] ">
-        {calcPercentage(count, 11)}%
+        {calcPercentage(count)}%
       </p>
     </div>
   );

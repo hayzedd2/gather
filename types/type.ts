@@ -182,3 +182,18 @@ export interface DailySubmissionsAnalyticsDataProps {
   date: string;
   count: number;
 }
+
+export interface CountryDataProps {
+  count: number;
+  country: string;
+}
+
+export interface DailySubmissionsProps {
+  count: number;
+  date: string;
+}
+export interface SingleFormAnalyticsProps {
+  totalSubmissions: number;
+  countryData: CountryDataProps[];
+  dailySubmissions: DailySubmissionsProps[];
+}
