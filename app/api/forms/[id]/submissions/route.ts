@@ -28,6 +28,11 @@ export const GET = async (
             data: true,
             createdAt: true,
           },
+          take: 5,
+          skip: 0,
+          orderBy: {
+            createdAt: "desc",
+          },
         },
         _count: {
           select: {
