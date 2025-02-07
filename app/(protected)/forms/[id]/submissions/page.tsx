@@ -16,25 +16,24 @@ export default async function Page({
   const id = (await params).id;
   const sParams = await searchParams;
   const currentPage = Number(sParams?.page) || 1;
-  const limit = Number(sParams?.limit) || 10;
+  const limit = 10;
   const skip = (currentPage - 1) * limit;
-  const { error, totalPages, labels, submissionsCount, submissions } =
-    await getSubmissions({ skip, limit, id });
-  if (error) {
-    return <div>An error ocuured</div>;
+  const result = await getSubmissions({ skip, limit, id });
+  if (result.error) {
+    return <div>An error ocuured {result.error}</div>;
   }
 
-  if (!labels || !submissions || !submissionsCount || !totalPages) {
-    return <>Empty!!</>;
+  if (!result.submissions?.length) {
+    return <div className="text-gray-500">No submissions found</div>;
   }
   return (
     <div>
-      <SubmissionPagination totalPages={totalPages} />
+      <SubmissionPagination totalPages={result.totalPages} />
       <Suspense key={currentPage} fallback={<>Loading..</>}>
         <SubmissionsTable
-          labels={labels}
-          submissions={submissions}
-          submissionsCount={submissionsCount}
+          labels={result.labels}
+          submissions={result.submissions}
+          submissionsCount={result.submissionsCount}
         />
       </Suspense>
     </div>
