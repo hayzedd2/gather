@@ -195,4 +195,5 @@ export interface SingleFormAnalyticsProps {
   totalSubmissions: number;
   countryData: CountryDataProps[];
   dailySubmissions: DailySubmissionsProps[];
+  viewCount:number
 }

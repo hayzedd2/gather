@@ -27,6 +27,7 @@ export default function AnalyticsChart({
   totalSubmissions,
   countryData,
   dailySubmissions,
+  viewCount,
 }: SingleFormAnalyticsProps) {
   return (
     <div>
@@ -38,13 +39,15 @@ export default function AnalyticsChart({
           </div>
           <div className="flex py-3 min-w-[150px] px-5 flex-col dotted-right dotted">
             <h4 className="text-muted-foreground font-[500]">Views </h4>
-            <h3 className="text-[1.5rem] font-[600]">27</h3>
+            <h3 className="text-[1.5rem] font-[600]">{viewCount}</h3>
           </div>
           <div className="flex py-3 min-w-[150px] px-5 flex-col dotted-right dotted">
             <h4 className="text-muted-foreground font-[500]">
               Conversion rate
             </h4>
-            <h3 className="text-[1.5rem] text-regular font-[600]">56%</h3>
+            <h3 className="text-[1.5rem] text-regular font-[600]">
+              {Math.floor((totalSubmissions / viewCount) * 100)}%
+            </h3>
           </div>
         </div>
         <div className="h-[300px] w-full">
@@ -68,13 +71,20 @@ export default function AnalyticsChart({
                   tickMargin={15}
                   tickFormatter={(value) => {
                     const date = new Date(value);
-                    return new Intl.DateTimeFormat('en-US', {
-                      hour: 'numeric',
-                      hour12: true
-                    }).format(date).replace(/^0/, '');
+                    return new Intl.DateTimeFormat("en-US", {
+                      hour: "numeric",
+                      hour12: true,
+                    })
+                      .format(date)
+                      .replace(/^0/, "");
                   }}
                 />
-                <YAxis tickCount={3}  tickMargin={20} tickLine={false} axisLine={false} />
+                <YAxis
+                  tickCount={3}
+                  tickMargin={20}
+                  tickLine={false}
+                  axisLine={false}
+                />
                 <ChartTooltip
                   cursor={false}
                   content={<ChartTooltipContent />}

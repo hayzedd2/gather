@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
@@ -6,19 +7,17 @@ import SingleFormOptionsTab from "./SingleFormOptionsTab";
 import { getRelativeTime } from "@/helpers/getRelativeTime";
 import SharedLink from "./SharedLink";
 import { generateShareableLink } from "@/helpers/generateShareableLink";
+import { useGetSingleForm } from "@/hooks/useGetSingleForm";
+import SingleFormViewSkeleton from "./SingleFormViewSkeleton";
 
-type FormResponseProps = {
-  form: {
-    id: string;
-    title: string;
-    updatedAt: Date;
-    _count: {
-      submissions: number;
-    };
-    viewCount: number;
-  };
-};
-const SingleFormHeader = ({ form }: FormResponseProps) => {
+const SingleFormHeader = ({ id }: { id: string }) => {
+  const { data: form, isPending } = useGetSingleForm(id);
+  if (isPending) {
+    return <SingleFormViewSkeleton />;
+  }
+  if (!form) {
+    return <>No data found</>;
+  }
   return (
     <div>
       <Link href={"/forms"} className="my-6 gap-1 px-3 flex items-center">
@@ -30,7 +29,10 @@ const SingleFormHeader = ({ form }: FormResponseProps) => {
           <h4 className="font-[500] text-[1.3rem]">{form.title}</h4>
           <div className="flex gap-4">
             <p className="text-muted-foreground text-[15px] font-[500]">
-              {form._count.submissions} submissions
+              {form._count.submissions}{" "}
+              <span>
+                {form._count.submissions != 1 ? "submissions" : "submission"}
+              </span>
             </p>
             <p className="text-muted-foreground text-[15px] font-[500]">
               {form.viewCount}{" "}
@@ -38,7 +40,7 @@ const SingleFormHeader = ({ form }: FormResponseProps) => {
             </p>
 
             <p className="text-muted-foreground text-[15px] font-[500]">
-              {getRelativeTime(form.updatedAt.toDateString())}
+              {getRelativeTime(form.updatedAt)}
             </p>
           </div>
         </div>

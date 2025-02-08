@@ -21,6 +21,11 @@ export const GET = async (
       where: { formId: id },
       select: {
         totalSubmissions: true,
+        form: {
+          select: {
+            viewCount: true,
+          },
+        },
         CountryData: {
           select: {
             country: true,
@@ -45,6 +50,7 @@ export const GET = async (
       totalSubmissions: analytics.totalSubmissions,
       countryData: analytics.CountryData,
       dailySubmissions: analytics.DailySubmissions,
+      viewCount: analytics.form.viewCount,
     });
   } catch (error) {
     console.error("Error fetching analytics:", error);

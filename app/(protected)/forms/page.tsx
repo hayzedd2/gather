@@ -1,9 +1,10 @@
 import { getMyForms } from "@/actions/getMyForms";
+import { FormSkeletonLoader } from "@/components/FormSkeletonLoader";
 import MyForms from "@/components/MyForms";
 import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
 interface FormResponseProps {
   id: string;
@@ -22,14 +23,14 @@ const page = async ({
     search?: string;
   }>;
 }) => {
-  const sParams = await searchParams;
-  const search = sParams?.search || "";
-  const result = await getMyForms({ search });
-  const typedResult = result.forms as FormResponseProps[];
-  
-  if (result.error) {
-    return <>An error occurred</>;
-  }
+  // const sParams = await searchParams;
+  // const search = sParams?.search || "";
+  // const result = await getMyForms({ search });
+  // const typedResult = result.forms as FormResponseProps[];
+
+  // if (result.error) {
+  //   return <>An error occurred</>;
+  // }
 
   return (
     <div className="p-4 py-10 max-w-5xl mx-auto">
@@ -44,7 +45,7 @@ const page = async ({
           </Link>
         </div>
       </div>
-      <MyForms forms={typedResult} />
+      <MyForms />
     </div>
   );
 };

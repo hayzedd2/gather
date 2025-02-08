@@ -7,22 +7,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { Loader, Search, XCircleIcon } from "lucide-react";
 import { Button } from "./ui/button";
+import { useGetForms } from "@/hooks/useGetForms";
+import { FormSkeletonLoader } from "./FormSkeletonLoader";
 
-interface myFormsProps {
-  forms?: FormResponseProps[];
-}
-interface FormResponseProps {
-  id: string;
-  updatedAt: Date;
-  title: string;
-  description: string;
-  buttonText: string;
-  formConfig: [];
-  viewCount: number;
-  _count: Record<"submissions", number>;
-}
-const MyForms = ({ forms }: myFormsProps) => {
+const MyForms = () => {
   const searchParams = useSearchParams();
+  const { data: forms, isPending } = useGetForms();
   const pathname = usePathname();
   const { replace } = useRouter();
   const [isSearching, startTransition] = useTransition();
@@ -38,17 +28,23 @@ const MyForms = ({ forms }: myFormsProps) => {
       }
       replace(`${pathname}?${params.toString()}`);
     });
-  }, 0);
+  }, 100);
   const handleClearInput = () => {
     if (inputRef.current) {
       inputRef.current.value = "";
       handleSearch("");
     }
   };
-
-  if (!s && (!forms || forms.length === 0)) {
+  if (isPending) {
+    return <FormSkeletonLoader />;
+  }
+  if (!forms || forms.length === 0) {
     return <EmptyFormsList />;
   }
+
+  const filteredForms = forms.filter((f) =>
+    f.title.toLowerCase().includes(s.toLowerCase())
+  );
 
   return (
     <>
@@ -84,18 +80,21 @@ const MyForms = ({ forms }: myFormsProps) => {
         </div>
       </div>
       <div className="forms mt-4">
-        {forms?.map((f) => (
-          <SingleForm
-            id={f.id}
-            viewCount={f.viewCount}
-            key={f.id}
-            submissionsCount={f._count.submissions}
-            title={f.title}
-            updatedAt={f.updatedAt.toDateString()}
-          />
-        ))}
-        {s && forms?.length == 0 && (
-          <p className="text-subtle text-[14px] font-[500]">No matching forms found</p>
+        {filteredForms.length > 0 ? (
+          filteredForms.map((f) => (
+            <SingleForm
+              id={f.id}
+              viewCount={f.viewCount}
+              key={f.id}
+              submissionsCount={f._count.submissions}
+              title={f.title}
+              updatedAt={f.updatedAt}
+            />
+          ))
+        ) : (
+          <p className="text-subtle text-[14px] font-[500]">
+            No matching forms found
+          </p>
         )}
       </div>
     </>

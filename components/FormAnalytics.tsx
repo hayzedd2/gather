@@ -14,6 +14,7 @@ const FormAnalytics = ({ id }: { id: string }) => {
   return (
     <div>
       <AnalyticsChart
+        viewCount={data.viewCount}
         countryData={data.countryData}
         dailySubmissions={data.dailySubmissions}
         totalSubmissions={data.totalSubmissions}
