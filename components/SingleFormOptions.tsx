@@ -20,20 +20,21 @@ interface SingleFormOptionsProps {
 }
 export function SingleFormOptions({ id }: SingleFormOptionsProps) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const { mutate: deleteEvent, isPending, isSuccess } = useDeleteForm(id);
-  const handleDelete = async () => {
-    try {
-      deleteEvent();
-    } catch (err) {
-      console.log(err);
-    }
+  const { mutate: deleteform, isPending } = useDeleteForm();
+  const handleDelete = () => {
+    deleteform(id, {
+      onSuccess: () => {
+        toast.success("Form deleted!");
+      },
+      onError(error) {
+        toast.error(error.message);
+      },
+
+      onSettled: () => {
+        setIsModalOpen(false);
+      },
+    });
   };
-  React.useEffect(() => {
-    if (isSuccess) {
-      setIsModalOpen(false);
-      toast.success("Form deleted!");
-    }
-  }, [isSuccess]);
 
   return (
     <>

@@ -147,7 +147,7 @@ export interface FormPayloadProps {
 
 export interface FormResponseProps {
   id: string;
-  updatedAt: string;
+  lastEdited: string;
   title: string;
   description: string;
   buttonText: string;

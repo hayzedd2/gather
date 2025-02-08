@@ -15,6 +15,9 @@ import {
 } from "@/components/ui/chart";
 import { SingleFormAnalyticsProps } from "@/types/type";
 import CountryAnalytics from "./CountryAnalytics";
+import { format, parseISO, isToday, isYesterday } from "date-fns";
+import { useMemo } from "react";
+import ErrorMessage from "./ErrorMessage";
 
 const chartConfig = {
   submissions: {
@@ -22,13 +25,49 @@ const chartConfig = {
     color: "#000",
   },
 };
-
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    const date = parseISO(label);
+    let dateDisplay;
+    if (isToday(date)) {
+      dateDisplay = `Today, ${format(date, "h:mm a")}`;
+    } else if (isYesterday(date)) {
+      dateDisplay = `Yesterday, ${format(date, "h:mm a")}`;
+    } else {
+      dateDisplay = format(date, "MMM d, yyyy h:mm a");
+    }
+    return (
+      <div className="bg-background flex flex-col gap-1 py-2 px-4 rounded  border border-border">
+        <p className="text-[14px] font-[500]">{dateDisplay}</p>
+        <p className="text-[13px] text-muted-foreground font-[500]">
+          Submissions: {payload[0].value}
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
 export default function AnalyticsChart({
   totalSubmissions,
   countryData,
   dailySubmissions,
   viewCount,
 }: SingleFormAnalyticsProps) {
+  const aggregatedData = useMemo(() => {
+    const aggregated: { [key: string]: number } = {};
+    dailySubmissions.forEach((item) => {
+      const date = new Date(item.date);
+      const key = format(date, "yyyy-MM-dd'T'HH:00:00.000'Z'");
+      aggregated[key] = (aggregated[key] || 0) + item.count;
+    });
+    return Object.entries(aggregated).map(([date, count]) => ({ date, count }));
+  }, [dailySubmissions]);
+
+  const maxCount = Math.max(...aggregatedData.map((item) => item.count), 1);
+  const yAxisTicks = [0, Math.ceil(maxCount / 2), maxCount];
+  if (aggregatedData.length == 0) {
+    return <ErrorMessage message="No data available." />;
+  }
   return (
     <div>
       <div className="border rounded-lg  w-full">
@@ -54,7 +93,7 @@ export default function AnalyticsChart({
           <ChartContainer config={chartConfig} className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
-                data={dailySubmissions}
+                data={aggregatedData}
                 margin={{
                   top: 20,
                   right: 10,
@@ -63,32 +102,31 @@ export default function AnalyticsChart({
                 }}
               >
                 <CartesianGrid vertical={false} />
+
                 <XAxis
                   dataKey="date"
+                  tickFormatter={(value) => {
+                    const date = parseISO(value);
+                    if (isToday(date)) return format(date, "h a");
+                    if (isYesterday(date)) return "Yesterday";
+                    return format(date, "MMM d");
+                  }}
+                  minTickGap={30}
+                  tickMargin={15}
+                  padding={{ left: 30, right: 30 }}
                   tickLine={false}
                   axisLine={false}
-                  padding={{ left: 30, right: 30 }}
-                  tickMargin={15}
-                  tickFormatter={(value) => {
-                    const date = new Date(value);
-                    return new Intl.DateTimeFormat("en-US", {
-                      hour: "numeric",
-                      hour12: true,
-                    })
-                      .format(date)
-                      .replace(/^0/, "");
-                  }}
                 />
                 <YAxis
-                  tickCount={3}
+                  // tickCount={4}
+                  // domain={[0, "dataMax"]}
+                  // ticks={yAxisTicks}
+                  tickFormatter={(value) => Math.round(value).toString()}
                   tickMargin={20}
                   tickLine={false}
                   axisLine={false}
                 />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent />}
-                />
+                <ChartTooltip cursor={false} content={<CustomTooltip />} />
                 <Line
                   type="monotone"
                   dataKey="count"

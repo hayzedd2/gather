@@ -7,14 +7,14 @@ interface SingleFormProps {
   title: string;
   submissionsCount: number;
   id: string;
-  updatedAt: string;
+  lastEdited: string;
   viewCount: number;
 }
 const SingleForm = ({
   title,
   submissionsCount,
   id,
-  updatedAt,
+  lastEdited,
   viewCount,
 }: SingleFormProps) => {
   return (
@@ -32,7 +32,7 @@ const SingleForm = ({
               {viewCount} <span>{viewCount != 1 ? "views" : "view"}</span>
             </p>
             <p className="text-muted-foreground text-[13px] font-[500]">
-              {getRelativeTime(updatedAt)}
+              {getRelativeTime(lastEdited)}
             </p>
           </div>
         </div>

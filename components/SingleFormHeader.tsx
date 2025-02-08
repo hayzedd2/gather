@@ -16,7 +16,7 @@ const SingleFormHeader = ({ id }: { id: string }) => {
     return <SingleFormViewSkeleton />;
   }
   if (!form) {
-    return <>No data found</>;
+    return null;
   }
   return (
     <div>
@@ -40,7 +40,7 @@ const SingleFormHeader = ({ id }: { id: string }) => {
             </p>
 
             <p className="text-muted-foreground text-[15px] font-[500]">
-              {getRelativeTime(form.updatedAt)}
+              {getRelativeTime(form.lastEdited)}
             </p>
           </div>
         </div>

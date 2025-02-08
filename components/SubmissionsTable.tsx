@@ -14,6 +14,8 @@ import { useGetSingleFormSubmissions } from "@/hooks/useGetSingleFormSubmissions
 import { useState } from "react";
 import SubmissionPagination from "./SubmissionPagintaion";
 import { useSearchParams } from "next/navigation";
+import MiniLoader from "./MiniLoader";
+import ErrorMessage from "./ErrorMessage";
 
 export function SubmissionsTable({ id }: { id: string }) {
   const searchParams = useSearchParams();
@@ -22,10 +24,10 @@ export function SubmissionsTable({ id }: { id: string }) {
   const skip = (currentPage - 1) * limit;
   const { data: form, isPending } = useGetSingleFormSubmissions(id);
   if (isPending) {
-    return <>Loading</>;
+    return <MiniLoader />;
   }
   if (!form) {
-    return <>Empty!!</>;
+    return <ErrorMessage message="Sorry, no submissions found for this form" />;
   }
   const totalPages = Math.ceil(form.submissionsCount / 10);
   return (

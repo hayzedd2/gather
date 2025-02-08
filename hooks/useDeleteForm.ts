@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useDeleteForm = (id: string) => {
+export const useDeleteForm = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (id: string) => {
       const response = await fetch(`/api/forms/${id}`, {
         method: "DELETE",
       });

@@ -88,7 +88,7 @@ const MyForms = () => {
               key={f.id}
               submissionsCount={f._count.submissions}
               title={f.title}
-              updatedAt={f.updatedAt}
+              lastEdited={f.lastEdited}
             />
           ))
         ) : (

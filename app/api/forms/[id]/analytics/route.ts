@@ -26,6 +26,7 @@ export const GET = async (
             viewCount: true,
           },
         },
+        
         CountryData: {
           select: {
             country: true,
@@ -37,8 +38,12 @@ export const GET = async (
             date: true,
             count: true,
           },
+          orderBy:{
+            date:"asc"
+          }
         },
       },
+      
     });
     if (!analytics) {
       return Response.json(
@@ -46,14 +51,16 @@ export const GET = async (
         { status: 404 }
       );
     }
-    return Response.json({
-      totalSubmissions: analytics.totalSubmissions,
-      countryData: analytics.CountryData,
-      dailySubmissions: analytics.DailySubmissions,
-      viewCount: analytics.form.viewCount,
-    });
+    return Response.json(
+      {
+        totalSubmissions: analytics.totalSubmissions,
+        countryData: analytics.CountryData,
+        dailySubmissions: analytics.DailySubmissions,
+        viewCount: analytics.form.viewCount,
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("Error fetching analytics:", error);
     return Response.json(
       { message: "Error fetching analytics" },
       { status: 500 }

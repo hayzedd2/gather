@@ -48,15 +48,16 @@ export const GET = async () => {
 
     const formsWithSubmissionCounts = await prismaDb.form.findMany({
       where: { userId: sessions.user.id },
-      orderBy:{
-        createdAt :"desc"
+      orderBy: {
+        createdAt: "desc",
       },
       select: {
         id: true,
         title: true,
         description: true,
         buttonText: true,
-        viewCount:true,
+        viewCount: true,
+        lastEdited: true,
         formConfig: true,
         _count: {
           select: {
@@ -64,8 +65,8 @@ export const GET = async () => {
           },
         },
       },
-
     });
+
     return Response.json(formsWithSubmissionCounts, { status: 200 });
   } catch (err) {
     console.log(err);
