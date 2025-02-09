@@ -1,4 +1,5 @@
 import { IncrementView } from "@/actions/view";
+import ErrorMessage from "@/components/ErrorMessage";
 import ResponseForm from "@/components/ResponseForm";
 import { prismaDb } from "@/lib/db";
 import { FormField } from "@/types/type";
@@ -22,7 +23,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     IncrementView(id),
   ]);
   if (!form) {
-    return <p>Could not find form...</p>;
+    return <ErrorMessage message="Could not find form"/>;
   }
 
   return (
@@ -31,7 +32,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         id={form.id}
         title={form.title}
         buttonText={form.buttonText as string}
-        description={form.description}
+      description={form.description}
         formConfig={form.formConfig as unknown as FormField[]}
       />
     </section>
