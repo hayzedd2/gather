@@ -11,9 +11,9 @@ import { FormSettingsSchema } from "@/schema";
 import { useSettingsFormStore } from "@/store/useSettingsFormStore";
 import { toast } from "sonner";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
-import { useCreateform } from "@/hooks/useCreateForm";
+import { useEditForm } from "@/hooks/useEditForm";
 
-const FormBuilder = () => {
+const FormEditor = ({id}:{id:string}) => {
   const [view, setView] = React.useState<viewT>("configure");
   const settingFields = useSettingsFormStore((s) => s.settingFields);
   const { fields, updateField, resetFields } = useFormBuilder();
@@ -24,8 +24,8 @@ const FormBuilder = () => {
       }
     });
   };
-  const { mutate, isPending } = useCreateform();
-  const onPublishForm = () => {
+  const { mutate, isPending } = useEditForm(id);
+  const onEditForm = () => {
     validateAllFields();
     if (fields.length == 0) {
       toast.warning("Add at least one form field");
@@ -62,7 +62,7 @@ const FormBuilder = () => {
           {view == "preview" && <FormPreview />}
           {view == "settings" && <FormSettingsForm />}
         </div>
-        <FormActions onPublish={onPublishForm} isPending={isPending} />
+        <FormActions onPublish={onEditForm} isPending={isPending} type="edit" />
       </div>
       <div className="flex  bg-[#FAFAFA] top-0 h-screen  p-4 flex-col sticky gap-4 w-[20rem] dotted dotted-left ">
         <AddField />
@@ -71,4 +71,4 @@ const FormBuilder = () => {
   );
 };
 
-export default FormBuilder;
+export default FormEditor;

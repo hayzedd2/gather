@@ -136,6 +136,7 @@ export interface FormSettingsControllerProps {
 export interface FormActionProps {
   onPublish: () => void;
   isPending: boolean;
+  type?:"edit"|"new"
 }
 export interface FormPayloadProps {
   title: string;

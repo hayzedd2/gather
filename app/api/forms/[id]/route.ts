@@ -29,6 +29,49 @@ export async function GET(
         },
       },
     });
+    if (!form) {
+      return Response.json({ message: "Form does not exist" }, { status: 400 });
+    }
+    return Response.json(form, { status: 200 });
+  } catch (error: any) {
+    return Response.json({ message: "Something went wrong" }, { status: 500 });
+  }
+}
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const sessions = await auth.api.getSession({ headers: await headers() });
+    if (!sessions) {
+      return Response.json({ message: "Unauthorized" }, { status: 401 });
+    }
+    const id = (await params).id;
+    if (!id) {
+      return Response.json({ message: "Form ID is required" }, { status: 400 });
+    }
+    const reqBody = await req.json();
+    const { fields, title, description, buttonCtaText } = reqBody;
+    if (!fields || !title || !description) {
+      return Response.json({ message: "Missing fields" }, { status: 400 });
+    }
+    const buttonText = buttonCtaText?.trim() || "Submit";
+    const form = await prismaDb.form.update({
+      where: {
+        userId: sessions.user.id,
+        id,
+      },
+      data: {
+        title,
+        description,
+        buttonText,
+        formConfig: fields,
+      },
+    });
+    if (!form) {
+      return Response.json({ message: "Form does not exist" }, { status: 400 });
+    }
+    console.log("Form edited", form)
     return Response.json(form, { status: 200 });
   } catch (error: any) {
     return Response.json({ message: "Something went wrong" }, { status: 500 });
@@ -44,7 +87,6 @@ export async function DELETE(
     if (!sessions) {
       return Response.json({ message: "Unauthorized" }, { status: 401 });
     }
-
     const id = (await params).id;
     if (!id) {
       return Response.json({ message: "Form ID is required" }, { status: 400 });
@@ -73,7 +115,7 @@ export async function DELETE(
       prismaDb.submission.deleteMany({ where: { formId: id } }),
       prismaDb.form.delete({ where: { id } }),
     ]);
-    return Response.json({ status: 200 });
+    return Response.json({ message: "Form deleted succesfully", status: 200 });
   } catch (err) {
     return Response.json({ message: "Something went wrong" }, { status: 500 });
   }

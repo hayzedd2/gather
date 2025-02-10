@@ -47,7 +47,7 @@ const SingleFormHeader = ({ id }: { id: string }) => {
         <div className="flex flex-col gap-1">
           <SharedLink link={generateShareableLink(form.id)} />
           <div className="flex gap-3 items-center justify-end ">
-            <Link href={generateShareableLink(form.id)}>
+            <Link href={`/forms/${id}/edit`}>
               <Button variant={"outline"}>Edit form</Button>
             </Link>
           </div>
