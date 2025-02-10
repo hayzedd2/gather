@@ -22,7 +22,7 @@ export default function SubmissionPagination({
   return (
     <>
       <div className="flex items-center w-full justify-end space-x-1">
-        <Button size="icon" className="h-8 w-8" asChild>
+        <Button size="icon" variant={"outline"} className="h-8 w-8" asChild>
           <Link
             href={createPageURL(currentPage - 1)}
             className={
@@ -33,7 +33,7 @@ export default function SubmissionPagination({
             <ChevronLeft />
           </Link>
         </Button>
-        <Button size="icon" className="h-8 w-8" asChild>
+        <Button size="icon" variant={"outline"} className="h-8 w-8" asChild>
           <Link
             href={createPageURL(currentPage + 1)}
             className={

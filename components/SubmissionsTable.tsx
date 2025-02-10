@@ -33,10 +33,7 @@ export function SubmissionsTable({ id }: { id: string }) {
   return (
     <div className="mt-1">
       <SubmissionPagination totalPages={totalPages} />
-      {/* <div className="flex w-full gap-2 mb-2 justify-end  items-end">
-        <Button variant={"outline"}>Download csv</Button>
-        <Button>Download json</Button>
-      </div> */}
+      
       <Table>
         <TableCaption>
           You have {form.submissionsCount} submissions{" "}
@@ -50,9 +47,9 @@ export function SubmissionsTable({ id }: { id: string }) {
         </TableHeader>
         <TableBody>
           {form.submissions.slice(skip, limit + skip).map((submission, i) => (
-            <TableRow key={i}>
+            <TableRow key={i} className="border-0 dotted-down ">
               {form.labels.map((label, j) => (
-                <TableCell key={j}>
+                <TableCell className="text-[14px] text-regular font-[500]" key={j}>
                   {Array.isArray(submission[label])
                     ? submission[label].join(", ")
                     : submission[label] || ""}

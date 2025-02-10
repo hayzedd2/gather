@@ -39,6 +39,8 @@ export interface SelectField extends BaseField {
     label: string;
     value: string;
   }>;
+  description?: string;
+
   multiple?: boolean;
 }
 

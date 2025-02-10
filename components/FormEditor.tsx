@@ -13,9 +13,9 @@ import { toast } from "sonner";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
 import { useEditForm } from "@/hooks/useEditForm";
 
-const FormEditor = ({id}:{id:string}) => {
+const FormEditor = ({ id }: { id: string }) => {
   const [view, setView] = React.useState<viewT>("configure");
-  const settingFields = useSettingsFormStore((s) => s.settingFields);
+  const { settingFields, resetSettingsFields } = useSettingsFormStore();
   const { fields, updateField, resetFields } = useFormBuilder();
   const validateAllFields = () => {
     fields.forEach((field) => {
@@ -46,6 +46,7 @@ const FormEditor = ({id}:{id:string}) => {
       mutate(payLoad, {
         onSuccess: () => {
           resetFields();
+          resetSettingsFields();
         },
       });
     } catch (err) {

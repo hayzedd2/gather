@@ -16,7 +16,7 @@ import { FormField } from "@/types/type";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { FormDescription, FormLabel } from "./ui/form";
+
 
 const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);
@@ -46,7 +46,7 @@ const FormPreview = () => {
       case "select":
         return (
           <div>
-            {/* <FormLabel>{field.label}</FormLabel> */}
+           
             <Select>
               <SelectTrigger>
                 <SelectValue
@@ -61,14 +61,14 @@ const FormPreview = () => {
                 ))}
               </SelectContent>
             </Select>
-            {/* <FormDescription>{field.description}</FormDescription> */}
+           
           </div>
         );
 
       case "checkbox-group":
         return (
           <div className="space-y-2 ">
-            {/* <FormLabel>{field.id}</FormLabel> */}
+          
             {field.options.map((option) => (
               <div key={option.value} className="flex items-center space-x-3">
                 <Checkbox id={`${field.id}-${option.value}`} />
@@ -80,7 +80,7 @@ const FormPreview = () => {
                 </Label>
               </div>
             ))}
-            {/* <FormDescription>{field.description}</FormDescription> */}
+   
           </div>
         );
 

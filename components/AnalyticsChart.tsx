@@ -54,8 +54,9 @@ export default function AnalyticsChart({
   viewCount,
 }: SingleFormAnalyticsProps) {
   const aggregatedData = useMemo(() => {
+    const maxAnalyticsData = 15
     const aggregated: { [key: string]: number } = {};
-    dailySubmissions.forEach((item) => {
+    dailySubmissions.slice(0,maxAnalyticsData).forEach((item) => {
       const date = new Date(item.date);
       const key = format(date, "yyyy-MM-dd'T'HH:00:00.000'Z'");
       aggregated[key] = (aggregated[key] || 0) + item.count;
@@ -82,7 +83,7 @@ export default function AnalyticsChart({
           </div>
           <div className="flex py-3 min-w-[150px] px-5 flex-col dotted-right dotted">
             <h4 className="text-muted-foreground font-[500]">
-              Conversion rate
+              Completion rate
             </h4>
             <h3 className="text-[1.5rem] text-regular font-[600]">
               {Math.floor((totalSubmissions / viewCount) * 100)}%
@@ -102,7 +103,6 @@ export default function AnalyticsChart({
                 }}
               >
                 <CartesianGrid vertical={false} />
-
                 <XAxis
                   dataKey="date"
                   tickFormatter={(value) => {
@@ -118,9 +118,6 @@ export default function AnalyticsChart({
                   axisLine={false}
                 />
                 <YAxis
-                  // tickCount={4}
-                  // domain={[0, "dataMax"]}
-                  // ticks={yAxisTicks}
                   tickFormatter={(value) => Math.round(value).toString()}
                   tickMargin={20}
                   tickLine={false}
