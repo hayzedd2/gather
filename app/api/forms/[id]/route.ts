@@ -63,6 +63,7 @@ export async function PUT(
       },
       data: {
         title,
+        lastEdited: new Date(),
         description,
         buttonText,
         formConfig: fields,
@@ -71,7 +72,7 @@ export async function PUT(
     if (!form) {
       return Response.json({ message: "Form does not exist" }, { status: 400 });
     }
-    console.log("Form edited", form)
+    console.log("Form edited", form);
     return Response.json(form, { status: 200 });
   } catch (error: any) {
     return Response.json({ message: "Something went wrong" }, { status: 500 });
@@ -111,7 +112,7 @@ export async function DELETE(
       prismaDb.countryData.deleteMany({
         where: { formAnalytics: { formId: id } },
       }),
-      prismaDb.formAnalytics.delete({ where: { formId: id } }),
+      prismaDb.formAnalytics.deleteMany({ where: { formId: id } }),
       prismaDb.submission.deleteMany({ where: { formId: id } }),
       prismaDb.form.delete({ where: { id } }),
     ]);

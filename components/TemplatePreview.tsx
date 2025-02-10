@@ -100,10 +100,7 @@ const TemplatePreview = ({ btnText }: { btnText: string }) => {
         return null;
     }
   };
-  if (fields.length === 0) {
-    return <EmptyFormPreview />;
-  }
-
+  
   return (
     <div>
       <div className="w-full mx-auto space-y-3  my-5">

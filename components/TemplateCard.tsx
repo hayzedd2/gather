@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import Modal from "./Modal";
 import { FormField } from "@/types/type";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
-import FormPreview from "./FormPreview";
 import {
   Sheet,
   SheetContent,
@@ -11,27 +9,35 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import TemplatePreview from "./TemplatePreview";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { useSettingsFormStore } from "@/store/useSettingsFormStore";
+import { useCreateform } from "@/hooks/useCreateForm";
+import { toast } from "sonner";
+import { SvgLoading } from "./SvgLoading";
 
 interface TemplateProps {
   title: string;
   description: string;
   tags: string[];
   formConfig: FormField[];
-  buttonText:string
+  buttonText: string;
 }
 const TemplateCard = ({
   title,
   description,
   tags,
   formConfig,
-  buttonText
+  buttonText,
 }: TemplateProps) => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const setfields = useFormBuilder((s) => s.setFields);
+  const router = useRouter();
+  const { saveFields, resetSettingsFields } = useSettingsFormStore();
+  const { setFields, resetFields } = useFormBuilder();
+  const { mutate, isPending } = useCreateform();
   const maxLength = 90;
   const truncatedDesc =
     description.length > maxLength
@@ -39,30 +45,68 @@ const TemplateCard = ({
       : description;
   const handleClick = () => {
     setIsPreviewOpen(true);
-    console.log(formConfig);
     setfields(formConfig);
   };
-  const onFormPublish = ()=>{
-
-  }
+  const onFormPublish = () => {
+    const payLoad = {
+      fields: formConfig,
+      title,
+      description,
+      buttonText,
+      saveAsTemplate: false,
+    };
+    try {
+      mutate(payLoad, {
+        onSuccess: () => {
+          setIsPreviewOpen(false);
+        },
+      });
+    } catch (err) {
+      toast.error("An error occured");
+      console.log(err);
+    }
+  };
+  const onEditForm = () => {
+    saveFields({
+      title,
+      description,
+      buttonCtaText: buttonText,
+      saveAsTemplate: false,
+    });
+    setFields(formConfig);
+    router.push("/templates/edit");
+  };
   return (
     <>
       <Sheet
         open={isPreviewOpen}
         onOpenChange={() => setIsPreviewOpen(!isPreviewOpen)}
       >
-        <SheetContent className="min-w-[500px]   overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle className="text-[1.6rem]">{title}</SheetTitle>
-            <SheetDescription className="">{description}</SheetDescription>
-          </SheetHeader>
-          <p className="py-3 dotted-down text-center text-[14px] text-muted-foreground font-[500]">
-            Template preview
-          </p>
-          <TemplatePreview btnText={buttonText} />
-          <SheetFooter className="dotted-up mt-auto sticky z-50 bottom-0 py-3 bg-white flex justify-between items-center">
-            <Button>Publish template</Button>
-            <Button variant={"outline"}>Edit template</Button>
+        <SheetContent className="flex flex-col p-0 min-w-[500px] overflow-y-auto">
+          <div className="flex-grow overflow-y-auto p-6">
+            <SheetHeader>
+              <SheetTitle className="text-[1.6rem]">{title}</SheetTitle>
+              <SheetDescription className="">{description}</SheetDescription>
+            </SheetHeader>
+            <p className="py-3 dotted-down text-center text-[14px] text-muted-foreground font-[500]">
+              Template preview
+            </p>
+            <TemplatePreview btnText={buttonText} />
+          </div>
+          <SheetFooter className="sticky bottom-0 px-6 py-4 bg-white border-t">
+            <div className="flex justify-between items-center w-full">
+              <Button onClick={onFormPublish} disabled={isPending}>
+                {isPending && <SvgLoading />}{" "}
+                <span className="mt-[0.2rem]">Publish template</span>
+              </Button>
+              <Button
+                disabled={isPending}
+                onClick={onEditForm}
+                variant={"outline"}
+              >
+                Edit template
+              </Button>
+            </div>
           </SheetFooter>
         </SheetContent>
       </Sheet>
