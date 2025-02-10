@@ -20,6 +20,7 @@ const page = () => {
             title={t.title}
             description={t.description}
             tags={t.tags}
+            buttonText={t.buttonText}
           />
         ))}
       </div>

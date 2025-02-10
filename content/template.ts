@@ -27,12 +27,14 @@ export const formTemplates = [
         placeholder: "Enter your message...",
       },
     ],
+    buttonText:"Submit info"
   },
   {
     title: "Job Application Form",
     description:
       "Comprehensive job application template to gather candidate information, work experience, and qualifications for hiring processes.",
     tags: ["Employment", "HR", "Recruitment"],
+     buttonText:"Submit application",
     formConfig: [
       {
         id: "4",
@@ -79,6 +81,7 @@ export const formTemplates = [
     description:
       "Streamline event registrations with fields for attendee information, preferences, and session selection.",
     tags: ["Events", "Registration", "Booking"],
+    buttonText:"Register for event",
     formConfig: [
       {
         id: "9",
@@ -148,6 +151,7 @@ export const formTemplates = [
         placeholder: "Your thoughts...",
       },
     ],
+    buttonText:"Submit feedback",
   },
   {
     title: "Product Order Form",
@@ -195,5 +199,6 @@ export const formTemplates = [
         placeholder: "Enter your address...",
       },
     ],
+    buttonText:"Submit info",
   },
 ];
