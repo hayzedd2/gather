@@ -14,6 +14,9 @@ import { Button } from "./ui/button";
 import { useDeleteForm } from "@/hooks/useDeleteForm";
 import { SvgLoading } from "./SvgLoading";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { generateShareableLink } from "@/helpers/generateShareableLink";
 
 interface SingleFormOptionsProps {
   id: string;
@@ -21,6 +24,7 @@ interface SingleFormOptionsProps {
 export function SingleFormOptions({ id }: SingleFormOptionsProps) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const { mutate: deleteform, isPending } = useDeleteForm();
+  const router = useRouter();
   const handleDelete = () => {
     deleteform(id, {
       onSuccess: () => {
@@ -36,6 +40,14 @@ export function SingleFormOptions({ id }: SingleFormOptionsProps) {
     });
   };
 
+  const copyFormLink = async () => {
+    try {
+      await navigator.clipboard.writeText(generateShareableLink(id));
+      toast.success("Link copied!");
+    } catch {
+      toast.error("An error occured");
+    }
+  };
   return (
     <>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -67,18 +79,22 @@ export function SingleFormOptions({ id }: SingleFormOptionsProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40">
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <Eye />
-              <span>View form</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
+            <Link href={`/form/${id}`}>
+              <DropdownMenuItem>
+                <Eye />
+                <span>View form</span>
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem onClick={copyFormLink}>
               <Copy />
               <span>Copy form link</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Pencil />
-              <span>Edit form</span>
-            </DropdownMenuItem>
+            <Link href={`/forms/${id}/edit`}>
+              <DropdownMenuItem>
+                <Pencil />
+                <span>Edit form</span>
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
 

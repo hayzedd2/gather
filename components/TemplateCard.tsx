@@ -38,7 +38,7 @@ const TemplateCard = ({
   const { saveFields, resetSettingsFields } = useSettingsFormStore();
   const { setFields, resetFields } = useFormBuilder();
   const { mutate, isPending } = useCreateform();
-  const maxLength = 90;
+  const maxLength = 500;
   const truncatedDesc =
     description.length > maxLength
       ? description.slice(0, maxLength).concat("...")
@@ -110,7 +110,7 @@ const TemplateCard = ({
           </SheetFooter>
         </SheetContent>
       </Sheet>
-      <div onClick={handleClick} className="p-3  cursor-pointer ">
+      <div onClick={handleClick} className="p-3   cursor-pointer ">
         <h4 className="font-[500] text-[1.2rem]">{title}</h4>
         <h6 className="mt-[-1px] text-muted-foreground font-[500] text-[13px]">
           {truncatedDesc}

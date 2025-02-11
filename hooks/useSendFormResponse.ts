@@ -19,10 +19,7 @@ export const useSendFormResponse = (id: string) => {
       }
       return response.json();
     },
-    onSuccess: async (data) => {
-      console.log("Success data", data);
-      toast.success("Your form was submitted sucessfully:)");
-    },
+   
     onError(error) {
       toast.error(error.message);
     },

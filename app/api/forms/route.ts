@@ -49,7 +49,7 @@ export const GET = async () => {
     const formsWithSubmissionCounts = await prismaDb.form.findMany({
       where: { userId: sessions.user.id },
       orderBy: {
-        createdAt: "desc",
+        lastEdited: "desc",
       },
       select: {
         id: true,
