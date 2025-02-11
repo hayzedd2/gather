@@ -102,6 +102,14 @@ li {
   background-position: 0;
   background-repeat: repeat-y;
 }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+  }
+
 .dotted-up {
   background-image: linear-gradient(to right, #ccc 33%, hsla(0, 0%, 100%, 0) 0);
   background-size: 4px 1px;

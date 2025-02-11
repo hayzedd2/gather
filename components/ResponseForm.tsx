@@ -180,7 +180,7 @@ const ResponseForm = ({
                             <FormControl>
                               <Textarea
                                 placeholder={c.placeholder && c.placeholder}
-                                className="resize-none"
+                               
                                 {...field}
                               />
                             </FormControl>

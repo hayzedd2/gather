@@ -95,7 +95,7 @@ const page = () => {
           {filteredTemplates.length > 0 ? (
             filteredTemplates.map((t, i) => (
               <TemplateCard
-                key={t.key}
+                key={i}
                 formConfig={t.formConfig as unknown as FormField[]}
                 title={t.title}
                 description={t.description}

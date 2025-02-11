@@ -5,18 +5,20 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { useGetSingleFormSubmissions } from "@/hooks/useGetSingleFormSubmissions";
-import { useState } from "react";
 import SubmissionPagination from "./SubmissionPagintaion";
 import { useSearchParams } from "next/navigation";
 import MiniLoader from "./MiniLoader";
 import ErrorMessage from "./ErrorMessage";
-
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 export function SubmissionsTable({ id }: { id: string }) {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -30,35 +32,65 @@ export function SubmissionsTable({ id }: { id: string }) {
     return <ErrorMessage message="Sorry, no submissions found for this form" />;
   }
   const totalPages = Math.ceil(form.submissionsCount / 10);
+  const maxLength = 40;
+  const shouldHavePopOver = (s: string) => {
+    return s.length >= maxLength;
+  };
+  const concatString = (s: string) => {
+    return s.slice(0, maxLength).concat("...");
+  };
   return (
     <div className="mt-1">
       <SubmissionPagination totalPages={totalPages} />
-      
-      <Table>
-        <TableCaption>
-          You have {form.submissionsCount} submissions{" "}
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            {form.labels.map((label, i) => {
-              return <TableHead key={i}>{label}</TableHead>;
-            })}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {form.submissions.slice(skip, limit + skip).map((submission, i) => (
-            <TableRow key={i} className="border-0 dotted-down ">
-              {form.labels.map((label, j) => (
-                <TableCell className="text-[14px] text-regular font-[500]" key={j}>
-                  {Array.isArray(submission[label])
-                    ? submission[label].join(", ")
-                    : submission[label] || ""}
-                </TableCell>
+
+      <div className=" overflow-x- hide-scrollbar">
+        {" "}
+        <Table className=" ">
+          <TableCaption>
+            You have {form.submissionsCount} submissions{" "}
+          </TableCaption>
+          <TableHeader>
+            <TableRow className="hide-scrollbar">
+              {form.labels.map((label, i) => (
+                <TableHead key={i} className="w-[200px] min-w-[200px]">
+                  {label}
+                </TableHead>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {form.submissions.slice(skip, limit + skip).map((submission, i) => (
+              <TableRow key={i} className="border-0 dotted-down">
+                {form.labels.map((label, j) => (
+                  <TableCell
+                    className="text-[14px] text-regular font-[500]"
+                    key={j}
+                  >
+                    {Array.isArray(submission[label]) ? (
+                      submission[label].join(", ")
+                    ) : shouldHavePopOver(submission[label]) ? (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <p className="cursor-pointer">
+                            {concatString(submission[label])}
+                          </p>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80">
+                          <div className="space-y-2">
+                            <p className="text-sm">{submission[label]}</p>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    ) : (
+                      <span>{concatString(submission[label])}</span>
+                    )}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
