@@ -7,14 +7,10 @@ interface ProtectedLayoutProps {
   children: React.ReactNode;
 }
 const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
-  const sessions = await auth.api
-    .getSession({ headers: await headers() })
-    .catch(() => {
-      throw redirect("/login");
-    });
+  const sessions = await auth.api.getSession({ headers: await headers() });
 
   if (!sessions) {
-    return null;
+    redirect("/login");
   }
   return (
     <div className="flex">

@@ -75,14 +75,14 @@ export function SubmissionsTable({ id }: { id: string }) {
                             {concatString(submission[label])}
                           </p>
                         </PopoverTrigger>
-                        <PopoverContent className="w-80">
+                        <PopoverContent className="w-80 shadow-none">
                           <div className="space-y-2">
                             <p className="text-sm">{submission[label]}</p>
                           </div>
                         </PopoverContent>
                       </Popover>
                     ) : (
-                      <span>{concatString(submission[label])}</span>
+                      submission[label]
                     )}
                   </TableCell>
                 ))}
