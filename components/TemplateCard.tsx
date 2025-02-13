@@ -110,8 +110,8 @@ const TemplateCard = ({
           </SheetFooter>
         </SheetContent>
       </Sheet>
-      <div onClick={handleClick} className="p-3   cursor-pointer ">
-        <h4 className="font-[500] text-[1.2rem]">{title}</h4>
+      <div onClick={handleClick} className="p-4   cursor-pointer border rounded-lg">
+        <h4 className="font-[500] text-[1.1rem]">{title}</h4>
         <h6 className="mt-[-1px] text-muted-foreground font-[500] text-[13px]">
           {truncatedDesc}
         </h6>

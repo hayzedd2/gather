@@ -1,4 +1,4 @@
-import { PlugZap } from "lucide-react";
+
 import React from "react";
 
 const page = () => {
@@ -46,7 +46,7 @@ const page = () => {
             <span
               className={`whitespace-nowrap   w-max  text-xs font-[500] py-1 bg-gray-50 text-gray-600 ring-1 ring-inset cursor-pointer  ring-gray-500/10 rounded-full px-2`}
             >
-              Connect
+              Coming soon
             </span>
           </div>
         </div>

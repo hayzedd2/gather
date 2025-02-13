@@ -91,7 +91,7 @@ const page = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-y-3 ">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-y-3 gap-x-4 ">
           {filteredTemplates.length > 0 ? (
             filteredTemplates.map((t, i) => (
               <TemplateCard

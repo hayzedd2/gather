@@ -1,8 +1,7 @@
 export const formTemplates = [
- 
   {
     title: "Service Request",
-    id:crypto.randomUUID(),
+    id: crypto.randomUUID(),
     description: "Request form for professional services and consultations.",
     category: "Business Forms",
     tags: ["Services", "Business", "Request"],
@@ -55,10 +54,9 @@ export const formTemplates = [
     ],
   },
 
-
   {
     title: "Customer Feedback",
-    id:crypto.randomUUID(),
+    id: crypto.randomUUID(),
     description:
       "Comprehensive feedback form for product or service evaluation.",
     category: "Survey Forms",
@@ -206,203 +204,406 @@ export const formTemplates = [
       },
     ],
   },
+  {
+    title: "Medical Appointment",
+    id: crypto.randomUUID(),
+    description: "Schedule an appointment with a healthcare provider.",
+    category: "Healthcare Forms",
+    tags: ["Medical", "Appointment", "Doctor"],
+    buttonText: "Book Appointment",
+    formConfig: [
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Full Name",
+        required: true,
+        placeholder: "John Doe",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "email",
+        label: "Email",
+        required: true,
+        placeholder: "john@example.com",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "number",
+        label: "Phone Number",
+        required: true,
+        placeholder: "1234567890",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "select",
+        label: "Preferred Doctor",
+        required: true,
+        options: [
+          { label: "Dr. Smith", value: "smith" },
+          { label: "Dr. Jane", value: "jane" },
+          { label: "Dr. Lee", value: "lee" },
+        ],
+      },
+
+      {
+        id: crypto.randomUUID(),
+        type: "textarea",
+        label: "Symptoms",
+        required: true,
+        placeholder: "Describe your symptoms...",
+      },
+    ],
+  },
+  {
+    title: "Loan Application",
+    id: crypto.randomUUID(),
+    description: "Apply for a personal or business loan.",
+    category: "Financial Forms",
+    tags: ["Loan", "Finance", "Application"],
+    buttonText: "Apply for Loan",
+    formConfig: [
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Full Name",
+        required: true,
+        placeholder: "John Doe",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "email",
+        label: "Email",
+        required: true,
+        placeholder: "john@example.com",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "select",
+        label: "Employment Status",
+        required: true,
+        options: [
+          { label: "Employed", value: "employed" },
+          { label: "Self-Employed", value: "self-employed" },
+          { label: "Unemployed", value: "unemployed" },
+        ],
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "number",
+        label: "Loan Amount",
+        required: true,
+        placeholder: "10000",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "select",
+        label: "Reason for Loan",
+        required: true,
+        options: [
+          { label: "Business", value: "business" },
+          { label: "Education", value: "education" },
+          { label: "Home Purchase", value: "home" },
+          { label: "Personal Use", value: "personal" },
+        ],
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "textarea",
+        label: "Additional Information",
+        required: false,
+        placeholder: "Provide any additional details...",
+      },
+    ],
+  },
+  {
+    title: "Gym Membership Registration",
+    id: crypto.randomUUID(),
+    description: "Register for a gym membership with flexible plans.",
+    category: "Membership Forms",
+    tags: ["Fitness", "Gym", "Membership"],
+    buttonText: "Join Now",
+    formConfig: [
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Full Name",
+        required: true,
+        placeholder: "John Doe",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "email",
+        label: "Email",
+        required: true,
+        placeholder: "john@example.com",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "number",
+        label: "Age",
+        required: true,
+        placeholder: "25",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "select",
+        label: "Membership Type",
+        required: true,
+        options: [
+          { label: "Monthly", value: "monthly" },
+          { label: "Quarterly", value: "quarterly" },
+          { label: "Annual", value: "annual" },
+        ],
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "radio-group",
+        label: "Preferred Workout Time",
+        required: true,
+        options: [
+          { label: "Morning", value: "morning" },
+          { label: "Afternoon", value: "afternoon" },
+          { label: "Evening", value: "evening" },
+        ],
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "checkbox-group",
+        label: "Fitness Goals",
+        required: true,
+        options: [
+          { label: "Weight Loss", value: "weight-loss" },
+          { label: "Muscle Gain", value: "muscle-gain" },
+          { label: "General Fitness", value: "fitness" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Vendor Registration",
+    id: crypto.randomUUID(),
+    description: "Register your business as a vendor for partnerships.",
+    category: "Business Registration Forms",
+    tags: ["Vendor", "Business", "Registration"],
+    buttonText: "Register Vendor",
+    formConfig: [
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Business Name",
+        required: true,
+        placeholder: "ABC Enterprises",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Contact Person",
+        required: true,
+        placeholder: "John Doe",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "email",
+        label: "Email",
+        required: true,
+        placeholder: "contact@abc.com",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "number",
+        label: "Phone Number",
+        required: true,
+        placeholder: "1234567890",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "select",
+        label: "Business Category",
+        required: true,
+        options: [
+          { label: "Retail", value: "retail" },
+          { label: "Wholesale", value: "wholesale" },
+          { label: "Services", value: "services" },
+        ],
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "number",
+        label: "Years in Business",
+        required: true,
+        placeholder: "5",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "textarea",
+        label: "Description of Business",
+        required: true,
+        placeholder: "Provide details about your business...",
+      },
+    ],
+  },
+  {
+    title: "Dental Checkup",
+    id: crypto.randomUUID(),
+    description: "Book an appointment with a dentist for a routine checkup.",
+    category: "Healthcare Forms",
+    tags: ["Dental", "Checkup", "Appointment"],
+    buttonText: "Schedule Checkup",
+    formConfig: [
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Full Name",
+        required: true,
+        placeholder: "John Doe",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "email",
+        label: "Email",
+        required: true,
+        placeholder: "john@example.com",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "number",
+        label: "Phone Number",
+        required: true,
+        placeholder: "1234567890",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "date",
+        label: "Preferred Date",
+        required: true,
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "select",
+        label: "Dental Concern",
+        required: true,
+        options: [
+          { label: "Routine Checkup", value: "routine" },
+          { label: "Toothache", value: "toothache" },
+          { label: "Gum Bleeding", value: "gum-bleeding" },
+        ],
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "textarea",
+        label: "Additional Notes",
+        required: false,
+        placeholder: "Provide any additional information...",
+      },
+    ],
+  },
+  {
+    title: "Business Loan Request",
+    id: crypto.randomUUID(),
+    description: "Apply for a business loan with flexible repayment options.",
+    category: "Financial Forms",
+    tags: ["Loan", "Business", "Finance"],
+    buttonText: "Request Loan",
+    formConfig: [
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Business Name",
+        required: true,
+        placeholder: "ABC Enterprises",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Full Name",
+        required: true,
+        placeholder: "John Doe",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "email",
+        label: "Email",
+        required: true,
+        placeholder: "contact@abc.com",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "number",
+        label: "Requested Loan Amount",
+        required: true,
+        placeholder: "50000",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "select",
+        label: "Purpose of Loan",
+        required: true,
+        options: [
+          { label: "Expansion", value: "expansion" },
+          { label: "Inventory Purchase", value: "inventory" },
+          { label: "Equipment", value: "equipment" },
+        ],
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "textarea",
+        label: "Business Plan Summary",
+        required: true,
+        placeholder: "Briefly describe your business plan...",
+      },
+    ],
+  },
+ 
+  {
+    title: "Fitness Class Enrollment",
+    id: crypto.randomUUID(),
+    description: "Sign up for a specialized fitness class at the gym.",
+    category: "Membership Forms",
+    tags: ["Fitness", "Gym", "Class"],
+    buttonText: "Enroll Now",
+    formConfig: [
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        label: "Full Name",
+        required: true,
+        placeholder: "John Doe",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "email",
+        label: "Email",
+        required: true,
+        placeholder: "john@example.com",
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "select",
+        label: "Class Type",
+        required: true,
+        options: [
+          { label: "Yoga", value: "yoga" },
+          { label: "HIIT", value: "hiit" },
+          { label: "Strength Training", value: "strength-training" },
+        ],
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "date",
+        label: "Preferred Start Date",
+        required: true,
+      },
+      {
+        id: crypto.randomUUID(),
+        type: "radio-group",
+        label: "Preferred Time Slot",
+        required: true,
+        options: [
+          { label: "Morning", value: "morning" },
+          { label: "Evening", value: "evening" },
+        ],
+      },
+    ],
+  },
 ];
 
-// export const formTemplates = [
-//   {
-//     key: crypto.randomUUID(),
-//     title: "Job form",
-//     description: "ffwfw",
-//     buttonText: "Submit info",
-//     formConfig: [
-//       {
-//         id: "f0cc67de-6c2c-4f0e-8088-eb4c10121884",
-//         type: "text",
-//         label: "Name",
-//         required: true,
-//         description: "Please tell us your name",
-//         placeholder: "John doe",
-//       },
-//       {
-//         id: "bc26574e-0951-491f-bdb6-7d2fa3ac6977",
-//         type: "number",
-//         label: "Phone number",
-//         required: true,
-//         description: "Please tell us your phone number",
-//         placeholder: "",
-//       },
-//       {
-//         id: "15a969a4-b627-4f41-872c-e51a0283e16d",
-//         type: "email",
-//         label: "Email",
-//         required: false,
-//         description: "",
-//         placeholder: "joe@mail.com",
-//       },
-//       {
-//         id: "4c2349bd-5a70-451a-bbcb-1c4839dc426f",
-//         type: "select",
-//         label: "Service type",
-//         options: [
-//           {
-//             label: "Massage",
-//             value: "fbef737f-345b-4bbd-927c-a7ddf36a0bc0",
-//           },
-//           {
-//             label: "Haircut",
-//             value: "option-de7843d4-33e4-4226-9845-e550173e8c3f",
-//           },
-//           {
-//             label: "new option",
-//             value: "option-5b16defc-3904-4f41-b4c2-fe194e9e687e",
-//           },
-//           {
-//             label: "Pedicure",
-//             value: "option-16f94d64-77a8-48b0-b418-9482f7835c0e",
-//           },
-//         ],
-//         required: true,
-//         description: "",
-//       },
-//       {
-//         id: "b2b757e9-5cb7-4c01-9451-acc97dbb94b2",
-//         type: "radio-group",
-//         label: "Price",
-//         options: [
-//           {
-//             label: "15-20",
-//             value: "3a511f1d-5b80-4834-9daf-f3066b6e13a9",
-//           },
-//           {
-//             label: "20-25",
-//             value: "option-89e0633e-da51-41e8-af32-477c22251f93",
-//           },
-//         ],
-//         required: true,
-//         description: "",
-//       },
-//       {
-//         id: "aff38a9d-0d81-4a01-9749-cc9ff2a4a18f",
-//         type: "checkbox-group",
-//         label: "Time of the day",
-//         options: [
-//           {
-//             label: "Morning",
-//             value: "1d8593f0-bc2c-4113-bf8a-836b1c538825",
-//           },
-//           {
-//             label: "Afternoon",
-//             value: "option-546a0e20-dd49-472a-ad00-f9e0259690e5",
-//           },
-//           {
-//             label: "Night",
-//             value: "option-e18f52a9-81ff-4ada-bb28-add6359235d1",
-//           },
-//         ],
-//         required: true,
-//         description:
-//           "Please select different time of the day that works for you",
-//       },
-//     ],
-//     tags: ["Businss", "Survery"],
-//     category:"Jobs form"
-//   },
-//   {
-//     key: crypto.randomUUID(),
-//     title: "Application",
-//     description: "ffwfw",
-//     buttonText: "Submit info",
-//     formConfig: [
-//       {
-//         id: "f0cc67de-6c2c-4f0e-8088-eb4c10121884",
-//         type: "text",
-//         label: "Name",
-//         required: true,
-//         description: "Please tell us your name",
-//         placeholder: "John doe",
-//       },
-//       {
-//         id: "bc26574e-0951-491f-bdb6-7d2fa3ac6977",
-//         type: "number",
-//         label: "Phone number",
-//         required: true,
-//         description: "Please tell us your phone number",
-//         placeholder: "",
-//       },
-//       {
-//         id: "15a969a4-b627-4f41-872c-e51a0283e16d",
-//         type: "email",
-//         label: "Email",
-//         required: false,
-//         description: "",
-//         placeholder: "joe@mail.com",
-//       },
-//       {
-//         id: "4c2349bd-5a70-451a-bbcb-1c4839dc426f",
-//         type: "select",
-//         label: "Service type",
-//         options: [
-//           {
-//             label: "Massage",
-//             value: "fbef737f-345b-4bbd-927c-a7ddf36a0bc0",
-//           },
-//           {
-//             label: "Haircut",
-//             value: "option-de7843d4-33e4-4226-9845-e550173e8c3f",
-//           },
-//           {
-//             label: "new option",
-//             value: "option-5b16defc-3904-4f41-b4c2-fe194e9e687e",
-//           },
-//           {
-//             label: "Pedicure",
-//             value: "option-16f94d64-77a8-48b0-b418-9482f7835c0e",
-//           },
-//         ],
-//         required: true,
-//         description: "",
-//       },
-//       {
-//         id: "b2b757e9-5cb7-4c01-9451-acc97dbb94b2",
-//         type: "radio-group",
-//         label: "Price",
-//         options: [
-//           {
-//             label: "15-20",
-//             value: "3a511f1d-5b80-4834-9daf-f3066b6e13a9",
-//           },
-//           {
-//             label: "20-25",
-//             value: "option-89e0633e-da51-41e8-af32-477c22251f93",
-//           },
-//         ],
-//         required: true,
-//         description: "",
-//       },
-//       {
-//         id: "aff38a9d-0d81-4a01-9749-cc9ff2a4a18f",
-//         type: "checkbox-group",
-//         label: "Time of the day",
-//         options: [
-//           {
-//             label: "Morning",
-//             value: "1d8593f0-bc2c-4113-bf8a-836b1c538825",
-//           },
-//           {
-//             label: "Afternoon",
-//             value: "option-546a0e20-dd49-472a-ad00-f9e0259690e5",
-//           },
-//           {
-//             label: "Night",
-//             value: "option-e18f52a9-81ff-4ada-bb28-add6359235d1",
-//           },
-//         ],
-//         required: true,
-//         description:
-//           "Please select different time of the day that works for you",
-//       },
-//     ],
-//     tags: ["Businss", "Survery"],
-//     category:"Applications form"
-//   },
-// ];
