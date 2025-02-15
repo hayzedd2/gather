@@ -35,14 +35,15 @@ const TemplateCard = ({
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const setfields = useFormBuilder((s) => s.setFields);
   const router = useRouter();
-  const { saveFields, resetSettingsFields } = useSettingsFormStore();
-  const { setFields, resetFields } = useFormBuilder();
+  const saveFields = useSettingsFormStore((s) => s.saveFields);
+  const setFields = useFormBuilder((s) => s.setFields);
   const { mutate, isPending } = useCreateform();
   const maxLength = 500;
   const truncatedDesc =
     description.length > maxLength
       ? description.slice(0, maxLength).concat("...")
       : description;
+
   const handleClick = () => {
     setIsPreviewOpen(true);
     setfields(formConfig);
@@ -110,7 +111,10 @@ const TemplateCard = ({
           </SheetFooter>
         </SheetContent>
       </Sheet>
-      <div onClick={handleClick} className="p-4   cursor-pointer border rounded-lg">
+      <div
+        onClick={handleClick}
+        className="p-4   cursor-pointer border rounded-lg"
+      >
         <h4 className="font-[500] text-[1.1rem]">{title}</h4>
         <h6 className="mt-[-1px] text-muted-foreground font-[500] text-[13px]">
           {truncatedDesc}
