@@ -17,7 +17,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { SingleFormSettingsSchema } from "@/schema";
 import { Textarea } from "./ui/textarea";
-
+import { useUpdateFormSettings } from "@/hooks/useUpdateFormSettings";
+import { toast } from "sonner";
+import { SvgLoading } from "./SvgLoading";
 interface SettingsProps {
   id: string;
   title: string;
@@ -38,9 +40,15 @@ const SingleFormSettings = ({
       buttonCtaText: buttonText,
     },
   });
-  const {isDirty}= form.formState
+  const { isDirty } = form.formState;
+  const { mutate: update, isPending } = useUpdateFormSettings(id);
   const onSubmit = (data: z.infer<typeof SingleFormSettingsSchema>) => {
-    console.log(data);
+    try {
+      update(data);
+      console.log("Form updated!");
+    } catch {
+      toast.error("Something went wrong");
+    }
   };
   return (
     <div className="px-3 mt-4 flex flex-col gap-5 ">
@@ -113,9 +121,12 @@ const SingleFormSettings = ({
                 className=" disabled:bg-[#f2f2f2] "
                 variant={"outline"}
                 size={"md"}
-                disabled={!isDirty}
+                disabled={!isDirty || isPending}
               >
-                Save
+                {isPending && <SvgLoading />}
+                <span className="mt-[0.2rem]">
+                  {isPending ? "Saving" : "Save"}
+                </span>
               </Button>
             </div>
           </form>
