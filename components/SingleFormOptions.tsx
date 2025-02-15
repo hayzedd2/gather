@@ -24,7 +24,6 @@ interface SingleFormOptionsProps {
 export function SingleFormOptions({ id }: SingleFormOptionsProps) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const { mutate: deleteform, isPending } = useDeleteForm();
-  const router = useRouter();
   const handleDelete = () => {
     deleteform(id, {
       onSuccess: () => {
@@ -33,7 +32,6 @@ export function SingleFormOptions({ id }: SingleFormOptionsProps) {
       onError(error) {
         toast.error(error.message);
       },
-
       onSettled: () => {
         setIsModalOpen(false);
       },
