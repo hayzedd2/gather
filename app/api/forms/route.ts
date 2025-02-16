@@ -15,13 +15,14 @@ export const POST = async (req: NextRequest) => {
     if (!fields || !title || !description) {
       return Response.json({ message: "Missing fields" }, { status: 400 });
     }
-    const formExistsByTitle = await getFormByTitle(title);
-    if (formExistsByTitle) {
+    const existingForm = await getFormByTitle(sessions.user.id, title);
+    if (existingForm) {
       return Response.json(
         { message: "Form title already exists, please use a different one" },
         { status: 500 }
       );
     }
+    console.log("existing form is", existingForm)
     const buttonText = buttonCtaText?.trim() || "Submit";
     const createdForm = await prismaDb.form.create({
       data: {

@@ -42,13 +42,11 @@ export function SubmissionsTable({ id }: { id: string }) {
   return (
     <div className="mt-1">
       <SubmissionPagination totalPages={totalPages} />
-
-      <div className=" overflow-x- hide-scrollbar">
+      
+      <div className=" my-3 overflow-x- hide-scrollbar">
         {" "}
         <Table className=" ">
-          <TableCaption>
-            You have {form.submissionsCount} submissions{" "}
-          </TableCaption>
+          
           <TableHeader>
             <TableRow className="hide-scrollbar">
               {form.labels.map((label, i) => (
@@ -90,6 +88,9 @@ export function SubmissionsTable({ id }: { id: string }) {
             ))}
           </TableBody>
         </Table>
+      </div>
+      <div className="w-full  flex items-center justify-center">
+        <p className="text-[15px] text-muted-foreground font-[500]">You have {form.submissionsCount} submissions{" "}</p>
       </div>
     </div>
   );

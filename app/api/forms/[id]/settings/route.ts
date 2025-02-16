@@ -25,7 +25,7 @@ export async function PUT(
     }
     const { title, description, buttonCtaText } = validData.data;
     const buttonText = buttonCtaText?.trim() || "Submit";
-    const existingForm = await getFormByTitle(title);
+    const existingForm = await getFormByTitle(sessions.user.id, title);
     if (existingForm && existingForm.id != id) {
       return Response.json(
         { message: "Form title already exists, please use a different one" },

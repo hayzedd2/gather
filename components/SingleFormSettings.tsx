@@ -66,7 +66,6 @@ const SingleFormSettings = ({
   const onSubmit = (data: z.infer<typeof SingleFormSettingsSchema>) => {
     try {
       update(data);
-      console.log("Form updated!");
     } catch {
       toast.error("Something went wrong");
     }
@@ -78,7 +77,6 @@ const SingleFormSettings = ({
         <p className="text-muted-foreground mt-1 font-[500] text-[14px]">
           Are you sure you want to delete this form? This would delete all data
           related to this form.
-          {isModalOpen ? "true" : "false"}
         </p>
         <div className="mt-4 flex gap-3 justify-end">
           <Button onClick={() => setIsModalOpen(false)} variant={"outline"}>
@@ -146,7 +144,7 @@ const SingleFormSettings = ({
                   render={({ field }) => (
                     <FormItem className="space-y-0">
                       <FormLabel className="font-[500] text-[1.05rem]">
-                        Button Text*
+                        Button Text
                       </FormLabel>
                       <FormDescription className="pb-2">
                         Use an informative button to tell your users about what

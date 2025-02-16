@@ -69,7 +69,7 @@ model Verification {
 model Form {
   id          String         @id @default(cuid())
   userId      String
-  title       String         @unique
+  title       String         
   description String
   buttonText  String
   formConfig  Json
@@ -80,6 +80,7 @@ model Form {
   user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   analytics   FormAnalytics?
   submissions Submission[]
+  @@unique([userId, title])
   @@index([userId])
 }
 

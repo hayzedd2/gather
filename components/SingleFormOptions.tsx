@@ -53,7 +53,6 @@ export function SingleFormOptions({ id }: SingleFormOptionsProps) {
         <p className="text-muted-foreground mt-1 font-[500] text-[14px]">
           Are you sure you want to delete this form? This would delete all data
           related to this form.
-          {isModalOpen ? "true" : "false"}
         </p>
         <div className="mt-4 flex gap-3 justify-end">
           <Button onClick={() => setIsModalOpen(false)} variant={"outline"}>
