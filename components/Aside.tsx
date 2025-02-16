@@ -24,34 +24,9 @@ import { UserMenu } from "./UserMenu";
 
 const links: SidebarLinksT[] = [
   {
-    icon: <LayoutDashboard size={16} />,
-    label: "Dashboard",
-    href: "/dashboard",
-  },
-  {
     icon: <NotebookText size={16} />,
     label: "Forms",
     href: "/forms",
-  },
-  {
-    icon: <ChartCandlestick size={16} />,
-    label: "Responses",
-    href: "/responses",
-  },
-  {
-    icon: <ChartNoAxesColumn size={16} />,
-    label: "Analytics",
-    href: "/analytics",
-  },
-  {
-    icon: <Workflow size={16} />,
-    label: "Integrations",
-    href: "/integrations",
-  },
-  {
-    icon: <Settings size={16} />,
-    label: "Settings",
-    href: "/settings",
   },
   {
     icon: <NotepadTextDashed size={16} />,

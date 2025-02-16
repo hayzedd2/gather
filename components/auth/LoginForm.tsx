@@ -57,7 +57,7 @@ const LoginForm = () => {
           },
           onSuccess() {
             setLoading(false);
-            router.push("/dashboard");
+            router.push("/forms");
           },
           onError: (ctx) => {
             setLoading(false);

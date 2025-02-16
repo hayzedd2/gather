@@ -64,6 +64,7 @@ const ResponseForm = ({
         onSuccess: () => {
           toast.success("Your response is submitted succesfully")
           setHasSubmitted(true);
+          form.reset()
           const params = new URLSearchParams(searchParams);
           params.set("success", "true");
           replace(`${pathname}?${params.toString()}`);

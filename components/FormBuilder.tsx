@@ -55,7 +55,7 @@ const FormBuilder = () => {
     }
   };
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen ">
       <div className="w-full  flex  flex-col  flex-1 bg-[#fafafa] relative">
         <FormControlTab view={view} setView={setView} />
         <div className="max-w-[40rem] p-6 mx-auto w-full ">

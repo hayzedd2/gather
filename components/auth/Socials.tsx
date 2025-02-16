@@ -8,7 +8,7 @@ export const Socials = ({ type }: { type: "up" | "in" }) => {
   const signInWithGoogle = async () => {
    const {data, error}=  await authClient.signIn.social({
       provider: "google",
-      callbackURL : "/dashboard"
+      callbackURL : "/forms"
     });
     if(error){
       toast.error("An error occured, please try again")

@@ -44,7 +44,7 @@ const RegisterForm = () => {
           email,
           name,
           password,
-          callbackURL: "/dashboard",
+          callbackURL: "/forms",
         },
         {
           onResponse: () => {
