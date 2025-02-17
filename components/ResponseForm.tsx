@@ -3,7 +3,7 @@ import { createFormDefaultValues } from "@/helpers/createFormdefaultValues";
 import { generateZodSchema } from "@/helpers/generateZodSchema";
 import { ResponseFormProps } from "@/types/type";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import {
@@ -32,6 +32,8 @@ import { SvgLoading } from "./SvgLoading";
 import { toast } from "sonner";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SuccessMessage from "./SuccessMessage";
+import { Slider } from "./ui/slider";
+import { Star } from "lucide-react";
 
 const ResponseForm = ({
   id,
@@ -46,14 +48,20 @@ const ResponseForm = ({
   const pathname = usePathname();
   const { replace } = useRouter();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-
+  const [sliderVal, setSliderVal] = useState(0);
   const form = useForm<z.infer<typeof generatedSchema>>({
     resolver: zodResolver(generatedSchema),
     defaultValues,
   });
 
+  useEffect(() => {
+    formConfig.map((f) => {
+      if (f.type == "slider") {
+        setSliderVal(f.defaultValue);
+      }
+    });
+  }, [formConfig]);
   const { mutate, isPending: loading } = useSendFormResponse(id);
-
   const handleSubmit = (data: z.infer<typeof generatedSchema>) => {
     const isValid = generatedSchema.safeParse(data);
     if (!isValid.success) {
@@ -62,9 +70,9 @@ const ResponseForm = ({
     try {
       mutate(data, {
         onSuccess: () => {
-          toast.success("Your response is submitted succesfully")
+          toast.success("Your response is submitted succesfully");
           setHasSubmitted(true);
-          form.reset()
+          form.reset();
           const params = new URLSearchParams(searchParams);
           params.set("success", "true");
           replace(`${pathname}?${params.toString()}`);
@@ -181,7 +189,6 @@ const ResponseForm = ({
                             <FormControl>
                               <Textarea
                                 placeholder={c.placeholder && c.placeholder}
-                               
                                 {...field}
                               />
                             </FormControl>
@@ -294,6 +301,93 @@ const ResponseForm = ({
                             <FormMessage />
                           </FormItem>
                         )}
+                      />
+                    )}
+                    {c.type == "slider" && (
+                      <FormField
+                        control={form.control}
+                        name={c.id}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center justify-between">
+                              <span>
+                                {" "}
+                                {c.label}
+                                {c.required && "*"}
+                              </span>
+                              <span>{sliderVal}</span>
+                            </FormLabel>
+                            <Slider
+                              value={[field.value || c.defaultValue]}
+                              onValueChange={(value) => {
+                                field.onChange(value[0]);
+                                setSliderVal(value[0]);
+                              }}
+                              aria-required={c.required}
+                              min={c.baseNumber}
+                              defaultValue={[c.defaultValue]}
+                              max={c.maxNumber}
+                              step={c.steps}
+                            />
+
+                            <FormDescription>
+                              {c.description && c.description}
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                    {c.type === "rating" && (
+                      <FormField
+                        control={form.control}
+                        name={c.id}
+                        render={({ field }) => {
+                          const [hoveredIndex, setHoveredIndex] = useState<
+                            number | null
+                          >(null);
+
+                          return (
+                            <FormItem>
+                              <FormLabel>
+                                {c.label}
+                                {c.required && "*"}
+                              </FormLabel>
+
+                              <div className="flex space-x-1">
+                                {Array.from({ length: c.length }).map(
+                                  (_, i) => {
+                                    const isFilled =
+                                      i < (hoveredIndex ?? field.value ?? 0);
+
+                                    return (
+                                      <Star
+                                        key={i}
+                                        size={18}
+                                        className={`cursor-pointer transition-all icon-yellow ${
+                                          isFilled
+                                            ? " fill-yellow-500"
+                                            : ""
+                                        }`}
+                                        
+                                        onMouseEnter={() =>
+                                          setHoveredIndex(i + 1)
+                                        }
+                                        onMouseLeave={() =>
+                                          setHoveredIndex(null)
+                                        }
+                                        onClick={() => field.onChange(i + 1)}
+                                      />
+                                    );
+                                  }
+                                )}
+                              </div>
+
+                              <FormDescription>{c.description}</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          );
+                        }}
                       />
                     )}
                   </div>

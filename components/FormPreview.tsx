@@ -24,7 +24,6 @@ const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);
   const [sliderVal, setSliderVal] = useState([0]);
   const settingsFields = useSettingsFormStore((s) => s.settingFields);
-  let value = [0]
   const renderField = (field: FormField) => {
     const commonProps = {
       id: field.id,
@@ -104,7 +103,6 @@ const FormPreview = () => {
         return (
           <Slider
             onValueChange={(v) => {
-              value = v
               setSliderVal(v);
             }}
             step={field.steps}
@@ -159,7 +157,7 @@ const FormPreview = () => {
             {settingsFields.description}
           </h5>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-6">
           {fields.map((field) => (
             <div key={field.id} className="space-y-2 ">
               <Label

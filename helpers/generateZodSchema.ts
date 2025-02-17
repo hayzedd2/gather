@@ -70,7 +70,18 @@ export function generateZodSchema(config: FormField[]) {
           );
         }
         break;
-
+      case "slider":
+      case "rating":
+        fieldSchema = z.coerce.number({
+          invalid_type_error: `${field.label || "This field"} must be a number`,
+        });
+        if (field.required) {
+          fieldSchema = (fieldSchema as z.ZodNumber).min(
+            1,
+            `${field.label || "This field"} is required`
+          );
+        }
+        break;
       case "select":
       case "radio-group":
         fieldSchema = z.string();
