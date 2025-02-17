@@ -73,6 +73,18 @@ export interface TextareaField extends BaseField {
   };
 }
 
+export interface RatingField extends BaseField {
+  type: "rating";
+  length: number;
+}
+
+export interface SliderField extends BaseField {
+  type: "slider";
+  defaultValue:number
+  baseNumber: number;
+  maxNumber: number;
+  steps: number;
+}
 export type FormField =
   | TextField
   | NumberField
@@ -80,16 +92,9 @@ export type FormField =
   | SelectField
   | CheckboxGroupField
   | RadioGroupField
-  | TextareaField;
-
-export type FormFieldT =
-  | TextField
-  | NumberField
-  | EmailField
-  | SelectField
-  | CheckboxGroupField
-  | RadioGroupField
-  | TextareaField;
+  | TextareaField
+  | RatingField
+  | SliderField;
 
 export type FieldType = FormField["type"];
 
@@ -138,7 +143,7 @@ export interface FormSettingsControllerProps {
 export interface FormActionProps {
   onPublish: () => void;
   isPending: boolean;
-  type?:"edit"|"new"
+  type?: "edit" | "new";
 }
 export interface FormPayloadProps {
   title: string;
@@ -155,7 +160,7 @@ export interface FormResponseProps {
   description: string;
   buttonText: string;
   formConfig: [];
-  viewCount:number
+  viewCount: number;
   _count: Record<"submissions", number>;
 }
 
@@ -198,5 +203,5 @@ export interface SingleFormAnalyticsProps {
   totalSubmissions: number;
   countryData: CountryDataProps[];
   dailySubmissions: DailySubmissionsProps[];
-  viewCount:number
+  viewCount: number;
 }

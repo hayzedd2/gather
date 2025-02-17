@@ -22,7 +22,19 @@ export const createDefaultValues = (type: FieldType) => {
         ...baseField,
         placeholder: "",
       };
-
+    case "rating":
+      return {
+        ...baseField,
+        length: 5,
+      };
+    case "slider":
+      return {
+        ...baseField,
+        defaultValue: 10,
+        baseNumber: 10,
+        maxNumber: 50,
+        steps: 10,
+      };
     default:
       return baseField;
   }

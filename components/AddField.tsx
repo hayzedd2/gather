@@ -52,6 +52,16 @@ const AddField = () => {
       label: "Radio",
       about: "Single selection",
     },
+    {
+      key: "rating",
+      label: "Rating",
+      about: "Rating field",
+    },
+    {
+      key: "slider",
+      label: "Slider",
+      about: "Slider field",
+    },
   ];
 
   return (

@@ -1,7 +1,7 @@
 import { updateAnalytics } from "@/actions/analytics";
 import { auth } from "@/lib/auth";
 import { prismaDb } from "@/lib/db";
-import { FormFieldT } from "@/types/type";
+import { FormField } from "@/types/type";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
@@ -44,12 +44,12 @@ export const GET = async (
       return Response.json({ message: "Form not found" }, { status: 404 });
     }
     const submissionsCount = formDetails._count.submissions;
-    const labels = (formDetails.formConfig as unknown as FormFieldT[]).map(
+    const labels = (formDetails.formConfig as unknown as FormField[]).map(
       (field) => field.label
     );
     const submissions = formDetails.submissions.map((submission: any) => {
       const submissionData: Record<string, string | string[]> = {};
-      (formDetails.formConfig as unknown as FormFieldT[]).forEach((field) => {
+      (formDetails.formConfig as unknown as FormField[]).forEach((field) => {
         const fieldValue = submission.data[field.id];
         if ("options" in field) {
           if (field.type === "checkbox-group") {

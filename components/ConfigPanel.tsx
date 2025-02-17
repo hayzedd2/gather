@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Trash2 } from "lucide-react";
+import { Star, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -113,6 +113,77 @@ const ConfigPanel = () => {
                   </div>
 
                   {"options" in field && <OptionsEditor field={field} />}
+
+                  {field.type == "rating" && (
+                    <div className="w-full">
+                      <Label>Length</Label>
+                      <Input
+                        value={field.length || ""}
+                        type="number"
+                        onChange={(e) =>
+                          updateField(field.id, {
+                            length: Number(e.target.value),
+                          })
+                        }
+                      />
+                    </div>
+                  )}
+                  {field.type == "slider" && (
+                    <div className="space-y-2">
+                      <div className="flex gap-2">
+                        <div className="w-full">
+                          <Label>Base number</Label>
+                          <Input
+                            value={field.baseNumber || ""}
+                            type="number"
+                            onChange={(e) =>
+                              updateField(field.id, {
+                                baseNumber: Number(e.target.value),
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="w-full">
+                          <Label>Max number</Label>
+                          <Input
+                            value={field.maxNumber || ""}
+                            type="number"
+                            onChange={(e) =>
+                              updateField(field.id, {
+                                maxNumber: Number(e.target.value),
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <div className="w-full">
+                          <Label>DefaultValue</Label>
+                          <Input
+                            value={field.defaultValue || ""}
+                            type="number"
+                            onChange={(e) =>
+                              updateField(field.id, {
+                                defaultValue: Number(e.target.value),
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="w-full">
+                          <Label>Steps</Label>
+                          <Input
+                            value={field.steps || ""}
+                            type="number"
+                            onChange={(e) =>
+                              updateField(field.id, {
+                                steps: Number(e.target.value),
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Validation Settings */}
                   {/* <ValidationSettings field={field} /> */}

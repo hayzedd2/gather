@@ -16,11 +16,15 @@ import { FormField } from "@/types/type";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-
+import { Star } from "lucide-react";
+import { Slider } from "./ui/slider";
+import { useEffect, useState } from "react";
 
 const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);
+  const [sliderVal, setSliderVal] = useState([0]);
   const settingsFields = useSettingsFormStore((s) => s.settingFields);
+  let value = [0]
   const renderField = (field: FormField) => {
     const commonProps = {
       id: field.id,
@@ -46,7 +50,6 @@ const FormPreview = () => {
       case "select":
         return (
           <div>
-           
             <Select>
               <SelectTrigger>
                 <SelectValue
@@ -61,14 +64,12 @@ const FormPreview = () => {
                 ))}
               </SelectContent>
             </Select>
-           
           </div>
         );
 
       case "checkbox-group":
         return (
           <div className="space-y-2 ">
-          
             {field.options.map((option) => (
               <div key={option.value} className="flex items-center space-x-3">
                 <Checkbox id={`${field.id}-${option.value}`} />
@@ -80,8 +81,37 @@ const FormPreview = () => {
                 </Label>
               </div>
             ))}
-   
           </div>
+        );
+      case "rating":
+        return (
+          <div className="flex gap-1">
+            {Array.from({ length: field.length }).map((_, i) => (
+              <Star
+                key={i}
+                size={16}
+                onClick={() => console.log(i)}
+                className="icon-yellow cursor-pointer"
+              />
+            ))}
+          </div>
+        );
+
+      case "slider":
+       useEffect(()=>{
+        setSliderVal([field.defaultValue])
+       },[field.defaultValue])
+        return (
+          <Slider
+            onValueChange={(v) => {
+              value = v
+              setSliderVal(v);
+            }}
+            step={field.steps}
+            defaultValue={[field.defaultValue]}
+            max={field.maxNumber}
+            min={field.baseNumber}
+          />
         );
 
       case "radio-group":
@@ -131,12 +161,17 @@ const FormPreview = () => {
         </div>
         <div className="space-y-4">
           {fields.map((field) => (
-            <div key={field.id} className="space-y-2">
-              <Label htmlFor={field.id}>
+            <div key={field.id} className="space-y-2 ">
+              <Label
+                className="flex justify-between items-center"
+                htmlFor={field.id}
+              >
                 {field.label || "Untitled Field"}
                 {field.required && (
                   <span className="text-destructive ml-1">*</span>
                 )}
+                {field.type == "slider" &&
+                  sliderVal.map((s, i) => <span key={i}>{s}</span>)}
               </Label>
               {renderField(field)}
               {field.description && (

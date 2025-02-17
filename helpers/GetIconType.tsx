@@ -9,7 +9,9 @@ import {
   FileType,
   List,
   MailPlus,
+  SlidersHorizontal,
   SquareCheck,
+  Star,
   Type,
   WrapText,
 } from "lucide-react";
@@ -27,13 +29,20 @@ const GetIconType = ({ type, size }: IconTypeProps) => {
     case "number":
       return <Binary size={size ? size : 18} className="icon-blue" />;
     case "select":
-      return <List size={size ? size : 18} className="icon-yellow" />;
+      return <List size={size ? size : 18} className="icon-fuchsia" />;
     case "textarea":
       return <WrapText size={size ? size : 18} className="icon-purple" />;
     case "checkbox-group":
       return <SquareCheck size={size ? size : 18} className="icon-pink" />;
     case "radio-group":
       return <CircleCheckBig size={size ? size : 18} className="icon-cyan" />;
+    case "rating":
+      return <Star size={size ? size : 18} className="icon-yellow" />;
+
+    case "slider":
+      return (
+        <SlidersHorizontal size={size ? size : 18} className="icon-emerald" />
+      );
     default:
       return <FileType size={18} />;
   }
