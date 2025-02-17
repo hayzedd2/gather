@@ -19,10 +19,15 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Star } from "lucide-react";
 import { Slider } from "./ui/slider";
 import { useEffect, useState } from "react";
+import { Switch } from "./ui/switch";
 
 const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);
-  const [sliderVal, setSliderVal] = useState([0]);
+  const [sliderValues, setSliderValues] = useState<Record<string, number>>({});
+
+  const handleSliderChange = (id: string, value: number) => {
+    setSliderValues((prev) => ({ ...prev, [id]: value }));
+  };
   const settingsFields = useSettingsFormStore((s) => s.settingFields);
   const renderField = (field: FormField) => {
     const commonProps = {
@@ -97,13 +102,14 @@ const FormPreview = () => {
         );
 
       case "slider":
-       useEffect(()=>{
-        setSliderVal([field.defaultValue])
-       },[field.defaultValue])
+        // useEffect(() => {
+        //   setSliderVal([field.defaultValue]);
+        // }, [field.defaultValue]);
         return (
           <Slider
-            onValueChange={(v) => {
-              setSliderVal(v);
+            value={[sliderValues[field.id] || field.defaultValue]}
+            onValueChange={(value) => {
+              handleSliderChange(field.id, value[0]);
             }}
             step={field.steps}
             defaultValue={[field.defaultValue]}
@@ -111,7 +117,8 @@ const FormPreview = () => {
             min={field.baseNumber}
           />
         );
-
+      case "switch":
+        return <Switch defaultChecked={field.defaultCheckedValue} />;
       case "radio-group":
         return (
           <RadioGroup className="gap-3">
@@ -161,15 +168,18 @@ const FormPreview = () => {
           {fields.map((field) => (
             <div key={field.id} className="space-y-2 ">
               <Label
-                className="flex justify-between items-center"
+                className={`flex justify-between items-center`}
                 htmlFor={field.id}
               >
-                {field.label || "Untitled Field"}
-                {field.required && (
-                  <span className="text-destructive ml-1">*</span>
+                <div>
+                  {field.label || "Untitled Field"}
+                  {field.required && (
+                    <span className="text-destructive ml-1">*</span>
+                  )}
+                </div>
+                {field.type == "slider" && (
+                  <span>{sliderValues[field.id] || field.defaultValue}</span>
                 )}
-                {field.type == "slider" &&
-                  sliderVal.map((s, i) => <span key={i}>{s}</span>)}
               </Label>
               {renderField(field)}
               {field.description && (

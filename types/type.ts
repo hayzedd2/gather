@@ -85,6 +85,10 @@ export interface SliderField extends BaseField {
   maxNumber: number;
   steps: number;
 }
+export interface SwitchField extends BaseField{
+  type:"switch"
+  defaultCheckedValue:boolean
+}
 export type FormField =
   | TextField
   | NumberField
@@ -94,7 +98,8 @@ export type FormField =
   | RadioGroupField
   | TextareaField
   | RatingField
-  | SliderField;
+  | SliderField
+  | SwitchField
 
 export type FieldType = FormField["type"];
 

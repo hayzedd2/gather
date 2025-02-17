@@ -11,6 +11,7 @@ import { FieldType } from "@/types/type";
 import GetIconType from "@/helpers/GetIconType";
 import EmptyFormPreview from "./EmptyFormPreview";
 import OptionsEditor from "./OptionsEditor";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 const ConfigPanel = () => {
   const { fields, updateField, deleteField } = useFormBuilder();
@@ -126,6 +127,34 @@ const ConfigPanel = () => {
                           })
                         }
                       />
+                    </div>
+                  )}
+                  {field.type == "switch" && (
+                    <div className="space-y-2">
+                      <Label>Default checked value</Label>
+                      <RadioGroup
+                        onValueChange={(v) =>
+                          updateField(field.id, {
+                            defaultCheckedValue: v == "true" ? true : false,
+                          })
+                        }
+                        defaultValue={
+                          field.defaultCheckedValue ? "true" : "false"
+                        }
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="true" id="r1" />
+                          <Label htmlFor="r1" className="pt-[3px]">
+                            True
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="false" id="r2" />
+                          <Label htmlFor="r2" className="pt-[3px]">
+                            False
+                          </Label>
+                        </div>
+                      </RadioGroup>
                     </div>
                   )}
                   {field.type == "slider" && (

@@ -12,6 +12,7 @@ import {
   SlidersHorizontal,
   SquareCheck,
   Star,
+  ToggleLeft,
   Type,
   WrapText,
 } from "lucide-react";
@@ -23,9 +24,9 @@ interface IconTypeProps {
 const GetIconType = ({ type, size }: IconTypeProps) => {
   switch (type) {
     case "email":
-      return <AtSign size={size ? size : 18} className="icon-green" />;
+      return <AtSign size={size ? size : 18} className="icon-red" />;
     case "text":
-      return <FileText size={size ? size : 18} className="icon-red" />;
+      return <FileText size={size ? size : 18} className="icon-sky" />;
     case "number":
       return <Binary size={size ? size : 18} className="icon-blue" />;
     case "select":
@@ -36,6 +37,7 @@ const GetIconType = ({ type, size }: IconTypeProps) => {
       return <SquareCheck size={size ? size : 18} className="icon-pink" />;
     case "radio-group":
       return <CircleCheckBig size={size ? size : 18} className="icon-cyan" />;
+
     case "rating":
       return <Star size={size ? size : 18} className="icon-yellow" />;
 
@@ -43,6 +45,8 @@ const GetIconType = ({ type, size }: IconTypeProps) => {
       return (
         <SlidersHorizontal size={size ? size : 18} className="icon-emerald" />
       );
+    case "switch":
+      return <ToggleLeft size={size ? size : 18} className="icon-violet" />;
     default:
       return <FileType size={18} />;
   }

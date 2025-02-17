@@ -48,19 +48,15 @@ const ResponseForm = ({
   const pathname = usePathname();
   const { replace } = useRouter();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [sliderVal, setSliderVal] = useState(0);
+  const [sliderValues, setSliderValues] = useState<Record<string, number>>({});
+  const handleSliderChange = (id: string, value: number) => {
+    setSliderValues((prev) => ({ ...prev, [id]: value }));
+  };
   const form = useForm<z.infer<typeof generatedSchema>>({
     resolver: zodResolver(generatedSchema),
     defaultValues,
   });
 
-  useEffect(() => {
-    formConfig.map((f) => {
-      if (f.type == "slider") {
-        setSliderVal(f.defaultValue);
-      }
-    });
-  }, [formConfig]);
   const { mutate, isPending: loading } = useSendFormResponse(id);
   const handleSubmit = (data: z.infer<typeof generatedSchema>) => {
     const isValid = generatedSchema.safeParse(data);
@@ -315,13 +311,15 @@ const ResponseForm = ({
                                 {c.label}
                                 {c.required && "*"}
                               </span>
-                              <span>{sliderVal}</span>
+                              <span>
+                                {sliderValues[c.id] || c.defaultValue}
+                              </span>
                             </FormLabel>
                             <Slider
-                              value={[field.value || c.defaultValue]}
+                              value={[sliderValues[c.id] || c.defaultValue]}
                               onValueChange={(value) => {
                                 field.onChange(value[0]);
-                                setSliderVal(value[0]);
+                                handleSliderChange(c.id, value[0]);
                               }}
                               aria-required={c.required}
                               min={c.baseNumber}
@@ -365,11 +363,8 @@ const ResponseForm = ({
                                         key={i}
                                         size={18}
                                         className={`cursor-pointer transition-all icon-yellow ${
-                                          isFilled
-                                            ? " fill-yellow-500"
-                                            : ""
+                                          isFilled ? " fill-yellow-500" : ""
                                         }`}
-                                        
                                         onMouseEnter={() =>
                                           setHoveredIndex(i + 1)
                                         }

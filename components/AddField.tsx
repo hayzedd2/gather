@@ -62,6 +62,11 @@ const AddField = () => {
       label: "Slider",
       about: "Slider field",
     },
+    {
+      key: "switch",
+      label: "Switch",
+      about: "True or false input",
+    },
   ];
 
   return (

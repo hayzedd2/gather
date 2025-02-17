@@ -72,7 +72,6 @@ export async function PUT(
     if (!form) {
       return Response.json({ message: "Form does not exist" }, { status: 400 });
     }
-    console.log("Form edited", form);
     return Response.json(form, { status: 200 });
   } catch (error: any) {
     return Response.json({ message: "Something went wrong" }, { status: 500 });

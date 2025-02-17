@@ -35,6 +35,11 @@ export const createDefaultValues = (type: FieldType) => {
         maxNumber: 50,
         steps: 10,
       };
+    case "switch":
+      return {
+        ...baseField,
+        defaultCheckedValue: false,
+      };
     default:
       return baseField;
   }
