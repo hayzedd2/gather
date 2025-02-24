@@ -39,11 +39,14 @@ export function SubmissionsTable({ id }: { id: string }) {
   const concatString = (s: string) => {
     return s.slice(0, maxLength).concat("...");
   };
+  const parseBoolean=(bool:boolean)=>{
+    return bool ? "Yes":"No"
+  }
   return (
     <div className="mt-1">
       <SubmissionPagination totalPages={totalPages} />
 
-      <div className=" my-3 overflow-x- hide-scrollbar">
+      <div className=" my-3  hide-scrollbar">
         {" "}
         <Table className=" ">
           <TableHeader>
@@ -79,7 +82,12 @@ export function SubmissionsTable({ id }: { id: string }) {
                         </PopoverContent>
                       </Popover>
                     ) : (
-                      submission[label]
+                      <span>
+                        {" "}
+                        {typeof submission[label] === "boolean"
+                          ? parseBoolean(submission[label])
+                          : submission[label]}
+                      </span>
                     )}
                   </TableCell>
                 ))}

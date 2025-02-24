@@ -75,7 +75,10 @@ const FormPreview = () => {
         return (
           <div className="space-y-2 ">
             {field.options.map((option) => (
-              <div key={option.value} className="flex items-center space-x-3">
+              <div
+                key={option.value}
+                className="flex items-center text-pop space-x-3"
+              >
                 <Checkbox id={`${field.id}-${option.value}`} />
                 <Label
                   className="font-normal pt-[3px]"
@@ -88,16 +91,26 @@ const FormPreview = () => {
           </div>
         );
       case "rating":
+        const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+        const [value, setValue] = useState<number | null>(null);
         return (
-          <div className="flex gap-1">
-            {Array.from({ length: field.length }).map((_, i) => (
-              <Star
-                key={i}
-                size={16}
-                onClick={() => console.log(i)}
-                className="icon-yellow cursor-pointer"
-              />
-            ))}
+          <div className="flex space-x-1">
+            {Array.from({ length: field.length }).map((_, i) => {
+              const isFilled = i < (hoveredIndex ?? value ?? 0);
+
+              return (
+                <Star
+                  key={i}
+                  size={18}
+                  className={`cursor-pointer transition-all icon-yellow ${
+                    isFilled ? " fill-yellow-500" : ""
+                  }`}
+                  onMouseEnter={() => setHoveredIndex(i + 1)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  onClick={() => setValue(i + 1)}
+                />
+              );
+            })}
           </div>
         );
 

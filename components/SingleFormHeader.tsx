@@ -20,7 +20,7 @@ const SingleFormHeader = ({ id }: { id: string }) => {
   }
   return (
     <div>
-      <Link href={"/forms"} className="my-6 gap-1 px-3 flex items-center">
+      <Link href={"/forms"} className="my-6 w-max gap-1 px-3 flex items-center">
         <ChevronLeft size={18} />{" "}
         <span className="mt-[2px] font-[500]">Back</span>
       </Link>

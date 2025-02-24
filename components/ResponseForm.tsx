@@ -34,6 +34,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SuccessMessage from "./SuccessMessage";
 import { Slider } from "./ui/slider";
 import { Star } from "lucide-react";
+import { Switch } from "./ui/switch";
 
 const ResponseForm = ({
   id,
@@ -64,6 +65,7 @@ const ResponseForm = ({
       console.log(isValid.error.message);
     }
     try {
+      console.log(data)
       mutate(data, {
         onSuccess: () => {
           toast.success("Your response is submitted succesfully");
@@ -163,6 +165,32 @@ const ResponseForm = ({
                                 })}
                               </SelectContent>
                             </Select>
+                            <FormDescription>
+                              {c.description && c.description}
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                    {c.type == "switch" && (
+                      <FormField
+                        control={form.control}
+                        name={c.id}
+                        render={({ field }) => (
+                          <FormItem className="flex items-center gap-1">
+                            <FormLabel>
+                              {" "}
+                              {c.label}
+                              {c.required && "*"}
+                            </FormLabel>
+                            <FormControl>
+                              <Switch
+                                defaultChecked={c.defaultCheckedValue}
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
                             <FormDescription>
                               {c.description && c.description}
                             </FormDescription>

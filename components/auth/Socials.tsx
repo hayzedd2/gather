@@ -3,16 +3,29 @@
 import { authClient } from "@/lib/auth-client";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import React from "react";
+import { SvgLoading } from "../SvgLoading";
 
 export const Socials = ({ type }: { type: "up" | "in" }) => {
+  const [isLoading, setIsLoading] = React.useState(false);
   const signInWithGoogle = async () => {
-   const {data, error}=  await authClient.signIn.social({
-      provider: "google",
-      callbackURL : "/forms"
-    });
-    if(error){
-      toast.error("An error occured, please try again")
-    }
+    await authClient.signIn.social(
+      {
+        provider: "google",
+        callbackURL: "/forms",
+      },
+      {
+        onError: () => {
+          toast.error("An error occured, please try again");
+        },
+        onRequest: () => {
+          setIsLoading(true);
+        },
+        onResponse: () => {
+          setIsLoading(false);
+        },
+      }
+    );
   };
 
   return (
@@ -21,8 +34,10 @@ export const Socials = ({ type }: { type: "up" | "in" }) => {
         variant={"outline"}
         className="w-full flex items-center"
         size={"lg"}
+        disabled={isLoading}
         onClick={signInWithGoogle}
       >
+        {isLoading && <SvgLoading />}
         <svg
           stroke="currentColor"
           fill="currentColor"

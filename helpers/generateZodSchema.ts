@@ -1,5 +1,5 @@
 import { FormField } from "@/types/type";
-import { z, ZodString } from "zod";
+import { z, ZodBoolean, ZodString } from "zod";
 
 export function generateZodSchema(config: FormField[]) {
   const schemaObject: Record<string, z.ZodType<any>> = {};
@@ -91,6 +91,14 @@ export function generateZodSchema(config: FormField[]) {
             `${field.label || "This field"} is required`
           );
         }
+        break;
+      case "switch":
+        fieldSchema = z.coerce.boolean();
+        // if(field.required){
+        //   fieldSchema = (fieldSchema as ZodBoolean).refine(value => value, {
+        //     message: `${field.label || "This field"} is required`
+        //   })
+        // }
         break;
 
       case "checkbox-group":

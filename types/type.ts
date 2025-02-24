@@ -99,7 +99,7 @@ export type FormField =
   | TextareaField
   | RatingField
   | SliderField
-  | SwitchField
+| SwitchField
 
 export type FieldType = FormField["type"];
 
