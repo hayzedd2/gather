@@ -18,7 +18,7 @@ export default function SingleFormViewSkeleton() {
             <Skeleton className="h-5 w-28" />
           </div>
         </div>
-        <div className="flex gap-3 items-center">
+        <div className="gap-3 items-center hidden md:flex">
           <Skeleton className="h-10 w-20" />
           <Skeleton className="h-10 w-24" />
         </div>

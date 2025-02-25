@@ -24,10 +24,10 @@ const SingleFormHeader = ({ id }: { id: string }) => {
         <ChevronLeft size={18} />{" "}
         <span className="mt-[2px] font-[500]">Back</span>
       </Link>
-      <div className="flex px-3 justify-between w-full items-center">
+      <div className="flex px-3 justify-between flex-wrap  w-full items-center">
         <div>
           <h4 className="font-[500] text-[1.3rem]">{form.title}</h4>
-          <div className="flex gap-4">
+          <div className="flex gap-4 flex-wrap">
             <p className="text-muted-foreground text-[15px] font-[500]">
               {form._count.submissions}{" "}
               <span>
@@ -44,11 +44,13 @@ const SingleFormHeader = ({ id }: { id: string }) => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-wrap gap-1">
           <SharedLink link={generateShareableLink(form.id)} />
           <div className="flex gap-3 items-center justify-end ">
             <Link href={`/forms/${id}/edit`}>
-              <Button variant={"outline"}>Edit form</Button>
+              <Button variant={"outline"} size={"md"}>
+                Edit form
+              </Button>
             </Link>
           </div>
         </div>

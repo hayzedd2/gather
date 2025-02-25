@@ -42,7 +42,7 @@ const SingleFormOptionsTab = ({ id }: SingleFormOptionsTabProps) => {
     }
   }, [hoveredTab]);
   return (
-    <div ref={divRef} className="flex relative">
+    <div ref={divRef} className="flex relative px-3">
       {/* for tab hovering */}
 
       <div

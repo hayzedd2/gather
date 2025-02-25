@@ -56,7 +56,7 @@ export default function AnalyticsChart({
   const aggregatedData = useMemo(() => {
     const maxAnalyticsData = 15
     const aggregated: { [key: string]: number } = {};
-    dailySubmissions.slice(0,maxAnalyticsData).forEach((item) => {
+    dailySubmissions.forEach((item) => {
       const date = new Date(item.date);
       const key = format(date, "yyyy-MM-dd'T'HH:00:00.000'Z'");
       aggregated[key] = (aggregated[key] || 0) + item.count;
@@ -72,16 +72,16 @@ export default function AnalyticsChart({
   return (
     <div>
       <div className="border rounded-lg  w-full">
-        <div className="flex w-full dotted-down mb-4">
-          <div className="flex py-3 min-w-[150px] px-5 flex-col dotted-right dotted">
+        <div className="flex w-full dotted-down mb-4 overflow-x-scroll max-w-fit hide-scrollbar">
+          <div className="flex py-3 min-w-[150px] shrink-0 px-5 flex-col dotted-right dotted">
             <h4 className="text-muted-foreground font-[500]">Submissions</h4>
             <h3 className="text-[1.5rem] font-[600]">{totalSubmissions}</h3>
           </div>
-          <div className="flex py-3 min-w-[150px] px-5 flex-col dotted-right dotted">
+          <div className="flex py-3 min-w-[150px]  shrink-0 px-5 flex-col dotted-right dotted">
             <h4 className="text-muted-foreground font-[500]">Views </h4>
             <h3 className="text-[1.5rem] font-[600]">{viewCount}</h3>
           </div>
-          <div className="flex py-3 min-w-[150px] px-5 flex-col dotted-right dotted">
+          <div className="flex py-3 min-w-[150px]  shrink-0 px-5 flex-col dotted-right dotted">
             <h4 className="text-muted-foreground font-[500]">
               Completion rate
             </h4>

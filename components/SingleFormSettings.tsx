@@ -28,12 +28,14 @@ interface SettingsProps {
   title: string;
   description: string;
   buttonText: string;
+  successMessage: string | null;
 }
 const SingleFormSettings = ({
   id,
   title,
   description,
   buttonText,
+  successMessage,
 }: SettingsProps) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const router = useRouter();
@@ -43,6 +45,7 @@ const SingleFormSettings = ({
       title,
       description,
       buttonCtaText: buttonText,
+      successMessage:successMessage || ""
     },
   });
   const { mutate: deleteform, isPending: isDeleting } = useDeleteForm();
@@ -112,7 +115,7 @@ const SingleFormSettings = ({
                         filling
                       </FormDescription>
                       <FormControl>
-                        <Input className="w-[600px]" {...field} />
+                        <Input {...field} />
                       </FormControl>
 
                       <FormMessage />
@@ -131,7 +134,7 @@ const SingleFormSettings = ({
                         Used to describe your form to your users
                       </FormDescription>
                       <FormControl>
-                        <Textarea className="w-[600px]" {...field} />
+                        <Textarea {...field} />
                       </FormControl>
 
                       <FormMessage />
@@ -151,7 +154,27 @@ const SingleFormSettings = ({
                         they are doing
                       </FormDescription>
                       <FormControl>
-                        <Input className="w-[600px]" {...field} />
+                        <Input {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="successMessage"
+                  render={({ field }) => (
+                    <FormItem className="space-y-0">
+                      <FormLabel className="font-[500] text-[1.05rem]">
+                       Success message
+                      </FormLabel>
+                      <FormDescription className="pb-2">
+                      Enter a success message to be shown to your users after they
+                      submit the form.
+                      </FormDescription>
+                      <FormControl>
+                        <Input {...field} />
                       </FormControl>
 
                       <FormMessage />

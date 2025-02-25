@@ -4,7 +4,6 @@ import FormPreview from "./FormPreview";
 import ConfigPanel from "./ConfigPanel";
 import AddField from "./AddField";
 import FormControlTab from "./FormControlTab";
-import FormActions from "./FormActions";
 import { viewT } from "@/types/type";
 import FormSettingsForm from "./FormSettingsForm";
 import { FormSettingsSchema } from "@/schema";
@@ -17,8 +16,8 @@ import { SvgLoading } from "./SvgLoading";
 
 const FormEditor = ({ id }: { id: string }) => {
   const [view, setView] = React.useState<viewT>("configure");
-  const { settingFields, resetSettingsFields } = useSettingsFormStore();
-  const { fields, resetFields } = useFormBuilder();
+  const { settingFields } = useSettingsFormStore();
+  const { fields } = useFormBuilder();
   const { mutate, isPending } = useEditForm(id);
   const onEditForm = () => {
     if (fields.length == 0) {

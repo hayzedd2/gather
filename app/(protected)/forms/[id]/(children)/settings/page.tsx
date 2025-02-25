@@ -14,6 +14,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
       title: true,
       description: true,
       buttonText: true,
+      successMessage:true
     },
   });
 
@@ -26,6 +27,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
       title={form.title}
       description={form.description}
       buttonText={form.buttonText}
+      successMessage={form.successMessage}
     />
   );
 };

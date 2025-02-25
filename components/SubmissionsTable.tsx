@@ -46,10 +46,9 @@ export function SubmissionsTable({ id }: { id: string }) {
     return bool ? "Yes" : "No";
   };
   return (
-    <div className="mt-1">
+    <div className="mt-1 px-3">
       <SubmissionPagination totalPages={totalPages} />
-
-      <div className=" my-3  hide-scrollbar">
+      <div className=" my-3  hide-scrollbar ">
         {" "}
         <Table className=" ">
           <TableHeader>

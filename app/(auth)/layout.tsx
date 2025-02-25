@@ -14,7 +14,7 @@ export default async function AuthLayout({
     redirect("/forms");
   }
   return (
-    <div className="flex p-4 justify-center items-center min-h-screen max-w-7xl mx-auto">
+    <div className="flex min-h-[100dvh]  items-center justify-center">
       {children}
     </div>
   );
