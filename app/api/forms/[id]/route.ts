@@ -51,11 +51,13 @@ export async function PUT(
       return Response.json({ message: "Form ID is required" }, { status: 400 });
     }
     const reqBody = await req.json();
-    const { fields, title, description, buttonCtaText } = reqBody;
+    const { fields, title, description, buttonCtaText, successMessage } =
+      reqBody;
     if (!fields || !title || !description) {
       return Response.json({ message: "Missing fields" }, { status: 400 });
     }
     const buttonText = buttonCtaText?.trim() || "Submit";
+    const successMsg = successMessage?.trim() || "Form submitted succesfully";
     const form = await prismaDb.form.update({
       where: {
         userId: sessions.user.id,
@@ -63,6 +65,7 @@ export async function PUT(
       },
       data: {
         title,
+        successMessage:successMsg,
         lastEdited: new Date(),
         description,
         buttonText,

@@ -25,8 +25,8 @@ export const useEditForm = (id: string) => {
       toast.success("Your form was edited sucessfully:)");
       router.push(`/forms/${data.id}/submissions`);
     },
-    onError(error) {
-      toast.error(error.message);
+    onError() {
+       toast.error("An error occured");
     },
   });
 };

@@ -14,7 +14,7 @@ const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
   }
   return (
     <div className="flex">
-      {/* <Aside user={sessions.user} /> */}
+      <Aside user={sessions.user} />
       <main className="w-full min-h-screen">{children}</main>
     </div>
   );

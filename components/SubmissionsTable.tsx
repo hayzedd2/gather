@@ -33,15 +33,18 @@ export function SubmissionsTable({ id }: { id: string }) {
   }
   const totalPages = Math.ceil(form.submissionsCount / 10);
   const maxLength = 40;
-  const shouldHavePopOver = (s: string) => {
-    return s.length >= maxLength;
+  const shouldHavePopOver = (s?: string) => {
+    if (s) {
+      s?.length >= maxLength;
+    }
+    return null;
   };
   const concatString = (s: string) => {
     return s.slice(0, maxLength).concat("...");
   };
-  const parseBoolean=(bool:boolean)=>{
-    return bool ? "Yes":"No"
-  }
+  const parseBoolean = (bool: boolean) => {
+    return bool ? "Yes" : "No";
+  };
   return (
     <div className="mt-1">
       <SubmissionPagination totalPages={totalPages} />
@@ -72,7 +75,7 @@ export function SubmissionsTable({ id }: { id: string }) {
                       <Popover>
                         <PopoverTrigger asChild>
                           <p className="cursor-pointer">
-                            {concatString(submission[label])}
+                            {concatString(submission[label].toString())}
                           </p>
                         </PopoverTrigger>
                         <PopoverContent className="w-80 shadow-none">

@@ -108,7 +108,7 @@ const ResponseForm = ({
         </div>
       ) : (
         <div className="max-w-xl mx-auto w-full py-10">
-          <div className="flex flex-col  mb-10">
+          <div className="flex flex-col mb-7">
             <h4 className="text-[1.6rem] font-[600] ">{title}</h4>
             <h6 className="font-[500] text-regular text-[1.1rem]">
               {description}
@@ -116,7 +116,7 @@ const ResponseForm = ({
           </div>
           <Form {...form}>
             <form
-              className="space-y-4"
+              className="space-y-6"
               onSubmit={form.handleSubmit(handleSubmit)}
             >
               {formConfig.map((c) => {
@@ -198,7 +198,12 @@ const ResponseForm = ({
                         control={form.control}
                         name={c.id}
                         render={({ field }) => (
-                          <FormItem className="flex items-center gap-1">
+                          <FormItem className="flex flex-col  gap-1">
+                             <FormLabel>
+                              {" "}
+                              {c.label}
+                              {c.required && "*"}
+                            </FormLabel>
                             <FormControl>
                               <Switch
                                 defaultChecked={c.defaultCheckedValue}
@@ -206,11 +211,7 @@ const ResponseForm = ({
                                 onCheckedChange={field.onChange}
                               />
                             </FormControl>
-                            <FormLabel>
-                              {" "}
-                              {c.label}
-                              {c.required && "*"}
-                            </FormLabel>
+                           
 
                             <FormDescription>
                               {c.description && c.description}
