@@ -30,7 +30,6 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { useSendFormResponse } from "@/hooks/useSendFormResponse";
 import { SvgLoading } from "./SvgLoading";
 import { toast } from "sonner";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SuccessMessage from "./SuccessMessage";
 import { Slider } from "./ui/slider";
 import { Star } from "lucide-react";
@@ -42,12 +41,10 @@ const ResponseForm = ({
   title,
   description,
   formConfig,
+  successMessage,
 }: ResponseFormProps) => {
   const generatedSchema = generateZodSchema(formConfig);
   const defaultValues = createFormDefaultValues(formConfig);
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [sliderValues, setSliderValues] = useState<Record<string, number>>({});
   const handleSliderChange = (id: string, value: number) => {
@@ -62,18 +59,15 @@ const ResponseForm = ({
   const handleSubmit = (data: z.infer<typeof generatedSchema>) => {
     const isValid = generatedSchema.safeParse(data);
     if (!isValid.success) {
-      console.log(isValid.error.message);
+      toast.error("Please fill all required fields");
     }
     try {
-      console.log(data)
       mutate(data, {
         onSuccess: () => {
           toast.success("Your response is submitted succesfully");
           setHasSubmitted(true);
+          setSliderValues({})
           form.reset();
-          const params = new URLSearchParams(searchParams);
-          params.set("success", "true");
-          replace(`${pathname}?${params.toString()}`);
         },
       });
     } catch (err) {
@@ -81,11 +75,37 @@ const ResponseForm = ({
       console.log(err);
     }
   };
-  const showSuccess = searchParams.get("success") === "true" && hasSubmitted;
   return (
     <>
-      {showSuccess ? (
-        <SuccessMessage title={title} id={id} />
+      {hasSubmitted ? (
+        <div>
+          <div className=" w-full flex flex-col items-start ">
+            <h4 className="text-[1.6rem] font-[600] ">{title}</h4>
+            <h6 className="font-[500] text-regular text-[1.1rem]">
+              {successMessage || " Thanks for submitting your info!"}
+            </h6>
+
+            <div className="w-full flex justify-end">
+              <Button
+                variant={"link"}
+                onClick={() => setHasSubmitted(false)}
+                className="px-0"
+              >
+                <span>Submit another response</span>
+              </Button>
+            </div>
+          </div>
+          <div className=" mt-auto absolute bottom-0 items-center justify-center ">
+            <div className="max-w-[300px] mx-auto flex gap-1 flex-col text-center my-5">
+              <p className="text-regular text-[14px] font-[500]">
+                This form is powered by{" "}
+                <a href="" className="underline underline-offset-2">
+                  Gather
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="max-w-xl mx-auto w-full py-10">
           <div className="flex flex-col  mb-10">
@@ -179,11 +199,6 @@ const ResponseForm = ({
                         name={c.id}
                         render={({ field }) => (
                           <FormItem className="flex items-center gap-1">
-                            <FormLabel>
-                              {" "}
-                              {c.label}
-                              {c.required && "*"}
-                            </FormLabel>
                             <FormControl>
                               <Switch
                                 defaultChecked={c.defaultCheckedValue}
@@ -191,6 +206,12 @@ const ResponseForm = ({
                                 onCheckedChange={field.onChange}
                               />
                             </FormControl>
+                            <FormLabel>
+                              {" "}
+                              {c.label}
+                              {c.required && "*"}
+                            </FormLabel>
+
                             <FormDescription>
                               {c.description && c.description}
                             </FormDescription>

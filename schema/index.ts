@@ -32,6 +32,7 @@ export const FormSettingsSchema = z.object({
   }),
   buttonCtaText: z.string().optional(),
   saveAsTemplate: z.boolean(),
+  successMessage: z.string().optional(),
 });
 
 export const SingleFormSettingsSchema = z.object({
@@ -42,4 +43,5 @@ export const SingleFormSettingsSchema = z.object({
     message: "Form description is required",
   }),
   buttonCtaText: z.string().optional(),
+  successMessage: z.string().optional(),
 });

@@ -1,7 +1,8 @@
 "use client";
 
 import { ViewProps, viewT } from "@/types/type";
-import { Bolt, Eye, Settings } from "lucide-react";
+import { Bolt, ChevronLeft, Eye, Settings } from "lucide-react";
+import Link from "next/link";
 import React, { useEffect } from "react";
 import { useState } from "react";
 
@@ -28,7 +29,16 @@ const FormControlTab = ({ view, setView }: ViewProps) => {
   ];
 
   return (
-    <div className="p-4 z-10  w-full sticky top-0 bg-[#fafafa]  flex items-center justify-center">
+    <div className="p-4 z-10  w-full sticky top-0 bg-[#fafafa]  flex items-center justify-between">
+      <div className="back ">
+        <Link
+          href={"/forms"}
+          className="w-max gap-1 px-3 flex items-center"
+        >
+          <ChevronLeft size={18} />{" "}
+          <span className="mt-[2px] font-[500]">Back</span>
+        </Link>
+      </div>
       <div
         ref={divRef}
         className="p-[6px] rounded-lg gap-3  flex bg-white relative"
@@ -54,6 +64,7 @@ const FormControlTab = ({ view, setView }: ViewProps) => {
           );
         })}
       </div>
+      <div></div>
     </div>
   );
 };

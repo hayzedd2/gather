@@ -13,6 +13,7 @@ export const useSettingsFormStore = create<useSettingsFormStoreProps>(
       description: "",
       buttonCtaText: "",
       saveAsTemplate: false,
+      successMessage:""
     },
     resetSettingsFields: () =>
       set({

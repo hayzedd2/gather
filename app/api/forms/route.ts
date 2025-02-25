@@ -11,7 +11,8 @@ export const POST = async (req: NextRequest) => {
       return Response.json({ message: "Unauthorized" }, { status: 401 });
     }
     const reqBody = await req.json();
-    const { fields, title, description, buttonCtaText } = reqBody;
+    const { fields, title, description, buttonCtaText, successMessage } =
+      reqBody;
     if (!fields || !title || !description) {
       return Response.json({ message: "Missing fields" }, { status: 400 });
     }
@@ -22,12 +23,13 @@ export const POST = async (req: NextRequest) => {
         { status: 500 }
       );
     }
-    console.log("existing form is", existingForm)
     const buttonText = buttonCtaText?.trim() || "Submit";
+    const successMsg = successMessage?.trim() || "Form submitted succesfully";
     const createdForm = await prismaDb.form.create({
       data: {
         userId: sessions.user.id,
         title,
+        successMessage: successMsg,
         description,
         buttonText,
         formConfig: fields,

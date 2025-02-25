@@ -35,8 +35,7 @@ const FormSettingsForm = () => {
 
   const onSubmit = (values: z.infer<typeof FormSettingsSchema>) => {
     saveFields(values);
-    toast.success("Settings saved!")
-    console.log("Form submitted", values);
+    toast.success("Settings saved!");
   };
   return (
     <div className="">
@@ -49,7 +48,7 @@ const FormSettingsForm = () => {
           </p>
         </div>
       </div>
-      <div className="max-w-2xl mx-auto bg-white p-5 rounded-lg my-5">
+      <div className="max-w-2xl my-3 mx-auto bg-white p-5 rounded-lg ">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <FormField
@@ -60,7 +59,6 @@ const FormSettingsForm = () => {
                   <FormLabel>Form title*</FormLabel>
                   <FormControl>
                     <Input
-                      //   value={settingFields?.title}
                       placeholder="Enter  form title.."
                       {...field}
                     />
@@ -77,17 +75,16 @@ const FormSettingsForm = () => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Form description</FormLabel>
+                  <FormLabel>Form description*</FormLabel>
                   <FormControl>
                     <Textarea
-                      //   value={settingFields?.description}
                       className="resize-none"
                       placeholder="Enter form description.."
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Give your users description about the form they are fillng
+                    Give your users description about the form they are filling
                     (optional).
                   </FormDescription>
                   <FormMessage />
@@ -101,15 +98,31 @@ const FormSettingsForm = () => {
                 <FormItem>
                   <FormLabel>Button CTA text*</FormLabel>
                   <FormControl>
-                    <Input
-                      //   value={settingFields?.buttonCtaText}
-                      placeholder="e.g Submit complaint"
-                      {...field}
-                    />
+                    <Input placeholder="e.g Submit complaint" {...field} />
                   </FormControl>
                   <FormDescription>
                     Enter a well-descriptive button text, telling your users
                     what they are doing.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="successMessage"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Success message</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="e.g Complaint submitted successfully"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Enter a success message to be shown to your users after they
+                    submit the form.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

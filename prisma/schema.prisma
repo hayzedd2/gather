@@ -72,6 +72,7 @@ model Form {
   title       String         
   description String
   buttonText  String
+  successMessage String?
   formConfig  Json
   createdAt   DateTime       @default(now())
   lastEdited  DateTime       @default(now())

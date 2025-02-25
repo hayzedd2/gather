@@ -14,6 +14,7 @@ interface FormEditProps {
     description: string;
     buttonText: string;
     formConfig: JsonValue;
+    successMessage: string | null;
   };
 }
 const FormBuilderEdit = ({ form }: FormEditProps) => {
@@ -25,6 +26,7 @@ const FormBuilderEdit = ({ form }: FormEditProps) => {
       description: form.description,
       buttonCtaText: form.buttonText,
       saveAsTemplate: false,
+      successMessage:  form.successMessage || "",
     });
     setFields(form.formConfig as unknown as FormField[]);
   }, [form]);

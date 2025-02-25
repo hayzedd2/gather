@@ -15,6 +15,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
       select: {
         id: true,
         title: true,
+        successMessage: true,
         description: true,
         buttonText: true,
         formConfig: true,
@@ -23,7 +24,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     IncrementView(id),
   ]);
   if (!form) {
-    return <ErrorMessage message="Could not find form"/>;
+    return <ErrorMessage message="Could not find form" />;
   }
 
   return (
@@ -32,8 +33,9 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         id={form.id}
         title={form.title}
         buttonText={form.buttonText as string}
-      description={form.description}
+        description={form.description}
         formConfig={form.formConfig as unknown as FormField[]}
+        successMessage={form.successMessage}
       />
     </section>
   );

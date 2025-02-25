@@ -23,8 +23,10 @@ export async function PUT(
     if (!validData.success) {
       return Response.json({ message: "Missing fields" }, { status: 400 });
     }
-    const { title, description, buttonCtaText } = validData.data;
+    const { title, description, buttonCtaText, successMessage } =
+      validData.data;
     const buttonText = buttonCtaText?.trim() || "Submit";
+    const successMsg = successMessage?.trim() || "Form submitted succesfully";
     const existingForm = await getFormByTitle(sessions.user.id, title);
     if (existingForm && existingForm.id != id) {
       return Response.json(
@@ -39,6 +41,7 @@ export async function PUT(
       },
       data: {
         title,
+        successMessage: successMsg,
         lastEdited: new Date(),
         description,
         buttonText,

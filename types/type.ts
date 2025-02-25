@@ -139,6 +139,8 @@ export interface FormSettingProps {
   description: string;
   buttonCtaText?: string | undefined;
   saveAsTemplate: boolean;
+  successMessage?:string
+  
 }
 
 export interface FormSettingsControllerProps {
@@ -165,6 +167,7 @@ export interface FormResponseProps {
   description: string;
   buttonText: string;
   formConfig: [];
+ 
   viewCount: number;
   _count: Record<"submissions", number>;
 }
@@ -183,6 +186,7 @@ export interface ResponseFormProps {
   title: string;
   buttonText: string;
   formConfig: FormField[];
+  successMessage:string | null
 }
 
 export interface CountryAnalyticsDataProps {

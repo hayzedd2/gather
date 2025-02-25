@@ -17,16 +17,16 @@ const FormBuilder = () => {
   const [view, setView] = React.useState<viewT>("configure");
   const { settingFields, resetSettingsFields } = useSettingsFormStore();
   const { fields, updateField, resetFields } = useFormBuilder();
-  const validateAllFields = () => {
-    fields.forEach((field) => {
-      if (field.label.trim().length === 0) {
-        updateField(field.id, { label: "Untitled Field" });
-      }
-    });
-  };
+  // const validateAllFields = () => {
+  //   fields.forEach((field) => {
+  //     if (field.label.trim().length === 0) {
+  //       updateField(field.id, { label: "Untitled Field" });
+  //     }
+  //   });
+  // };
   const { mutate, isPending } = useCreateform();
   const onPublishForm = () => {
-    validateAllFields();
+    // validateAllFields();
     if (fields.length == 0) {
       toast.warning("Add at least one form field");
       return;
@@ -58,7 +58,7 @@ const FormBuilder = () => {
     <div className="flex min-h-screen ">
       <div className="w-full  flex  flex-col  flex-1 bg-[#fafafa] relative">
         <FormControlTab view={view} setView={setView} />
-        <div className="max-w-[40rem] p-6 mx-auto w-full ">
+        <div className="max-w-[40rem]  mx-auto w-full ">
           {view == "configure" && <ConfigPanel />}
           {view == "preview" && <FormPreview />}
           {view == "settings" && <FormSettingsForm />}
