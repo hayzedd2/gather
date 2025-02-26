@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import SingleFormHeader from "@/components/SingleFormHeader";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -22,9 +23,12 @@ const SingleFormLayout = async ({
     return null;
   }
   return (
-    <div className="max-w-5xl mx-auto py-10">
-      <SingleFormHeader id={id} />
-      {children}
+    <div>
+      <Navbar />
+      <div className="max-w-5xl mx-auto mb-5">
+        <SingleFormHeader id={id} />
+        {children}
+      </div>
     </div>
   );
 };

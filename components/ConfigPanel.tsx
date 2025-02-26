@@ -14,7 +14,7 @@ import OptionsEditor from "./OptionsEditor";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 const ConfigPanel = () => {
-  const { fields, updateField, deleteField } = useFormBuilder();
+  const { fields, updateField, deleteField, resetFields } = useFormBuilder();
   const [selectedField, setSelectedField] = React.useState<string | null>(null);
 
   if (fields.length == 0) {
@@ -239,6 +239,9 @@ const ConfigPanel = () => {
             )}
           </div>
         ))}
+      </div>
+      <div className="w-full flex justify-end">
+        <Button variant={"link"} onClick={resetFields}>Clear all</Button>
       </div>
     </div>
   );

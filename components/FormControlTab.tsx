@@ -3,12 +3,14 @@
 import { ViewProps, viewT } from "@/types/type";
 import { Bolt, ChevronLeft, Eye, Settings } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useState } from "react";
 
 const FormControlTab = ({ view, setView }: ViewProps) => {
   const divRef = React.useRef<HTMLDivElement>(null);
   const [activeStyles, setActiveStyles] = useState({});
+  const router = useRouter();
   useEffect(() => {
     if (divRef.current && view) {
       const activeItem = divRef.current.querySelector(`[data-id="${view}"]`);
@@ -31,13 +33,13 @@ const FormControlTab = ({ view, setView }: ViewProps) => {
   return (
     <div className="p-4 z-10  w-full sticky top-0 bg-[#fafafa]  flex items-center justify-between">
       <div className="back ">
-        <Link
-          href={"/forms"}
+        <button
+          onClick={() => router.back()}
           className="w-max gap-1 px-3 flex items-center"
         >
           <ChevronLeft size={18} />{" "}
           <span className="mt-[2px] font-[500]">Back</span>
-        </Link>
+        </button>
       </div>
       <div
         ref={divRef}

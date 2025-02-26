@@ -6,6 +6,8 @@ import { useFormBuilder } from "@/hooks/useFormBuilder";
 import { JsonValue } from "@prisma/client/runtime/library";
 import React from "react";
 import FormEditor from "./FormEditor";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import ErrorMessage from "./ErrorMessage";
 
 interface FormEditProps {
   form: {
@@ -30,6 +32,14 @@ const FormBuilderEdit = ({ form }: FormEditProps) => {
     });
     setFields(form.formConfig as unknown as FormField[]);
   }, [form]);
+  const isMobile = useIsMobile();
+  if (isMobile) {
+    return (
+      <div className="min-h-[100dvh] flex items-center justify-center px-2">
+        <ErrorMessage message="The form builder is not optimized for mobile devices. Please open this page on a larger screen " />
+      </div>
+    );
+  }
   return (
     <div>
       <FormEditor id={form.id} />

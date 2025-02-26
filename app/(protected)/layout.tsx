@@ -1,4 +1,5 @@
 import Aside from "@/components/Aside";
+import Navbar from "@/components/Navbar";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -13,9 +14,9 @@ const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
     redirect("/login");
   }
   return (
-    <div className="flex">
-      {/* <Aside user={sessions.user} /> */}
-      <main className="w-full min-h-screen">{children}</main>
+    <div className="">
+    
+      <main className="w-full">{children}</main>
     </div>
   );
 };

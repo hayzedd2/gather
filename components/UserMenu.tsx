@@ -2,7 +2,7 @@
 
 import { UserObject } from "@/types/type";
 import React from "react";
-import { ChevronsUpDown, LogOut, Settings, User } from "lucide-react";
+import { ChevronsUpDown, Home, LogOut, Settings, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +17,8 @@ import { generateGradient } from "@/helpers/generateGradient";
 import { signOut } from "@/lib/auth-client";
 import { useFormHelpers } from "@/hooks/useFormHelpers";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import Link from "next/link";
 
 interface UserMenuProps {
   user: UserObject;
@@ -24,7 +26,7 @@ interface UserMenuProps {
 
 export function UserMenu({ user }: UserMenuProps) {
   const router = useRouter();
-  const { loading, error, setLoading } = useFormHelpers();
+  const { loading, setLoading } = useFormHelpers();
   const handleLogOut = async () => {
     await signOut({
       fetchOptions: {
@@ -34,6 +36,10 @@ export function UserMenu({ user }: UserMenuProps) {
         onSuccess: () => {
           setLoading(false);
           router.push("/login");
+        },
+        onError: () => {
+          setLoading(false);
+          toast.error("An error occured");
         },
       },
     });
@@ -47,9 +53,13 @@ export function UserMenu({ user }: UserMenuProps) {
       >
         <button
           disabled={loading}
-          className="w-full rounded-md p-[6px]  bg-[#F0F0F0] text-[#18181B] flex justify-between items-center "
+          className="w-8 h-8 rounded-full text-white font-[600] text-[14px] flex justify-center items-center"
+          style={{
+            background: generateGradient(4),
+          }}
         >
-          <div className="flex gap-2 items-center">
+          <span className="mt-1">{user.name.charAt(0)}</span>
+          {/* <div className="flex gap-2 items-center">
             <div
               className="w-8 h-8 rounded-md"
               style={{
@@ -68,31 +78,39 @@ export function UserMenu({ user }: UserMenuProps) {
                   : user.email}
               </h6>
             </div>
-          </div>
-          <ChevronsUpDown size={14} className="mr-1" />
+          </div> */}
+          {/* <ChevronsUpDown size={14} className="mr-1" /> */}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+      <DropdownMenuContent className="shadow-none border">
+        <div className="py-1 px-2">
+          <h2 className="text-[14px] font-[500]">{user.name}</h2>
+          <h4 className="text-[13px] font-[500] text-muted-foreground">
+            {user.email}
+          </h4>
+        </div>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User />
+          <DropdownMenuItem disabled className="flex justify-between items-center">
             <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            <User />
           </DropdownMenuItem>
 
-          <DropdownMenuItem>
-            <Settings />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          <Link href="/">
+            <DropdownMenuItem className="flex justify-between items-center">
+              <span>Home Page</span>
+              <Home />
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
 
-        <DropdownMenuItem disabled={loading} onClick={handleLogOut}>
-          <LogOut />
+        <DropdownMenuItem
+          disabled={loading}
+          className="flex justify-between items-center"
+          onClick={handleLogOut}
+        >
           <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          <LogOut />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

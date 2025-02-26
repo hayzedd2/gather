@@ -4,7 +4,6 @@ import FormPreview from "./FormPreview";
 import ConfigPanel from "./ConfigPanel";
 import AddField from "./AddField";
 import FormControlTab from "./FormControlTab";
-import FormActions from "./FormActions";
 import { viewT } from "@/types/type";
 import FormSettingsForm from "./FormSettingsForm";
 import { FormSettingsSchema } from "@/schema";
@@ -14,6 +13,8 @@ import { useFormBuilder } from "@/hooks/useFormBuilder";
 import { useCreateform } from "@/hooks/useCreateForm";
 import { SvgLoading } from "./SvgLoading";
 import { Button } from "./ui/button";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import ErrorMessage from "./ErrorMessage";
 
 const FormBuilder = () => {
   const [view, setView] = React.useState<viewT>("configure");
@@ -46,11 +47,19 @@ const FormBuilder = () => {
       },
     });
   };
+  const isMobile = useIsMobile();
+  if (isMobile) {
+    return (
+      <div className="min-h-[100dvh] flex items-center justify-center px-2">
+        <ErrorMessage message="The form builder is not optimized for mobile devices. Please open this page on a larger screen " />
+      </div>
+    );
+  }
   return (
     <div className="flex min-h-screen ">
       <div className="w-full  flex  flex-col  flex-1 bg-[#fafafa] relative">
         <FormControlTab view={view} setView={setView} />
-        <div className="max-w-[40rem]  mx-auto w-full ">
+        <div className="max-w-[40rem]  mx-auto w-full p-2 ">
           {view == "configure" && <ConfigPanel />}
           {view == "preview" && <FormPreview />}
           {view == "settings" && <FormSettingsForm />}
