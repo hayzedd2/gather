@@ -4,6 +4,7 @@ import { UserMenu } from "./UserMenu";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { Button } from "./ui/button";
 
 const Navbar = async () => {
   const sessions = await auth.api
@@ -12,13 +13,12 @@ const Navbar = async () => {
       throw redirect("/login");
     });
 
-  if (!sessions) {
-    return null;
-  }
   return (
     <nav className="max-w-7xl mb-3 flex justify-between items-center  mx-auto p-4">
       <div className="logo">
-        <h1 className="font-[500] text-[1.4rem]">Gather</h1>
+        <Link href={"/"}>
+          <h1 className="font-[500] text-[1.4rem]">Gather</h1>
+        </Link>
       </div>
 
       <ul className="flex gap-5 items-center text-[15px] font-[500]">
@@ -28,8 +28,14 @@ const Navbar = async () => {
         <li>
           <Link href={"/templates"}>Templates</Link>
         </li>
-        <UserMenu user={sessions.user} />
-       
+        {sessions && sessions.user ? (
+          <UserMenu user={sessions.user} />
+        ) : (
+          <div className="flex items-center gap-3  dotted-left">
+    
+            <Button>Get started for free</Button>
+          </div>
+        )}
       </ul>
     </nav>
   );

@@ -71,11 +71,9 @@ li {
 }
 
 .light-shadow {
-  box-shadow: 0 0 0 1px color(display-p3 0.0572 0.0889 0.1628/.1),
+  box-shadow: 0 0 0 1px color(display-p3 0.0572 0.0889 0.1628/0.1),
     0 2px 4px 0 color(display-p3 0 0 0/0.06);
 }
-
-
 
 .spinner-fast {
   animation: rotate-fast 0.55s linear infinite;
@@ -107,8 +105,8 @@ li {
 }
 .hide-scrollbar {
   -ms-overflow-style: none;
-  scrollbar-width: none; 
-  }
+  scrollbar-width: none;
+}
 
 .dotted-up {
   background-image: linear-gradient(to right, #ccc 33%, hsla(0, 0%, 100%, 0) 0);
@@ -119,27 +117,25 @@ li {
 
 .dotted-down {
   background-image: linear-gradient(to right, #ccc 33%, hsla(0, 0%, 100%, 0) 0);
-  background-size: 4px 1px; 
+  background-size: 4px 1px;
   background-repeat: repeat-x;
-  background-position: 0 100%; 
+  background-position: 0 100%;
 }
-
 
 .icon-green {
-
   color: rgb(16 185 129 / var(--tw-text-opacity));
 }
-.icon-red{
-  color: rgb(239 68 68 / var(--tw-text-opacity))
+.icon-red {
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
-.icon-blue{
+.icon-blue {
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
-.icon-yellow{
+.icon-yellow {
   color: rgb(245 158 11 / var(--tw-text-opacity));
 }
-.icon-purple{
+.icon-purple {
   color: rgb(99 102 241 / var(--tw-text-opacity));
 }
 .icon-orange {
@@ -205,3 +201,7 @@ li {
   color: rgb(120 113 108 / var(--tw-text-opacity));
 }
 
+.skewed {
+  transform: perspective(1000px) rotateX(25deg) rotateY(0deg);
+  transition: transform 0.5s ease-in-out;
+}
