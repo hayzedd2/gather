@@ -27,7 +27,7 @@ const FeaturesSection = () => {
         "Start with one of our professionally designed templates and customize it to match your brand.",
     },
     {
-      icon: <ChartNoAxesColumn size={40} className="icon-amber mb-2" />,
+      icon: <ChartNoAxesCombinedIcon size={40} className="icon-amber mb-2" />,
       title: "Advanced Analytics",
       description:
         "Real-time reporting and analytics to help you understand your form performance and respondent data.",
@@ -48,9 +48,9 @@ const FeaturesSection = () => {
 
   return (
     <section>
-      <div className="my-10 items-center">
+      <div className="my-12 items-center">
         <div className="w-full flex-col flex items-center justify-center">
-          <StaggerText className="text-[2rem]  text-center font-[600]">
+          <StaggerText className="text-[2.5rem] max-w-[450px] items-center justify-center leading-[2.5rem] mx-auto  text-center font-[600]">
             Powerful Features, Simple to Use
           </StaggerText>
 
@@ -59,7 +59,7 @@ const FeaturesSection = () => {
             questionnaires in seconds.
           </h6>
         </div>
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-6 mt-10 ">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-6 mt-12 ">
           {features.map((f, i) => (
             <div key={i} className="card rounded-xl  p-3">
               {f.icon}

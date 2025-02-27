@@ -15,7 +15,7 @@ interface StaggerTextProps {
 const StaggerText = ({
   children,
   tag = "p",
-  staggerDelay = 0.1,
+  staggerDelay = 0.08,
   duration = 0.6,
   y = 20,
   className = "",
@@ -54,7 +54,7 @@ const StaggerText = ({
   };
 
   return (
-    <motion.p
+    <motion.h1
       ref={ref}
       className={className}
       style={{
@@ -73,13 +73,13 @@ const StaggerText = ({
           style={{
             marginRight: "0.25em",
             marginBottom: "0.15em",
-            // display: "inline-block",
+            display: "inline-block",
           }}
         >
           {word}
         </motion.span>
       ))}
-    </motion.p>
+    </motion.h1>
   );
 };
 

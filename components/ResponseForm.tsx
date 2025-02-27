@@ -78,14 +78,13 @@ const ResponseForm = ({
   return (
     <>
       {hasSubmitted ? (
-        <div>
-          <div className=" w-full flex flex-col items-start ">
+        <div className="flex  justify-center items-center py-3 flex-col">
+          <div className=" w-full flex flex-col items-center justify-center ">
             <h4 className="text-[1.6rem] font-[600] ">{title}</h4>
             <h6 className="font-[500] text-regular text-[1.1rem]">
               {successMessage || " Thanks for submitting your info!"}
             </h6>
-
-            <div className="w-full flex justify-end">
+            <div className="w-full flex items-center justify-center ">
               <Button
                 variant={"link"}
                 onClick={() => setHasSubmitted(false)}

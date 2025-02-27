@@ -18,8 +18,9 @@ import ErrorMessage from "./ErrorMessage";
 
 const FormBuilder = () => {
   const [view, setView] = React.useState<viewT>("configure");
-  const { settingFields, resetSettingsFields } = useSettingsFormStore();
-  const { fields, resetFields } = useFormBuilder();
+  const { settingFields } = useSettingsFormStore();
+  const { fields } = useFormBuilder();
+  const isMobile = useIsMobile();
   const { mutate, isPending } = useCreateform();
   const onPublishForm = () => {
     if (fields.length == 0) {
@@ -38,16 +39,12 @@ const FormBuilder = () => {
       ...validData.data,
     };
     mutate(payLoad, {
-      onSuccess: () => {
-        resetFields();
-        resetSettingsFields();
-      },
       onError: () => {
         toast.error("An error occurred");
       },
     });
   };
-  const isMobile = useIsMobile();
+ 
   if (isMobile) {
     return (
       <div className="min-h-[100dvh] flex items-center justify-center px-2">

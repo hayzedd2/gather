@@ -10,7 +10,7 @@ export const IncrementView = async (formId: string) => {
       },
     });
   } catch (error) {
-    console.error("Failed to increment view count:", error);
+    // console.error("Failed to increment view count:", error);
     return null;
   }
 };

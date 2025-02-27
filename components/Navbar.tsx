@@ -20,7 +20,8 @@ const Navbar = async () => {
           <h1 className="font-[500] text-[1.4rem]">Gather</h1>
         </Link>
       </div>
-      {sessions && (
+
+      {sessions && sessions.user ? (
         <ul className="flex gap-5 items-center text-[15px] font-[500]">
           <li>
             <Link href={"/forms"}>My forms</Link>
@@ -28,15 +29,17 @@ const Navbar = async () => {
           <li>
             <Link href={"/templates"}>Templates</Link>
           </li>
+          <UserMenu user={sessions.user} />
         </ul>
-      )}
-
-      {sessions && sessions.user ? (
-        <UserMenu user={sessions.user} />
       ) : (
         <div className="flex items-center gap-3  dotted-left">
-            <a href="/login" className="font-[500]">Login</a>
-          <a href="/register" className="rounded-[100px] bg-black text-[14px] font-[500] hover:opacity-80 text-white py-[6px] px-[14px] cursor-pointer">
+          <a href="/login" className="font-[500]">
+            Login
+          </a>
+          <a
+            href="/register"
+            className="rounded-[100px] bg-black text-[14px] font-[500] hover:opacity-80 text-white py-[6px] px-[14px] cursor-pointer"
+          >
             Sign up
           </a>
         </div>

@@ -35,7 +35,7 @@ export function UserMenu({ user }: UserMenuProps) {
         },
         onSuccess: () => {
           setLoading(false);
-          router.push("/login");
+          router.refresh();
         },
         onError: () => {
           setLoading(false);
