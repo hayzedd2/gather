@@ -4,7 +4,7 @@ import SkewedImage from './SkewedImage'
 
 const HeroSection = () => {
   return (
-    <section>
+    <section id="#">
     <div className="flex flex-col w-full items-center justify-center ">
       <div className="hero mt-10 flex flex-col items-center">
         <StaggerText className="text-[3rem] mx-auto max-w-[450px] items-center justify-center leading-[3.4rem] text-center font-[600]">

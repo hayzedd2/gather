@@ -21,7 +21,7 @@ const StaggerText = ({
   className = "",
 }: StaggerTextProps) => {
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.8 });
   const text = React.Children.toArray(children).join(" ");
   const words = text.split(" ");
   const container = {
@@ -38,7 +38,7 @@ const StaggerText = ({
   const child = {
     hidden: {
       opacity: 0,
-      y: y,
+      y,
     },
     visible: {
       opacity: 1,

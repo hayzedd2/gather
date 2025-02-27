@@ -1,8 +1,8 @@
 import FeaturesSection from "@/components/FeaturesSection";
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import PreviewSection from "@/components/PreviewSection";
-
 
 export default function Home() {
   return (
@@ -11,6 +11,7 @@ export default function Home() {
       <HeroSection />
       <FeaturesSection />
       <PreviewSection />
+      <Footer />
     </main>
   );
 }

@@ -1,4 +1,5 @@
 import {
+  BotIcon,
   ChartNoAxesColumn,
   ChartNoAxesCombinedIcon,
   ChartPie,
@@ -6,8 +7,10 @@ import {
   HammerIcon,
   LockIcon,
   LockKeyholeIcon,
+  PlugIcon,
   PlugZap,
   ScrollTextIcon,
+  ShieldCheckIcon,
 } from "lucide-react";
 import React from "react";
 import StaggerText from "./StaggerText";
@@ -33,16 +36,24 @@ const FeaturesSection = () => {
         "Real-time reporting and analytics to help you understand your form performance and respondent data.",
     },
     {
-      icon: <LockKeyholeIcon size={40} className="icon-blue mb-2" />,
+      icon: <ShieldCheckIcon size={40} className="icon-blue mb-2" />,
       title: "Secure Submissions",
       description:
         "Data encryption, CAPTCHA protection, and GDPR compliance to keep your form data safe and secure.",
     },
     {
-      icon: <PlugZap size={40} className="icon-violet mb-2" />,
+      icon: <PlugIcon size={40} className="icon-violet mb-2" />,
       title: "Powerful Integrations",
       description:
         "Connect with your favorite tools like Google Sheets, Airtable, Notion, and more with just a few clicks.",
+      wip: true,
+    },
+    {
+      icon: <BotIcon size={40} className="icon-green mb-2" />,
+      title: "AI form builder",
+      description:
+        "Leverage AI to generate form questions, optimize layouts, and predict the best fields for higher response rates",
+        wip: true,
     },
   ];
 
@@ -63,7 +74,9 @@ const FeaturesSection = () => {
           {features.map((f, i) => (
             <div key={i} className="card rounded-xl  p-3">
               {f.icon}
-              <h3 className="text-[1.4rem]  font-[600]">{f.title}</h3>
+              <h3 className="text-[1.4rem]  font-[600]">
+                {f.title} {f.wip && <Pill s="Coming soon" />}{" "}
+              </h3>
 
               <p className="text-muted-foreground font-[500]  text-[15px]">
                 {f.description}
@@ -77,3 +90,13 @@ const FeaturesSection = () => {
 };
 
 export default FeaturesSection;
+
+const Pill = ({ s }: { s: string }) => {
+  return (
+    <span
+      className={`whitespace-nowrap   w-max  text-xs font-[500] py-1 bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/10 rounded-full px-2`}
+    >
+      {s}
+    </span>
+  );
+};
