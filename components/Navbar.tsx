@@ -20,23 +20,27 @@ const Navbar = async () => {
           <h1 className="font-[500] text-[1.4rem]">Gather</h1>
         </Link>
       </div>
+      {sessions && (
+        <ul className="flex gap-5 items-center text-[15px] font-[500]">
+          <li>
+            <Link href={"/forms"}>My forms</Link>
+          </li>
+          <li>
+            <Link href={"/templates"}>Templates</Link>
+          </li>
+        </ul>
+      )}
 
-      <ul className="flex gap-5 items-center text-[15px] font-[500]">
-        <li>
-          <Link href={"/forms"}>My forms</Link>
-        </li>
-        <li>
-          <Link href={"/templates"}>Templates</Link>
-        </li>
-        {sessions && sessions.user ? (
-          <UserMenu user={sessions.user} />
-        ) : (
-          <div className="flex items-center gap-3  dotted-left">
-    
-            <Button>Get started for free</Button>
-          </div>
-        )}
-      </ul>
+      {sessions && sessions.user ? (
+        <UserMenu user={sessions.user} />
+      ) : (
+        <div className="flex items-center gap-3  dotted-left">
+            <a href="/login" className="font-[500]">Login</a>
+          <a href="/register" className="rounded-[100px] bg-black text-[14px] font-[500] hover:opacity-80 text-white py-[6px] px-[14px] cursor-pointer">
+            Sign up
+          </a>
+        </div>
+      )}
     </nav>
   );
 };

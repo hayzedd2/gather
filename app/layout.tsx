@@ -23,7 +23,9 @@ export default function RootLayout({
     <QueryProvider>
       <html lang="en">
         <body className={`${newsReader.className} antialiased`}>
-          {children}
+      
+         {children}
+      
           <Toaster richColors />
         </body>
       </html>

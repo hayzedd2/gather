@@ -202,6 +202,6 @@ li {
 }
 
 .skewed {
-  transform: perspective(1000px) rotateX(25deg) rotateY(0deg);
+  /* transform: perspective(1000px) rotateX(25deg) rotateY(0deg); */
   transition: transform 0.5s ease-in-out;
 }
