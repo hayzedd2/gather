@@ -53,7 +53,7 @@ const FeaturesSection = () => {
       title: "AI form builder",
       description:
         "Leverage AI to generate form questions, optimize layouts, and predict the best fields for higher response rates",
-        wip: true,
+      wip: true,
     },
   ];
 
@@ -61,7 +61,7 @@ const FeaturesSection = () => {
     <section>
       <div className="my-12 items-center">
         <div className="w-full flex-col flex items-center justify-center">
-          <StaggerText className="text-[2.5rem] max-w-[450px] items-center justify-center leading-[2.5rem] mx-auto  text-center font-[600]">
+          <StaggerText className="md:text-[3rem] text-[2rem] mx-auto max-w-[350px] md:max-w-[450px] items-center justify-center leading-[2rem] md:leading-[3.4rem] text-center font-[600]">
             Powerful Features, Simple to Use
           </StaggerText>
 

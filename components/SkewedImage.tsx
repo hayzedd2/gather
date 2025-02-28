@@ -18,6 +18,8 @@ const SkewedImage = () => {
   return (
     <div ref={ref} className="mb-5 mt-[-5px]">
       <Image
+      onMouseEnter={()=>setCurrentDeg(20)}
+      onMouseLeave={()=>setCurrentDeg(30)}
         style={{
           transform: `perspective(1000px) rotateX(${currentDeg}deg) rotateY(0deg)`,
         }}

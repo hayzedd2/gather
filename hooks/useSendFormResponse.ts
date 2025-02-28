@@ -20,8 +20,8 @@ export const useSendFormResponse = (id: string) => {
       return response.json();
     },
    
-    onError(error) {
-      toast.error(error.message);
+    onError() {
+      toast.error("Something went wrong, please try again.");
     },
   });
 };

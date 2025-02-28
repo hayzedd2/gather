@@ -28,7 +28,7 @@ export const GET = async (
             data: true,
             createdAt: true,
           },
-      
+
           orderBy: {
             createdAt: "desc",
           },
@@ -100,7 +100,6 @@ export const POST = async (
     const countryRes = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/ip`);
     const { country = "Unknown" } = await countryRes.json();
     const data = await req.json();
-
     await prismaDb.$transaction(async (tx) => {
       const submission = await tx.submission.create({
         data: {
