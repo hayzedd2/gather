@@ -22,6 +22,7 @@ import { useFormHelpers } from "@/hooks/useFormHelpers";
 import { useRouter } from "next/navigation";
 import { FormError } from "../FormError";
 import { SvgLoading } from "../SvgLoading";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,7 +57,8 @@ const RegisterForm = () => {
           },
           onSuccess() {
             setLoading(false);
-            router.push("/dashboard");
+            toast.success("Signup successful!");
+            router.push("/login");
           },
           onError: (ctx) => {
             setLoading(false);
@@ -92,7 +94,11 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email*</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={loading} />
+                    <Input
+                      data-testid="email-input"
+                      {...field}
+                      disabled={loading}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,7 +111,11 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Name*</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={loading} />
+                    <Input
+                      data-testid="name-input"
+                      {...field}
+                      disabled={loading}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,6 +132,7 @@ const RegisterForm = () => {
                     <div>
                       <div className="relative">
                         <Input
+                          data-testid="password-input"
                           {...field}
                           disabled={loading}
                           type={showPassword ? "text" : "password"}
@@ -157,6 +168,7 @@ const RegisterForm = () => {
             <Button
               type="submit"
               disabled={loading}
+              data-testid="signup-btn"
               className="w-full shadow-md"
             >
               {loading && <SvgLoading />}
