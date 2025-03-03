@@ -1,5 +1,5 @@
 
-import FormAnalytics from "@/components/FormAnalytics";
+import FormAnalytics from "@/components/forms/FormAnalytics";
 import React from "react";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {

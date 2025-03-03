@@ -20,8 +20,8 @@ import {
 import { signUp } from "@/lib/auth-client";
 import { useFormHelpers } from "@/hooks/useFormHelpers";
 import { useRouter } from "next/navigation";
-import { FormError } from "../FormError";
-import { SvgLoading } from "../SvgLoading";
+import { FormError } from "../forms/FormError";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
 import { toast } from "sonner";
 
 const RegisterForm = () => {

@@ -13,7 +13,7 @@ import {
   ShieldCheckIcon,
 } from "lucide-react";
 import React from "react";
-import StaggerText from "./StaggerText";
+import StaggerText from "../reusable-comps/StaggerText";
 
 const FeaturesSection = () => {
   const features = [

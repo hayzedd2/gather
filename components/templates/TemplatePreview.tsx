@@ -1,8 +1,8 @@
 "use client";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
-import EmptyFormPreview from "./EmptyFormPreview";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import EmptyFormPreview from "../forms/EmptyFormPreview";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
@@ -10,11 +10,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { FormField } from "@/types/type";
-import { Textarea } from "./ui/textarea";
-import { Checkbox } from "./ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Textarea } from "../ui/textarea";
+import { Checkbox } from "../ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const TemplatePreview = ({ btnText }: { btnText: string }) => {
   const fields = useFormBuilder((state) => state.fields);

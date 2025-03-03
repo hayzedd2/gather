@@ -7,7 +7,7 @@ import { JsonValue } from "@prisma/client/runtime/library";
 import React from "react";
 import FormEditor from "./FormEditor";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../reusable-comps/ErrorMessage";
 
 interface FormEditProps {
   form: {

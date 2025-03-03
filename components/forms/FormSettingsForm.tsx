@@ -20,8 +20,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "./ui/textarea";
-import { Switch } from "./ui/switch";
+import { Textarea } from "../ui/textarea";
+import { Switch } from "../ui/switch";
 import { FormSettingsControllerProps } from "@/types/type";
 import { useSettingsFormStore } from "@/store/useSettingsFormStore";
 import { toast } from "sonner";

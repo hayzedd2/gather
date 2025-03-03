@@ -1,5 +1,5 @@
-import ErrorMessage from "@/components/ErrorMessage";
-import SingleFormSettings from "@/components/SingleFormSettings";
+import ErrorMessage from "@/components/reusable-comps/ErrorMessage";
+import SingleFormSettings from "@/components/forms/SingleFormSettings";
 import { prismaDb } from "@/lib/db";
 import React from "react";
 

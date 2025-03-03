@@ -8,7 +8,7 @@ import {
   SidebarHeader,
   SidebarLink,
   SidebarLinks,
-} from "@/components/Sidebar";
+} from "@/components/ui/Sidebar";
 import {
   ChartNoAxesColumn,
   NotebookText,
@@ -20,7 +20,7 @@ import {
   NotepadTextDashed,
 } from "lucide-react";
 import { SidebarLinksT, UserObject } from "@/types/type";
-import { UserMenu } from "./UserMenu";
+import { UserMenu } from "../reusable-comps/UserMenu";
 
 const links: SidebarLinksT[] = [
   {

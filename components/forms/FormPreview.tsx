@@ -1,8 +1,8 @@
 "use client";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
 import EmptyFormPreview from "./EmptyFormPreview";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
@@ -11,15 +11,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useSettingsFormStore } from "@/store/useSettingsFormStore";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { FormField } from "@/types/type";
-import { Textarea } from "./ui/textarea";
-import { Checkbox } from "./ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Textarea } from "../ui/textarea";
+import { Checkbox } from "../ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Star } from "lucide-react";
-import { Slider } from "./ui/slider";
+import { Slider } from "../ui/slider";
 import { useEffect, useState } from "react";
-import { Switch } from "./ui/switch";
+import { Switch } from "../ui/switch";
 
 const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);

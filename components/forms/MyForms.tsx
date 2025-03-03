@@ -1,12 +1,12 @@
 "use client";
-import SingleForm from "@/components/SingleForm";
+import SingleForm from "@/components/forms/SingleForm";
 import { Input } from "@/components/ui/input";
 import React, { useRef, useTransition } from "react";
 import EmptyFormsList from "./EmptyFormsList";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { Loader, Search, XCircleIcon } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useGetForms } from "@/hooks/useGetForms";
 import { FormSkeletonLoader } from "./FormSkeletonLoader";
 

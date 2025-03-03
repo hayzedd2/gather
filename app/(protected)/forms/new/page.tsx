@@ -1,5 +1,5 @@
 
-import FormBuilder from "@/components/FormBuilder";
+import FormBuilder from "@/components/forms/FormBuilder";
 import React from "react";
 
 const page = () => {

@@ -1,6 +1,6 @@
 import React from "react";
-import StaggerText from "./StaggerText";
-import DemoForm from "./DemoForm";
+import StaggerText from "../reusable-comps/StaggerText";
+import DemoForm from "../forms/DemoForm";
 
 const PreviewSection = () => {
   return (

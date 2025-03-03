@@ -20,8 +20,8 @@ import {
 import { signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useFormHelpers } from "@/hooks/useFormHelpers";
-import { SvgLoading } from "../SvgLoading";
-import { FormError } from "../FormError";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
+import { FormError } from "../forms/FormError";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);

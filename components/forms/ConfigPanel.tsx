@@ -11,7 +11,7 @@ import { FieldType } from "@/types/type";
 import GetIconType from "@/helpers/GetIconType";
 import EmptyFormPreview from "./EmptyFormPreview";
 import OptionsEditor from "./OptionsEditor";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const ConfigPanel = () => {
   const { fields, updateField, deleteField, resetFields } = useFormBuilder();

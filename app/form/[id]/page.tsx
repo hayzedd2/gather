@@ -1,6 +1,6 @@
 import { IncrementView } from "@/actions/view";
-import ErrorMessage from "@/components/ErrorMessage";
-import ResponseForm from "@/components/ResponseForm";
+import ErrorMessage from "@/components/reusable-comps/ErrorMessage";
+import ResponseForm from "@/components/forms/ResponseForm";
 import { prismaDb } from "@/lib/db";
 import { FormField } from "@/types/type";
 import React from "react";

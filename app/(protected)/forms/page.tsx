@@ -1,5 +1,5 @@
-import MyForms from "@/components/MyForms";
-import Navbar from "@/components/Navbar";
+import MyForms from "@/components/forms/MyForms";
+import Navbar from "@/components/homepage/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";

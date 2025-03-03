@@ -2,8 +2,8 @@
 import React from "react";
 import AnalyticsChart from "./AnalyticsChart";
 import { useSingleFormAnalytics } from "@/hooks/useSingleFormAnalytics";
-import MiniLoader from "./MiniLoader";
-import ErrorMessage from "./ErrorMessage";
+import MiniLoader from "../reusable-comps/MiniLoader";
+import ErrorMessage from "../reusable-comps/ErrorMessage";
 
 const FormAnalytics = ({ id }: { id: string }) => {
   const { data, isPending } = useSingleFormAnalytics(id);

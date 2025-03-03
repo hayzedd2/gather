@@ -6,6 +6,18 @@ jest.mock("@/lib/auth-client", () => ({
     email: jest.fn(),
   },
 }));
+const mockState = {
+  shipments: [
+    {
+      customer: "John Smith",
+      Pickup: "Seattle",
+      destination: "Portland",
+      status: "Delivered" as const,
+      date: "Nov 28, 2024",
+    },
+  ],
+  signUp: jest.fn(),
+};
 
 describe("User signup", () => {
   it("should sign up a user with correct credentials", async () => {

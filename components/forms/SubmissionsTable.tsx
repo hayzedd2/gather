@@ -12,8 +12,8 @@ import {
 import { useGetSingleFormSubmissions } from "@/hooks/useGetSingleFormSubmissions";
 import SubmissionPagination from "./SubmissionPagintaion";
 import { useSearchParams } from "next/navigation";
-import MiniLoader from "./MiniLoader";
-import ErrorMessage from "./ErrorMessage";
+import MiniLoader from "../reusable-comps/MiniLoader";
+import ErrorMessage from "../reusable-comps/ErrorMessage";
 import {
   Popover,
   PopoverContent,

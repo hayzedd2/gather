@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { ChevronLeft } from "lucide-react";
 import SingleFormOptionsTab from "./SingleFormOptionsTab";
 import { getRelativeTime } from "@/helpers/getRelativeTime";
-import SharedLink from "./SharedLink";
+import SharedLink from "../reusable-comps/SharedLink";
 import { generateShareableLink } from "@/helpers/generateShareableLink";
 import { useGetSingleForm } from "@/hooks/useGetSingleForm";
 import SingleFormViewSkeleton from "./SingleFormViewSkeleton";

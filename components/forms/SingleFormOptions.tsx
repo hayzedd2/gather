@@ -9,10 +9,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import React from "react";
-import Modal from "./Modal";
-import { Button } from "./ui/button";
+import Modal from "../reusable-comps/Modal";
+import { Button } from "../ui/button";
 import { useDeleteForm } from "@/hooks/useDeleteForm";
-import { SvgLoading } from "./SvgLoading";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";

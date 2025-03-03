@@ -14,8 +14,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
+} from "../ui/form";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
@@ -23,17 +23,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "./ui/textarea";
-import { Checkbox } from "./ui/checkbox";
-import { Button } from "./ui/button";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Textarea } from "../ui/textarea";
+import { Checkbox } from "../ui/checkbox";
+import { Button } from "../ui/button";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { useSendFormResponse } from "@/hooks/useSendFormResponse";
-import { SvgLoading } from "./SvgLoading";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
 import { toast } from "sonner";
-import SuccessMessage from "./SuccessMessage";
-import { Slider } from "./ui/slider";
+import SuccessMessage from "../reusable-comps/SuccessMessage";
+import { Slider } from "../ui/slider";
 import { Star } from "lucide-react";
-import { Switch } from "./ui/switch";
+import { Switch } from "../ui/switch";
 
 const ResponseForm = ({
   id,

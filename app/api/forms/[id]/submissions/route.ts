@@ -51,6 +51,12 @@ export const GET = async (
       const submissionData: Record<string, string | string[]> = {};
       (formDetails.formConfig as unknown as FormField[]).forEach((field) => {
         const fieldValue = submission.data[field.id];
+        // if it is a checkbox, fieldValue would be an array, so mapping through fieldValue gives the options a user picked
+        // example of a checkbox submitted data
+        /* "aff38a9d-0d81-4a01-9749-cc9ff2a4a18f": [
+    "1d8593f0-bc2c-4113-bf8a-836b1c538825",
+    "option-546a0e20-dd49-472a-ad00-f9e0259690e5"
+  ], */
         if ("options" in field) {
           if (field.type === "checkbox-group") {
             const selectedOptions = (fieldValue || []).map((value: string) => {

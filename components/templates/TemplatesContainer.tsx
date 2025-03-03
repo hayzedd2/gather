@@ -1,5 +1,5 @@
 "use client";
-import TemplateCard from "@/components/TemplateCard";
+import TemplateCard from "@/components/templates/TemplateCard";
 import { formTemplates } from "@/content/template";
 import { FormField } from "@/types/type";
 import { Input } from "@/components/ui/input";

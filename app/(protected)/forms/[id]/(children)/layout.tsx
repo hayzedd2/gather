@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar";
-import SingleFormHeader from "@/components/SingleFormHeader";
+import Navbar from "@/components/homepage/Navbar";
+import SingleFormHeader from "@/components/forms/SingleFormHeader";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";

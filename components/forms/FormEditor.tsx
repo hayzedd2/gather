@@ -10,19 +10,16 @@ import { FormSettingsSchema } from "@/schema";
 import { useSettingsFormStore } from "@/store/useSettingsFormStore";
 import { toast } from "sonner";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
-import { useCreateform } from "@/hooks/useCreateForm";
-import { SvgLoading } from "./SvgLoading";
-import { Button } from "./ui/button";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import ErrorMessage from "./ErrorMessage";
+import { useEditForm } from "@/hooks/useEditForm";
+import { Button } from "../ui/button";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
 
-const FormBuilder = () => {
+const FormEditor = ({ id }: { id: string }) => {
   const [view, setView] = React.useState<viewT>("configure");
   const { settingFields } = useSettingsFormStore();
   const { fields } = useFormBuilder();
-  const isMobile = useIsMobile();
-  const { mutate, isPending } = useCreateform();
-  const onPublishForm = () => {
+  const { mutate, isPending } = useEditForm(id);
+  const onEditForm = () => {
     if (fields.length == 0) {
       toast.warning("Add at least one form field");
       return;
@@ -38,34 +35,23 @@ const FormBuilder = () => {
       fields,
       ...validData.data,
     };
-    mutate(payLoad, {
-      onError: () => {
-        toast.error("An error occurred");
-      },
-    });
+
+    mutate(payLoad);
   };
- 
-  if (isMobile) {
-    return (
-      <div className="min-h-[100dvh] flex items-center justify-center px-2">
-        <ErrorMessage message="The form builder is not optimized for mobile devices. Please open this page on a larger screen " />
-      </div>
-    );
-  }
   return (
-    <div className="flex min-h-screen ">
+    <div className="flex min-h-screen">
       <div className="w-full  flex  flex-col  flex-1 bg-[#fafafa] relative">
         <FormControlTab view={view} setView={setView} />
-        <div className="max-w-[40rem]  mx-auto w-full p-2 ">
+        <div className="max-w-[40rem] p-6 mx-auto w-full ">
           {view == "configure" && <ConfigPanel />}
           {view == "preview" && <FormPreview />}
           {view == "settings" && <FormSettingsForm />}
         </div>
         <div className="w-full  sticky bottom-0 z-10  mt-auto bg-[#fafafa] p-4">
           <div className="flex w-full justify-end">
-            <Button onClick={onPublishForm} type="submit" disabled={isPending}>
+            <Button onClick={onEditForm} type="submit" disabled={isPending}>
               {isPending && <SvgLoading />}
-              <p className="mt-[0.2rem]">Publish form</p>
+              <p className="mt-[0.2rem]">Make changes</p>
             </Button>
           </div>
         </div>
@@ -77,4 +63,4 @@ const FormBuilder = () => {
   );
 };
 
-export default FormBuilder;
+export default FormEditor;

@@ -1,7 +1,7 @@
 import React from "react";
 import ResponseForm from "./ResponseForm";
 import { prismaDb } from "@/lib/db";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../reusable-comps/ErrorMessage";
 import { FormField } from "@/types/type";
 
 const DemoForm = async () => {

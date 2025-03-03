@@ -17,7 +17,7 @@ import { SingleFormAnalyticsProps } from "@/types/type";
 import CountryAnalytics from "./CountryAnalytics";
 import { format, parseISO, isToday, isYesterday } from "date-fns";
 import { useMemo } from "react";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../reusable-comps/ErrorMessage";
 
 const chartConfig = {
   submissions: {

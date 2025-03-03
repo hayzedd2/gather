@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import {
   Form,
   FormControl,
@@ -16,11 +16,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { SingleFormSettingsSchema } from "@/schema";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 import { useUpdateFormSettings } from "@/hooks/useUpdateFormSettings";
 import { toast } from "sonner";
-import { SvgLoading } from "./SvgLoading";
-import Modal from "./Modal";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
+import Modal from "../reusable-comps/Modal";
 import { useDeleteForm } from "@/hooks/useDeleteForm";
 import { useRouter } from "next/navigation";
 interface SettingsProps {

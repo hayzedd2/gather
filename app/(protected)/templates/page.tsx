@@ -1,6 +1,6 @@
 
-import Navbar from "@/components/Navbar";
-import TemplatesContainer from "@/components/TemplatesContainer";
+import Navbar from "@/components/homepage/Navbar";
+import TemplatesContainer from "@/components/templates/TemplatesContainer";
 const page = () => {
   return (
     <div>

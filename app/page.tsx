@@ -1,8 +1,8 @@
-import FeaturesSection from "@/components/FeaturesSection";
-import Footer from "@/components/Footer";
-import HeroSection from "@/components/HeroSection";
-import Navbar from "@/components/Navbar";
-import PreviewSection from "@/components/PreviewSection";
+import FeaturesSection from "@/components/homepage/FeaturesSection";
+import Footer from "@/components/homepage/Footer";
+import HeroSection from "@/components/homepage/HeroSection";
+import Navbar from "@/components/homepage/Navbar";
+import PreviewSection from "@/components/homepage/PreviewSection";
 
 export default function Home() {
   return (

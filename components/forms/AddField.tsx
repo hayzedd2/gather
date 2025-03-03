@@ -1,7 +1,7 @@
 import { useFormBuilder } from "@/hooks/useFormBuilder";
 import { FieldType } from "@/types/type";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { FileDigit, List, MailPlus, Type, WrapText } from "lucide-react";
 import GetIconType from "@/helpers/GetIconType";
 import { createDefaultValues } from "@/helpers/createDefaultValues";

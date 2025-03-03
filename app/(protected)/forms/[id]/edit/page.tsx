@@ -1,6 +1,6 @@
-import ErrorMessage from "@/components/ErrorMessage";
-import FormBuilderEdit from "@/components/FormBuilderEdit";
-import MiniLoader from "@/components/MiniLoader";
+import ErrorMessage from "@/components/reusable-comps/ErrorMessage";
+import FormBuilderEdit from "@/components/forms/FormBuilderEdit";
+import MiniLoader from "@/components/reusable-comps/MiniLoader";
 import { prismaDb } from "@/lib/db";
 import React, { Suspense } from "react";
 

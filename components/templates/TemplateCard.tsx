@@ -11,12 +11,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import TemplatePreview from "./TemplatePreview";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useSettingsFormStore } from "@/store/useSettingsFormStore";
 import { useCreateform } from "@/hooks/useCreateForm";
 import { toast } from "sonner";
-import { SvgLoading } from "./SvgLoading";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
 
 interface TemplateProps {
   title: string;

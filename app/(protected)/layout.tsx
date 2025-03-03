@@ -1,5 +1,5 @@
-import Aside from "@/components/Aside";
-import Navbar from "@/components/Navbar";
+import Aside from "@/components/ui/Aside";
+import Navbar from "@/components/homepage/Navbar";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";

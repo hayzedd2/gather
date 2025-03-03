@@ -4,7 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import React from "react";
-import { SvgLoading } from "../SvgLoading";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
 
 export const Socials = ({ type }: { type: "up" | "in" }) => {
   const [isLoading, setIsLoading] = React.useState(false);

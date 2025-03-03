@@ -1,5 +1,5 @@
 
-import { SubmissionsTable } from "@/components/SubmissionsTable";
+import { SubmissionsTable } from "@/components/forms/SubmissionsTable";
 
 export default async function Page({
   params,

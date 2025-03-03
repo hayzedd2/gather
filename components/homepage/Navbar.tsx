@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { UserMenu } from "./UserMenu";
+import { UserMenu } from "../reusable-comps/UserMenu";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const Navbar = async () => {
   const sessions = await auth.api
