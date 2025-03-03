@@ -56,7 +56,7 @@ export default function AnalyticsChart({
   const aggregatedData = useMemo(() => {
     const maxAnalyticsData = 15
     const aggregated: { [key: string]: number } = {};
-    dailySubmissions.forEach((item) => {
+    dailySubmissions.slice(0, maxAnalyticsData).forEach((item) => {
       const date = new Date(item.date);
       const key = format(date, "yyyy-MM-dd'T'HH:00:00.000'Z'");
       aggregated[key] = (aggregated[key] || 0) + item.count;
