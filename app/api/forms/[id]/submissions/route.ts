@@ -23,6 +23,7 @@ export const GET = async (
       where: { userId: sessions.user.id, id },
       select: {
         formConfig: true,
+        title: true,
         submissions: {
           select: {
             data: true,
@@ -83,6 +84,7 @@ export const GET = async (
       };
     });
     const returnedPayload = {
+      title: formDetails.title,
       labels,
       submissionsCount,
       submissions,

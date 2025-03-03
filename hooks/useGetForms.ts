@@ -10,7 +10,6 @@ export const useGetForms = () => {
         throw new Error(error.message);
       }
       const data = await res.json();
-      console.log(data)
       return data;
     },
     

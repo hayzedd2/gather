@@ -178,6 +178,7 @@ export interface GetFormSubmissionProps {
   submissions: {
     [x: string]: string | string[];
   }[];
+  title:string
 }
 
 export interface ResponseFormProps {

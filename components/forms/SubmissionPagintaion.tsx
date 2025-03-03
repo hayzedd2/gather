@@ -21,7 +21,7 @@ export default function SubmissionPagination({
   };
   return (
     <>
-      <div className="flex items-center w-full justify-end  space-x-2">
+      <div className="space-x-2">
         <Button size="icon" variant={"outline"} className="h-8 w-8" asChild>
           <Link
             href={createPageURL(currentPage - 1)}
