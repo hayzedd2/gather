@@ -8,7 +8,7 @@ const PreviewSection = () => {
     <section className="pt-20 pb-4 mb-20 bg-[#fafafa] rounded-xl">
       {" "}
       <div className="flex gap-2 flex-col items-center justify-center">
-        <StaggerText className="md:text-[3rem] text-[2rem] mx-auto max-w-[350px] md:max-w-[450px] items-center justify-center leading-[2rem] md:leading-[3.4rem] text-center font-[600]">
+        <StaggerText className="md:text-[2.5rem] text-[2rem] mx-auto max-w-[350px] md:max-w-[450px] items-center justify-center leading-[2rem] md:leading-[3rem] text-center font-[600]">
           Make form-building seamless and powerful
         </StaggerText>
         <h6 className="text-muted-foreground mx-auto text-center  text-[15px] font-[500] max-w-[500px]">
