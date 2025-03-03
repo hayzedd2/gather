@@ -12,7 +12,7 @@ const Footer = () => {
           Gather
         </h1>
       </div>
-      <p className="text-muted-foreground font-[500] ">
+      <p className="text-muted-foreground font-[500] text-[14px] ">
         &copy; {new Date().getFullYear()} Gather. All rights reserved.{" "}
       </p>
     </footer>

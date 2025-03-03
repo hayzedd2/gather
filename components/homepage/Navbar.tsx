@@ -4,7 +4,7 @@ import { UserMenu } from "../reusable-comps/UserMenu";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Button } from "../ui/button";
+
 
 const Navbar = async () => {
   const sessions = await auth.api
@@ -33,15 +33,15 @@ const Navbar = async () => {
         </ul>
       ) : (
         <div className="flex items-center gap-3  dotted-left">
-          <a href="/login" className="font-[500]">
+          <Link href="/login" className="font-[500]">
             Login
-          </a>
-          <a
+          </Link>
+          <Link
             href="/register"
-            className="rounded-[100px] bg-black text-[14px] font-[500] hover:opacity-80 text-white py-[6px] px-[14px] cursor-pointer"
+            className="rounded-[100px] bx-shadow bg-black text-[14px] font-[500] hover:opacity-80 text-white py-[6px] px-[14px] cursor-pointer"
           >
             Sign up
-          </a>
+          </Link>
         </div>
       )}
     </nav>

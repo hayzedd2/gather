@@ -2,6 +2,7 @@ import React from "react";
 import StaggerText from "../reusable-comps/StaggerText";
 import SkewedImage from "./SkewedImage";
 import { TextShimmer } from "../reusable-comps/TextShimmer";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -16,9 +17,12 @@ const HeroSection = () => {
             Create beautiful forms and share them anywhere. It's super fast, you
             don't need to know how to code.
           </h6>
-          <button className="rounded-[100px] bg-black text-[14px] font-[500] hover:opacity-80 text-white py-[6px] px-[14px] cursor-pointer">
+          <Link
+            href="/register"
+            className="rounded-[100px] bg-black text-[14px] font-[500] hover:opacity-80 text-white py-[6px] px-[14px] cursor-pointer bx-shadow"
+          >
             Start for free
-          </button>
+          </Link>
         </div>
         <SkewedImage />
       </div>
