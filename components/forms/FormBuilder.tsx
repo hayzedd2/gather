@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import FormPreview from "./FormPreview";
 import ConfigPanel from "./ConfigPanel";
 import AddField from "./AddField";
@@ -16,23 +16,29 @@ import { Button } from "../ui/button";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import ErrorMessage from "../reusable-comps/ErrorMessage";
 import { TextShimmer } from "../reusable-comps/TextShimmer";
+import FormPublish from "./FormPublish";
 
 const FormBuilder = () => {
   const [view, setView] = React.useState<viewT>("configure");
+  const [notAllowed, setNotAllowed] = useState(false);
   const { settingFields } = useSettingsFormStore();
   const { fields } = useFormBuilder();
   const isMobile = useIsMobile();
-  const { mutate, isPending } = useCreateform();
+  const { mutate, isPending, isSuccess } = useCreateform();
   const onPublishForm = () => {
     if (fields.length == 0) {
+      setNotAllowed(true);
       toast.warning("Add at least one form field");
+      setTimeout(() => setNotAllowed(false), 500);
       return;
     }
     const validData = FormSettingsSchema.safeParse(settingFields);
     if (!validData.success) {
+      setNotAllowed(true);
       toast.warning(
         "Missing field in settings, please edit before you can proceed."
       );
+      setTimeout(() => setNotAllowed(false), 500);
       return;
     }
     const payLoad = {
@@ -64,12 +70,18 @@ const FormBuilder = () => {
         </div>
         <div className="w-full  sticky bottom-0 z-10  mt-auto bg-[#fafafa] p-4">
           <div className="flex w-full justify-end">
-            <Button onClick={onPublishForm} type="submit" disabled={isPending}>
+            {/* <Button onClick={onPublishForm} type="submit" disabled={isPending}>
               {isPending && <SvgLoading />}
               <p className="mt-[0.2rem]">
                 <TextShimmer duration={1}>Publish form</TextShimmer>
               </p>
-            </Button>
+            </Button> */}
+            <FormPublish
+              handlePublish={onPublishForm}
+              isLoading={isPending}
+              isSuccess={isSuccess}
+              notAllowed={notAllowed}
+            />
           </div>
         </div>
       </div>
