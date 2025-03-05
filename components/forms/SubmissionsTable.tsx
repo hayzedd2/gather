@@ -48,6 +48,7 @@ import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CustomButton } from "../reusable-comps/CustomButton";
 import { Input } from "../ui/input";
+import Floater from "../reusable-comps/Floater";
 
 const maxLength = 40;
 const shouldHavePopOver = (s: string) => s.length >= maxLength;
@@ -61,7 +62,9 @@ export function SubmissionsTable({ id }: { id: string }) {
     pageIndex: 0,
     pageSize: 10,
   });
-  const [currentSearchFilter, setCurrentSearchFilter] = useState("Name");
+  const [currentSearchFilter, setCurrentSearchFilter] = useState<string | null>(
+    null
+  );
   const columns = useMemo(() => {
     // Only create columns if form data is available
     if (!form) return [];
@@ -96,17 +99,17 @@ export function SubmissionsTable({ id }: { id: string }) {
         columnHelper.accessor(label, {
           header: () => label,
           enableColumnFilter: true,
-          // filterFn: (row, columnId, filterValue) => {
-          //   const cellValue = row.getValue(columnId);
-          //   if (typeof filterValue == "number") {
-          //     return String(cellValue).includes(filterValue);
-          //   }
-          // },
+          filterFn: (row, columnId, filterValue) => {
+            const cellValue = row.getValue(columnId);
+            return String(cellValue)
+              .toLowerCase()
+              .includes(String(filterValue).toLowerCase());
+          },
           cell: (info) => {
             const value = info.getValue();
             if (Array.isArray(value)) return value.join(", ");
             if (typeof value === "boolean") return value ? "Yes" : "No";
-            if (typeof value === "number") return "I am a number";
+
             if (typeof value === "string" && value.length > maxLength) {
               return (
                 <Popover>
@@ -145,27 +148,47 @@ export function SubmissionsTable({ id }: { id: string }) {
     return <ErrorMessage message="Sorry, no submissions found for this form" />;
   return (
     <div>
+      <Floater
+        isOpen={table.getFilteredSelectedRowModel().rows.length > 0}
+        onClose={() => console.log("Closed!")}
+      >
+        <div className="flex items-center w-full justify-between">
+          <p className="text-white ml-3 font-[500] text-[15px]">
+            {table.getFilteredSelectedRowModel().rows.length} rows selected.
+          </p>
+          <div className="space-x-1">
+            <CustomButton variant="secondary">Export as csv</CustomButton>
+            <CustomButton variant="destructive">Delete rows</CustomButton>
+          </div>
+        </div>
+      </Floater>
       <div className="w-full justify-between items-center mt-4 flex">
         <div className="w-full flex gap-2">
           <Input
             value={
               (table
-                .getColumn(currentSearchFilter)
+                .getColumn(
+                  !currentSearchFilter ? form.labels[0] : currentSearchFilter
+                )
                 ?.getFilterValue() as string) ?? ""
             }
             onChange={(event) =>
               table
-                .getColumn(currentSearchFilter)
+                .getColumn(
+                  !currentSearchFilter ? form.labels[0] : currentSearchFilter
+                )
                 ?.setFilterValue(event.target.value)
             }
-            placeholder={`Search by ${currentSearchFilter}`}
+            placeholder={`Search by ${
+              !currentSearchFilter ? form.labels[0] : currentSearchFilter
+            }`}
             className="max-w-sm"
           />
           <Select
             onValueChange={(e) => setCurrentSearchFilter(e)}
             defaultValue={form.labels[0]}
           >
-            <SelectTrigger className="w-max">
+            <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Search by" />
             </SelectTrigger>
             <SelectContent>

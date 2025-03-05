@@ -1,7 +1,17 @@
-import { cn } from "@/lib/utils"; // Utility function for classNames (optional)
-
+import { cn } from "@/lib/utils";
+type variantT = "primary" | "secondary" | "destructive";
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary";
+  variant?: variantT;
+};
+const getVariantClass = (variant: variantT) => {
+  switch (variant) {
+    case "primary":
+      return "bg-black text-white bx-shadow";
+    case "secondary":
+      return "bg-white light-shadow  text-black cursor-pointer";
+    case "destructive":
+      return "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90";
+  }
 };
 
 export function CustomButton({
@@ -12,7 +22,8 @@ export function CustomButton({
   return (
     <button
       className={cn(
-        "rounded-[100px] bg-black text-[14px] font-[500] hover:opacity-80 text-white py-[6px] px-[14px] cursor-pointer bx-shadow",
+        getVariantClass(variant),
+        "text-[14px] font-[500] py-[6px] px-[14px] cursor-pointer rounded-[100px] hover:opacity-90",
         className
       )}
       {...props}

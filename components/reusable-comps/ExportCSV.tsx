@@ -1,4 +1,5 @@
 import React from "react";
+import { CustomButton } from "./CustomButton";
 
 type JsonData = {
   [x: string]: string | string[];
@@ -34,15 +35,7 @@ const ExportCSV = ({ data, filename = "export.csv" }: ExportCSVProps) => {
     a.click();
     URL.revokeObjectURL(url);
   };
-
-  return (
-    <button
-      onClick={handleExport}
-      className="rounded-[100px] bg-black text-[14px] font-[500] hover:opacity-80 bx-shadow w-max text-white py-[6px] px-[14px] cursor-pointer"
-    >
-      Export as csv
-    </button>
-  );
+  return <CustomButton onClick={handleExport}>Export as csv</CustomButton>;
 };
 
 export default ExportCSV;
