@@ -9,6 +9,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useGetSingleFormSubmissions } from "@/hooks/useGetSingleFormSubmissions";
 import SubmissionPagination from "./SubmissionPagintaion";
 import { useSearchParams } from "next/navigation";
@@ -20,105 +34,91 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import ExportCSV from "../reusable-comps/ExportCSV";
+import { useMemo } from "react";
 
+const maxLength = 40;
+const shouldHavePopOver = (s: string) => s.length >= maxLength;
+const concatString = (s: string) =>
+  s.length > maxLength ? s.slice(0, maxLength) + "..." : s;
+const parseBoolean = (bool: boolean) => (bool ? "Yes" : "No");
 export function SubmissionsTable({ id }: { id: string }) {
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const limit = 10;
-  const skip = (currentPage - 1) * limit;
-
   const { data: form, isPending } = useGetSingleFormSubmissions(id);
+  const maxLength = 40;
+  const columns = useMemo(() => {
+    // Only create columns if form data is available
+    if (!form) return [];
+    const columnHelper = createColumnHelper<Record<string, any>>();
+    return form.labels.map((label) =>
+      columnHelper.accessor(label, {
+        header: () => label,
+        cell: (info) => {
+          const value = info.getValue();
+          if (Array.isArray(value)) {
+            return value.join(", ");
+          }
+          if (typeof value === "boolean") {
+            return value ? "Yes" : "No";
+          }
+          if (typeof value === "string" && value.length > maxLength) {
+            return (
+              <Popover>
+                <PopoverTrigger>
+                  {value.slice(0, maxLength) + "..."}
+                </PopoverTrigger>
+                <PopoverContent>{value}</PopoverContent>
+              </Popover>
+            );
+          }
+          return value ?? "-";
+        },
+      })
+    );
+  }, [form, maxLength]);
+  const tableData = useMemo(() => form?.submissions || [], [form]);
 
+  // Create table instance
+  const table = useReactTable({
+    columns,
+    data: tableData,
+    getCoreRowModel: getCoreRowModel(),
+  });
   if (isPending) return <MiniLoader />;
   if (!form)
     return <ErrorMessage message="Sorry, no submissions found for this form" />;
 
-  const totalPages = Math.ceil(form.submissionsCount / limit);
-  const maxLength = 40;
-
-  const shouldHavePopOver = (s: string) => s.length >= maxLength;
-  const concatString = (s: string) =>
-    s.length > maxLength ? s.slice(0, maxLength) + "..." : s;
-  const parseBoolean = (bool: boolean) => (bool ? "Yes" : "No");
-
   return (
-    <div className="mt-1 px-3">
-      <div className="flex w-full items-center justify-end space-x-2">
-        <ExportCSV data={form.submissions} filename={`${form.title}.csv`} />
-        <SubmissionPagination totalPages={totalPages} />
-      </div>
-
-      <div className="my-3 hide-scrollbar">
-        <Table>
-          <TableHeader>
-            <TableRow className="hide-scrollbar">
-              {form.labels.map((label, i) => (
-                <TableHead key={i} className="w-[200px] min-w-[200px]">
-                  {label}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {form.submissions.slice(skip, skip + limit).map((submission, i) => (
-              <TableRow key={i} className="border-0 dotted-down">
-                {form.labels.map((label, j) => {
-                  const value = submission[label];
-
-                  if (Array.isArray(value)) {
-                    return (
-                      <TableCell key={j} className="text-[14px] font-[500]">
-                        {value.join(", ")}
-                      </TableCell>
-                    );
-                  }
-
-                  if (typeof value === "boolean") {
-                    return (
-                      <TableCell key={j} className="text-[14px] font-[500]">
-                        {parseBoolean(value)}
-                      </TableCell>
-                    );
-                  }
-
-                  if (typeof value === "string" && shouldHavePopOver(value)) {
-                    return (
-                      <TableCell key={j} className="text-[14px] font-[500]">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <p className="cursor-pointer">
-                              {concatString(value)}
-                            </p>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-80 shadow-none">
-                            <div className="space-y-2">
-                              <p className="text-sm">{value}</p>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      </TableCell>
-                    );
-                  }
-
-                  return (
-                    <TableCell key={j} className="text-[14px] font-[500]">
-                      {value ?? "-"}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
+    <Table>
+      <TableHeader>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <TableRow key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <TableHead
+                className="w-fit shrink-0 whitespace-nowrap font-[500]"
+                key={header.id}
+              >
+                {flexRender(
+                  header.column.columnDef.header,
+                  header.getContext()
+                )}
+              </TableHead>
             ))}
-          </TableBody>
-        </Table>
-      </div>
-
-      {/* Submission Count */}
-      <div className="w-full flex items-center justify-center">
-        <p className="text-[15px] text-muted-foreground font-[500]">
-          You have {form.submissionsCount} submission
-          {form.submissionsCount !== 1 && "s"}
-        </p>
-      </div>
-    </div>
+          </TableRow>
+        ))}
+      </TableHeader>
+      <TableBody>
+        {table.getRowModel().rows.map((row) => (
+          <TableRow key={row.id}>
+            {row.getVisibleCells().map((cell) => (
+              <TableCell
+                key={cell.id}
+                className="w-fit shrink-0 whitespace-nowrap"
+              >
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }
