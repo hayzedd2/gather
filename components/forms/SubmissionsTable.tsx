@@ -3,23 +3,17 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -33,8 +27,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import SubmissionPagination from "./SubmissionPagintaion";
-import { useSearchParams } from "next/navigation";
 import MiniLoader from "../reusable-comps/MiniLoader";
 import ErrorMessage from "../reusable-comps/ErrorMessage";
 import {
@@ -43,20 +35,21 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import ExportCSV from "../reusable-comps/ExportCSV";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CustomButton } from "../reusable-comps/CustomButton";
 import { Input } from "../ui/input";
 import Floater from "../reusable-comps/Floater";
+import { useDeleteSelectedSubmissions } from "@/hooks/useDeleteSelectedSubmissions";
+import { toast } from "sonner";
+import { SvgLoading } from "../reusable-comps/SvgLoading";
 
-const maxLength = 40;
-const shouldHavePopOver = (s: string) => s.length >= maxLength;
-const concatString = (s: string) =>
-  s.length > maxLength ? s.slice(0, maxLength) + "..." : s;
-const parseBoolean = (bool: boolean) => (bool ? "Yes" : "No");
 export function SubmissionsTable({ id }: { id: string }) {
   const { data: form, isPending } = useGetSingleFormSubmissions(id);
+  const { mutate: deleteSubmissions, isPending: isDeleting } =
+    useDeleteSelectedSubmissions(id);
+  const handleDelete = () => {};
   const maxLength = 40;
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -109,7 +102,6 @@ export function SubmissionsTable({ id }: { id: string }) {
             const value = info.getValue();
             if (Array.isArray(value)) return value.join(", ");
             if (typeof value === "boolean") return value ? "Yes" : "No";
-
             if (typeof value === "string" && value.length > maxLength) {
               return (
                 <Popover>
@@ -153,12 +145,36 @@ export function SubmissionsTable({ id }: { id: string }) {
         onClose={() => console.log("Closed!")}
       >
         <div className="flex items-center w-full justify-between">
-          <p className="text-white ml-3 font-[500] text-[15px]">
-            {table.getFilteredSelectedRowModel().rows.length} rows selected.
+          <p className="text-black ml-3 font-[500] text-[15px]">
+            {table.getFilteredSelectedRowModel().rows.length} row
+            {table.getFilteredSelectedRowModel().rows.length != 1 && "s"}{" "}
+            selected
           </p>
-          <div className="space-x-1">
-            <CustomButton variant="secondary">Export as csv</CustomButton>
-            <CustomButton variant="destructive">Delete rows</CustomButton>
+          <div className="space-x-1.5">
+            {/* <CustomButton variant="secondary">Export as csv</CustomButton> */}
+            <CustomButton
+            className="flex gap-2"
+              variant="destructive"
+              disabled={isDeleting}
+              onClick={() => {
+                deleteSubmissions(
+                  table
+                    .getFilteredSelectedRowModel()
+                    .rows.map((row) => row.original.unique_form_submission_id),
+                  {
+                    onSuccess: () => {
+                      toast.success("Submissions deleted!");
+                    },
+                    onError(error) {
+                      toast.error(error.message);
+                    },
+                  }
+                );
+              }}
+            >
+              {isDeleting && <SvgLoading />}
+              <span> Delete rows</span>
+            </CustomButton>
           </div>
         </div>
       </Floater>

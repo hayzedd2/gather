@@ -23,7 +23,7 @@ export function CustomButton({
     <button
       className={cn(
         getVariantClass(variant),
-        "text-[14px] font-[500] py-[6px] px-[14px] cursor-pointer rounded-[100px] hover:opacity-90",
+        "text-[14px] font-[500] disabled:cursor-not-allowed disabled:opacity-70 py-[6px] px-[14px] cursor-pointer rounded-[100px] hover:opacity-90",
         className
       )}
       {...props}

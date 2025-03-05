@@ -60,16 +60,21 @@ const ResponseForm = ({
     const isValid = generatedSchema.safeParse(data);
     if (!isValid.success) {
       toast.error("Please fill all required fields");
+      return;
     }
+
     try {
-      mutate(data, {
-        onSuccess: () => {
-          toast.success("Your response is submitted succesfully");
-          setHasSubmitted(true);
-          setSliderValues({})
-          form.reset();
-        },
-      });
+      mutate(
+        data,
+        {
+          onSuccess: () => {
+            toast.success("Your response is submitted succesfully");
+            setHasSubmitted(true);
+            setSliderValues({});
+            form.reset();
+          },
+        }
+      );
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
@@ -198,7 +203,7 @@ const ResponseForm = ({
                         name={c.id}
                         render={({ field }) => (
                           <FormItem className="flex flex-col  gap-1">
-                             <FormLabel>
+                            <FormLabel>
                               {" "}
                               {c.label}
                               {c.required && "*"}
@@ -210,7 +215,6 @@ const ResponseForm = ({
                                 onCheckedChange={field.onChange}
                               />
                             </FormControl>
-                           
 
                             <FormDescription>
                               {c.description && c.description}

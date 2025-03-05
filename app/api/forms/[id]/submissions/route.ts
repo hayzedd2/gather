@@ -28,6 +28,7 @@ export const GET = async (
           select: {
             data: true,
             createdAt: true,
+            unique_form_submission_id: true,
           },
 
           orderBy: {
@@ -52,12 +53,7 @@ export const GET = async (
       const submissionData: Record<string, string | string[]> = {};
       (formDetails.formConfig as unknown as FormField[]).forEach((field) => {
         const fieldValue = submission.data[field.id];
-        // if it is a checkbox, fieldValue would be an array, so mapping through fieldValue gives the options a user picked
-        // example of a checkbox submitted data
-        /* "aff38a9d-0d81-4a01-9749-cc9ff2a4a18f": [
-    "1d8593f0-bc2c-4113-bf8a-836b1c538825",
-    "option-546a0e20-dd49-472a-ad00-f9e0259690e5"
-  ], */
+
         if ("options" in field) {
           if (field.type === "checkbox-group") {
             const selectedOptions = (fieldValue || []).map((value: string) => {
@@ -81,6 +77,7 @@ export const GET = async (
 
       return {
         ...submissionData,
+        unique_form_submission_id: submission.unique_form_submission_id,
       };
     });
     const returnedPayload = {
@@ -128,6 +125,45 @@ export const POST = async (
     console.error("Error in form submission:", error);
     return Response.json(
       { message: "An error occurred, please try again" },
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (req: NextRequest) => {
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session) {
+      return Response.json({ message: "Unauthorized" }, { status: 401 });
+    }
+    const selectedIds = await req.json(); 
+    if (
+      !selectedIds ||
+      !Array.isArray(selectedIds) ||
+      selectedIds.length === 0
+    ) {
+      return Response.json(
+        { message: "No submissions selected" },
+        { status: 400 }
+      );
+    }
+    const deletedSubmissions = await prismaDb.submission.deleteMany({
+      where: {
+        unique_form_submission_id: { in: selectedIds },
+      },
+    });
+
+    return Response.json(
+      {
+        message: "Submissions deleted successfully",
+        deletedCount: deletedSubmissions.count,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting submissions:", error);
+    return Response.json(
+      { message: "Something went wrong" },
       { status: 500 }
     );
   }

@@ -25,7 +25,7 @@ const Floater = ({ isOpen, onClose, children }: FloaterProps) => {
             duration: 0.2,
             ease: "easeInOut",
           }}
-          className={`bg-black bx-shadow rounded-[100px] p-2 bx-shadow ab w-full max-w-md `}
+          className={`bg-white  rounded-[100px] p-1.5 border w-full max-w-md `}
           onClick={(e) => e.stopPropagation()}
         >
           {children}
