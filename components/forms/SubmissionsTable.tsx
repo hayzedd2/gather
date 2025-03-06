@@ -44,6 +44,7 @@ import Floater from "../reusable-comps/Floater";
 import { useDeleteSelectedSubmissions } from "@/hooks/useDeleteSelectedSubmissions";
 import { toast } from "sonner";
 import { SvgLoading } from "../reusable-comps/SvgLoading";
+import ExportSelector from "../reusable-comps/ExportSelector";
 
 export function SubmissionsTable({ id }: { id: string }) {
   const { data: form, isPending } = useGetSingleFormSubmissions(id);
@@ -153,7 +154,7 @@ export function SubmissionsTable({ id }: { id: string }) {
           <div className="space-x-1.5">
             {/* <CustomButton variant="secondary">Export as csv</CustomButton> */}
             <CustomButton
-            className="flex gap-2"
+              className="flex gap-2"
               variant="destructive"
               disabled={isDeleting}
               onClick={() => {
@@ -178,8 +179,8 @@ export function SubmissionsTable({ id }: { id: string }) {
           </div>
         </div>
       </Floater>
-      <div className="w-full justify-between items-center mt-4 flex">
-        <div className="w-full flex gap-2">
+      <div className="w-full justify-between gap-2 flex-wrap md:flex-nowrap px-2 items-center mt-4 flex">
+        <div className="w-full flex gap-2 ">
           <Input
             value={
               (table
@@ -222,8 +223,8 @@ export function SubmissionsTable({ id }: { id: string }) {
           </Select>
         </div>
         <div></div>
-        <div className="flex w-full items-end gap-2  justify-end">
-          <CustomButton>Export as csv</CustomButton>
+        <div className="flex w-full items-end gap-2  justify-between md:justify-end">
+          <ExportSelector />
           <div className="space-x-2">
             <Button
               onClick={() => table.previousPage()}
