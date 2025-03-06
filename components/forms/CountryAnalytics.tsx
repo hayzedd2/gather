@@ -40,27 +40,34 @@ const SingleCountry = ({
   count,
   totalSubmissions,
 }: SingleCountryProps) => {
-  const countryName = getCountryData(countryCode as TCountryCode);
+  const countryData = getCountryData(countryCode as TCountryCode);
+  const countryName = countryData ? countryData.name : "Unknown";
+
   const calcPercentage = (count: number) => {
+    if (totalSubmissions === 0) return 0;
     return Math.floor((count / totalSubmissions) * 100);
   };
+
+  const flagSrc =
+    countryCode && countryCode !== "Unknown"
+      ? `https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`
+      : "/fallback-flag.svg";
+
   return (
     <div className="flex items-center hover:bg-[#fafafa] py-1 px-2 rounded-md justify-between">
       <div className="flex gap-2">
         <Image
           width={14}
           height={14}
-          src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`}
-          alt={countryCode}
+          src={flagSrc}
+          alt={countryCode || "Unknown"}
           className="rounded-lg object-contain aspect-square"
         />
-        <p className="text-[0.875rem]  font-[500] text-muted-foreground mt-[1px]">
-          {countryName.name}
+        <p className="text-[0.875rem] font-[500] text-muted-foreground mt-[1px]">
+          {countryName}
         </p>
       </div>
-      <p className="text-[0.875rem]  font-[500] ">
-        {calcPercentage(count)}%
-      </p>
+      <p className="text-[0.875rem] font-[500]">{calcPercentage(count)}%</p>
     </div>
   );
 };

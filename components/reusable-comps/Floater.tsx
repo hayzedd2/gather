@@ -11,7 +11,7 @@ const Floater = ({ isOpen, onClose, children }: FloaterProps) => {
   if (!isOpen) return null;
   return (
     <>
-      <div className="w-full  left-0 right-0 fixed  z-50 bottom-5 flex items-center justify-center">
+      <div className="w-full px-2 left-0 right-0 fixed  z-50 bottom-5 flex items-center justify-center">
         <motion.div
           initial={{
             opacity: 0,

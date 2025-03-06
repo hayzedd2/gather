@@ -5,7 +5,9 @@ export const GET = async () => {
   if (!token) {
     return Response.json({ message: "Missing token" }, { status: 500 });
   }
-  const res = await fetch(`https://ipinfo.io/json?token=${token}`);
-  const {country, ip} = await res.json();
-  return Response.json({ country,ip }, { status: 200 });
+  const res = await fetch(`https://ipinfo.io/json?token=${token}`).catch(() =>
+    null
+  );
+  const ipData = res ? await res.json() : { country: "Unknown", ip: "" };
+  return Response.json(ipData, { status: 200 });
 };

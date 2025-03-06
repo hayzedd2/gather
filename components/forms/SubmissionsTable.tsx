@@ -154,7 +154,6 @@ export function SubmissionsTable({ id }: { id: string }) {
             selected
           </p>
           <div className="space-x-1.5">
-            {/* <CustomButton variant="secondary">Export as csv</CustomButton> */}
             <CustomButton
               className="flex gap-2"
               variant="destructive"
@@ -165,8 +164,8 @@ export function SubmissionsTable({ id }: { id: string }) {
                     .getFilteredSelectedRowModel()
                     .rows.map((row) => row.original.unique_form_submission_id),
                   {
-                    onSuccess: () => {
-                      toast.success("Submissions deleted!");
+                    onSuccess: (data) => {
+                      toast.success(data.deletedCount + " " + data.message);
                     },
                     onError(error) {
                       toast.error(error.message);
@@ -282,7 +281,7 @@ export function SubmissionsTable({ id }: { id: string }) {
           )}
         </TableBody>
       </Table>
-      <div className="w-full flex items-center justify-center mt-4">
+      <div className="w-full flex items-center px-2 mt-4">
         <p className="text-muted-foreground font-[500] text-[15px]">
           {" "}
           {table.getFilteredSelectedRowModel().rows.length} of{" "}

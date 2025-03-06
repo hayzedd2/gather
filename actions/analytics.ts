@@ -6,7 +6,6 @@ export const updateAnalytics = async (formId: string, country: string) => {
   today.setMinutes(0, 0, 0);
   try {
     await prismaDb.$transaction(async (tx) => {
-      console.log("Starting transaction");
       const formAnalytics = await tx.formAnalytics.upsert({
         where: { formId },
         update: {
@@ -18,7 +17,6 @@ export const updateAnalytics = async (formId: string, country: string) => {
         },
       });
 
-      console.log("Upserting countryData");
       await tx.countryData.upsert({
         where: {
           formAnalyticsId_country: {
@@ -36,7 +34,6 @@ export const updateAnalytics = async (formId: string, country: string) => {
         },
       });
 
-      console.log("Upserting dailySubmissions");
       await tx.dailySubmissions.upsert({
         where: {
           formAnalyticsId_date: {
@@ -54,7 +51,6 @@ export const updateAnalytics = async (formId: string, country: string) => {
         },
       });
 
-      console.log("Transaction completed successfully");
     });
   } catch (error) {
     console.error("Error in updateAnalytics:", error);
@@ -62,4 +58,4 @@ export const updateAnalytics = async (formId: string, country: string) => {
   }
 };
 
-// This code is actuallt beans now
+// This code is actuallt beans 

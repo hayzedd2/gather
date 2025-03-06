@@ -105,18 +105,14 @@ export const POST = async (
     const countryRes = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/ip`);
     const { country = "Unknown" } = await countryRes.json();
     const data = await req.json();
-    await prismaDb.$transaction(async (tx) => {
-      const submission = await tx.submission.create({
-        data: {
-          formId: id,
-          data,
-          country,
-        },
-      });
-      await updateAnalytics(id, country);
-      return submission;
+    await prismaDb.submission.create({
+      data: {
+        formId: id,
+        data,
+        country,
+      },
     });
-
+    await updateAnalytics(id, country);
     return Response.json(
       { message: "Successfully submitted form" },
       { status: 200 }
@@ -136,7 +132,7 @@ export const DELETE = async (req: NextRequest) => {
     if (!session) {
       return Response.json({ message: "Unauthorized" }, { status: 401 });
     }
-    const selectedIds = await req.json(); 
+    const selectedIds = await req.json();
     if (
       !selectedIds ||
       !Array.isArray(selectedIds) ||
@@ -155,16 +151,13 @@ export const DELETE = async (req: NextRequest) => {
 
     return Response.json(
       {
-        message: "Submissions deleted successfully",
+        message: "response(s) deleted successfully",
         deletedCount: deletedSubmissions.count,
       },
       { status: 200 }
     );
   } catch (error) {
     console.error("Error deleting submissions:", error);
-    return Response.json(
-      { message: "Something went wrong" },
-      { status: 500 }
-    );
+    return Response.json({ message: "Something went wrong" }, { status: 500 });
   }
 };
