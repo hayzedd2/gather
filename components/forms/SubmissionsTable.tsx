@@ -37,7 +37,7 @@ import {
 import ExportCSV from "../reusable-comps/ExportCSV";
 import { useMemo, useState } from "react";
 import { Button } from "../ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, SearchIcon } from "lucide-react";
 import { CustomButton } from "../reusable-comps/CustomButton";
 import { Input } from "../ui/input";
 import Floater from "../reusable-comps/Floater";
@@ -45,6 +45,8 @@ import { useDeleteSelectedSubmissions } from "@/hooks/useDeleteSelectedSubmissio
 import { toast } from "sonner";
 import { SvgLoading } from "../reusable-comps/SvgLoading";
 import ExportSelector from "../reusable-comps/ExportSelector";
+import SearchSelector from "./SearchSelector";
+import { Separator } from "@radix-ui/react-dropdown-menu";
 
 export function SubmissionsTable({ id }: { id: string }) {
   const { data: form, isPending } = useGetSingleFormSubmissions(id);
@@ -181,48 +183,37 @@ export function SubmissionsTable({ id }: { id: string }) {
       </Floater>
       <div className="w-full justify-between gap-2 flex-wrap md:flex-nowrap px-2 items-center mt-4 flex">
         <div className="w-full flex gap-2 ">
-          <Input
-            value={
-              (table
-                .getColumn(
-                  !currentSearchFilter ? form.labels[0] : currentSearchFilter
-                )
-                ?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table
-                .getColumn(
-                  !currentSearchFilter ? form.labels[0] : currentSearchFilter
-                )
-                ?.setFilterValue(event.target.value)
-            }
-            placeholder={`Search by ${
-              !currentSearchFilter ? form.labels[0] : currentSearchFilter
-            }`}
-            className="max-w-sm"
-          />
-          <Select
-            onValueChange={(e) => setCurrentSearchFilter(e)}
-            defaultValue={form.labels[0]}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Search by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Search by</SelectLabel>
-                {form.labels.map((label, i) => {
-                  return (
-                    <SelectItem key={i} value={label}>
-                      {label}
-                    </SelectItem>
-                  );
-                })}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <div className="flex w-full rounded-md items-center bg-white px-2 text-base light-shadow ">
+            <Input
+              value={
+                (table
+                  .getColumn(
+                    !currentSearchFilter ? form.labels[0] : currentSearchFilter
+                  )
+                  ?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table
+                  .getColumn(
+                    !currentSearchFilter ? form.labels[0] : currentSearchFilter
+                  )
+                  ?.setFilterValue(event.target.value)
+              }
+              placeholder={`Search by ${
+                !currentSearchFilter ? form.labels[0] : currentSearchFilter
+              }`}
+              className="flex-1 placeholder:text-[14px] shadow-none border-none focus:outline-none focus-visible:ring-0 focus:border-none"
+            />
+            <SearchSelector
+              onSelectSearchBy={(s) => {
+                setCurrentSearchFilter(s);
+              }}
+              searchByOptions={form.labels}
+              defaultValue={currentSearchFilter ?? form.labels[0]}
+            />
+          </div>
         </div>
-        <div></div>
+
         <div className="flex w-full items-end gap-2  justify-between md:justify-end">
           <ExportSelector />
           <div className="space-x-2">

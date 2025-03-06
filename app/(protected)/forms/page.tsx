@@ -1,5 +1,6 @@
 import MyForms from "@/components/forms/MyForms";
 import Navbar from "@/components/homepage/Navbar";
+import { CustomButton } from "@/components/reusable-comps/CustomButton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
@@ -16,7 +17,7 @@ const page = async () => {
           </div>
           <div>
             <Link href={"/forms/new"}>
-              <Button>Create new form</Button>
+              <CustomButton>Create new form</CustomButton>
             </Link>
           </div>
         </div>
