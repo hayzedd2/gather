@@ -1,4 +1,5 @@
 "use client";
+import { CheckIcon } from "lucide-react";
 import React from "react";
 
 interface SearchByProps {
@@ -36,7 +37,6 @@ const SearchSelector = ({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         className="flex gap-1 text-[13px] font-[500] text-[#595959]"
-        
       >
         {defaultValue}
         <svg
@@ -56,7 +56,7 @@ const SearchSelector = ({
         </svg>
       </button>
       {isOpen && (
-        <div className="shadow-md bg-white p-1 min-w-[200px] rounded-xl z-50  top-10 right-0 absolute">
+        <div className="shadow-md bg-white p-1 min-w-[200px] rounded-xl z-50  top-10 right-0 absolute flex flex-col gap-1">
           {searchByOptions.map((s, i) => (
             <button
               onClick={() => {
@@ -64,11 +64,15 @@ const SearchSelector = ({
                 setIsOpen(false);
               }}
               key={i}
+              style={{
+                backgroundColor: s == defaultValue ? "#f0f0f0" : "",
+              }}
               className="
                    hover:bg-[#f0f0f0]
-               w-full font-[500] rounded-[0.5rem] px-3   h-8 text-left text-sm text-[#595959]"
+               w-full font-[500] rounded-[0.5rem] px-3 flex justify-between items-center   h-8 text-left text-sm text-[#595959]"
             >
               {s}
+              {s == defaultValue && <CheckIcon size={14} />}
             </button>
           ))}
         </div>

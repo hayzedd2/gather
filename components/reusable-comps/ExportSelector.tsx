@@ -2,13 +2,22 @@
 import React from "react";
 import { CustomButton } from "./CustomButton";
 import Pill from "./Pill";
-type supportedExportTypes = "csv" | "xlsx" | "pdf" | "yaml";
+import { handleCSVExport } from "@/helpers/export";
 
+type JsonData = {
+  [x: string]: string | string[];
+}[];
+type supportedExportTypes = "csv" | "xlsx" | "pdf" | "yaml";
 interface dataTypeInterface {
   label: string;
   format: supportedExportTypes;
   isSupported: boolean;
 }
+interface exportInterface {
+  fileName: string;
+  data: JsonData;
+}
+
 const dataTypes: dataTypeInterface[] = [
   {
     label: "Export as csv",
@@ -31,7 +40,7 @@ const dataTypes: dataTypeInterface[] = [
     isSupported: false,
   },
 ];
-const ExportSelector = () => {
+const ExportSelector = ({ fileName, data }: exportInterface) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const selectRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
@@ -43,17 +52,21 @@ const ExportSelector = () => {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const handleExport = (type: supportedExportTypes) => {
+    switch (type) {
+      case "csv":
+        handleCSVExport(data, fileName);
+    }
+  };
   return (
     <div ref={selectRef} className="relative">
       <CustomButton
         onClick={() => setIsOpen(!isOpen)}
-        aria-haspopup="listbox"
         aria-expanded={isOpen}
         className="flex"
       >
@@ -78,6 +91,10 @@ const ExportSelector = () => {
         <div className="shadow-md bg-white p-1 min-w-[200px] rounded-xl z-50  top-10 left-0 absolute">
           {dataTypes.map((type) => (
             <button
+              onClick={() => {
+                console.log(data);
+                handleExport(type.format);
+              }}
               key={type.format}
               className={`${
                 type.isSupported

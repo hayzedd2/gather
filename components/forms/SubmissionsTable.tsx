@@ -52,7 +52,6 @@ export function SubmissionsTable({ id }: { id: string }) {
   const { data: form, isPending } = useGetSingleFormSubmissions(id);
   const { mutate: deleteSubmissions, isPending: isDeleting } =
     useDeleteSelectedSubmissions(id);
-  const handleDelete = () => {};
   const maxLength = 40;
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -214,7 +213,12 @@ export function SubmissionsTable({ id }: { id: string }) {
         </div>
 
         <div className="flex w-full items-end gap-2  justify-between md:justify-end">
-          <ExportSelector />
+          <ExportSelector
+            data={form.submissions.map(
+              ({ unique_form_submission_id, ...rest }) => rest
+            )}
+            fileName={form.title}
+          />
           <div className="space-x-2">
             <Button
               onClick={() => table.previousPage()}
