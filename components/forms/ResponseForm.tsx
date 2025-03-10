@@ -103,7 +103,7 @@ const ResponseForm = ({
             <div className="max-w-[300px] mx-auto flex gap-1 flex-col text-center my-5">
               <p className="text-regular text-[14px] font-[500]">
                 This form is powered by{" "}
-                <a href="" className="underline underline-offset-2">
+                <a href="/" className="underline underline-offset-2">
                   Gather
                 </a>
               </p>

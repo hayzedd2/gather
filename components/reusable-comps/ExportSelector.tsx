@@ -7,7 +7,7 @@ import { exportToCSV, exportToXLSX } from "@/helpers/export";
 type JsonData = {
   [x: string]: string | string[];
 }[];
-type supportedExportTypes = "csv" | "xlsx" | "pdf" | "yaml";
+type supportedExportTypes = "csv" | "xlsx" | "pdf";
 interface dataTypeInterface {
   label: string;
   format: supportedExportTypes;
@@ -32,11 +32,6 @@ const dataTypes: dataTypeInterface[] = [
   {
     label: "Export as pdf",
     format: "pdf",
-    isSupported: true,
-  },
-  {
-    label: "Export as yaml",
-    format: "yaml",
     isSupported: false,
   },
 ];

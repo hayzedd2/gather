@@ -7,7 +7,7 @@ export default function SingleFormViewSkeleton() {
     <div>
       <Link href="/forms" className="my-6 gap-1 px-3 flex items-center">
         <ChevronLeft size={18} />
-    <span className="mt-[2px] font-[500]">Back</span>
+        <span className="mt-[2px] font-[500]">Back</span>
       </Link>
       <div className="flex px-3 justify-between w-full items-center">
         <div>
@@ -17,10 +17,6 @@ export default function SingleFormViewSkeleton() {
             <Skeleton className="h-5 w-20" />
             <Skeleton className="h-5 w-28" />
           </div>
-        </div>
-        <div className="gap-3 items-center hidden md:flex">
-          <Skeleton className="h-10 w-20" />
-          <Skeleton className="h-10 w-24" />
         </div>
       </div>
       <SingleFormOptionsTabSkeleton />

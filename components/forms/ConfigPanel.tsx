@@ -102,7 +102,7 @@ const ConfigPanel = () => {
                               placeholder: e.target.value,
                             })
                           }
-                        />
+                     />
                       </div>
                     )}
                   </div>
