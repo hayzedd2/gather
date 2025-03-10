@@ -1,62 +1,56 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
-import { Check, GripVertical, Plus, X } from "lucide-react";
+import { useReducer } from "react";
+import { motion } from "motion/react";
+import { Plus, X } from "lucide-react";
+import { toast } from "sonner";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
-import { CheckboxGroupField, RadioGroupField, SelectField } from "@/types/type";
-import { toast } from "sonner";
+import { SelectField, RadioGroupField, CheckboxGroupField } from "@/types/type";
 
-const OptionsEditor = ({
-  field,
-}: {
+type FieldOption = { label: string; value: string };
+
+type OptionsEditorProps = {
   field: SelectField | RadioGroupField | CheckboxGroupField;
-}) => {
-  const [inputValues, setInputValues] = React.useState<string[]>(
-    field.options.map((option) => option.label)
-  );
+};
 
+type Action =
+  | { type: "ADD" }
+  | { type: "UPDATE"; index: number; label: string }
+  | { type: "REMOVE"; index: number };
+
+
+const optionsReducer = (options: FieldOption[], action: Action) => {
+  switch (action.type) {
+    case "ADD":
+      return [
+        ...options,
+        { label: "New option", value: `option-${crypto.randomUUID()}` },
+      ];
+    case "UPDATE":
+      return options.map((opt, i) =>
+        i === action.index
+          ? { ...opt, label: action.label.trim() || "Untitled field" }
+          : opt
+      );
+    case "REMOVE":
+      return options.length > 1
+        ? options.filter((_, i) => i !== action.index)
+        : options;
+    default:
+      return options;
+  }
+};
+
+const OptionsEditor = ({ field }: OptionsEditorProps) => {
   const updateField = useFormBuilder((s) => s.updateField);
-  const addOption = () => {
-    const newOption = {
-      label: `new option`,
-      value: `option-${crypto.randomUUID()}`,
-    };
-    updateField(field.id, { options: [...field.options, newOption] });
-    setInputValues([...inputValues, newOption.label]);
-  };
+  const [options, dispatch] = useReducer(optionsReducer, field.options);
 
-  const updateOption = (index: number) => {
-    let label = inputValues[index];
-    if (label.trim().length == 0) {
-      toast.warning("Field cannot be empty, setting it to untittled field");
-      const newInputValues = [...inputValues];
-      newInputValues[index] = "Untitled field";
-      setInputValues(newInputValues);
-      label = "Untitled field";
-    }
-    const newOptions = field.options.map((opt, i) =>
-      i === index ? { ...opt, label } : opt
-    );
+  // Sync state with form builder
+  const updateOptions = (newOptions: FieldOption[]) => {
     updateField(field.id, { options: newOptions });
   };
 
-  const removeOption = (index: number) => {
-    if (field.options.length > 1) {
-      const newOptions = field.options.filter((_, i) => i !== index);
-      updateField(field.id, { options: newOptions });
-      const newInputValues = [...inputValues];
-      newInputValues.splice(index, 1);
-      setInputValues(newInputValues);
-    }
-  };
-  const handleInputChange = (index: number, value: string) => {
-    const newInputValues = [...inputValues];
-    newInputValues[index] = value;
-    setInputValues(newInputValues);
-  };
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
@@ -64,40 +58,53 @@ const OptionsEditor = ({
         <Button
           size="sm"
           variant="outline"
-          onClick={addOption}
+          onClick={() => {
+            dispatch({ type: "ADD" });
+            updateOptions([
+              ...options,
+              { label: "New option", value: `option-${crypto.randomUUID()}` },
+            ]);
+          }}
           className="flex items-center gap-1"
         >
           <Plus size={14} /> Add Option
         </Button>
       </div>
+
       <div className="space-y-2">
-        {field.options.map((option, index) => (
+        {options.map((option, index) => (
           <motion.div key={option.value} className="flex items-center gap-2">
-            <GripVertical size={16} className="text-gray-400" />
             <Input
-              value={inputValues[index]}
-              onChange={(e) => handleInputChange(index, e.target.value)}
+              value={option.label}
+              onChange={(e) =>
+                dispatch({ type: "UPDATE", index, label: e.target.value })
+              }
+              onBlur={() => {
+                if (!option.label.trim()) {
+                  toast.warning(
+                    "Field cannot be empty, setting it to 'Untitled field'"
+                  );
+                }
+                updateOptions(options);
+              }}
+              onKeyDown={(e) => e.key === "Enter" && updateOptions(options)}
             />
-            <div className="flex ">
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => updateOption(index)}
-              >
-                <Check size={14} />
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => removeOption(index)}
-              >
-                <X size={14} />
-              </Button>
-            </div>
+
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => {
+                dispatch({ type: "REMOVE", index });
+                updateOptions(options.filter((_, i) => i !== index));
+              }}
+            >
+              <X size={14} />
+            </Button>
           </motion.div>
         ))}
       </div>
     </div>
   );
 };
+
 export default OptionsEditor;

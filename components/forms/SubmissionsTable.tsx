@@ -18,15 +18,6 @@ import {
 } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useGetSingleFormSubmissions } from "@/hooks/useGetSingleFormSubmissions";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import MiniLoader from "../reusable-comps/MiniLoader";
 import ErrorMessage from "../reusable-comps/ErrorMessage";
 import {
@@ -34,7 +25,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import ExportCSV from "../reusable-comps/ExportCSV";
 import { useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight, SearchIcon } from "lucide-react";
@@ -46,7 +36,6 @@ import { toast } from "sonner";
 import { SvgLoading } from "../reusable-comps/SvgLoading";
 import ExportSelector from "../reusable-comps/ExportSelector";
 import SearchSelector from "./SearchSelector";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 
 export function SubmissionsTable({ id }: { id: string }) {
   const { data: form, isPending } = useGetSingleFormSubmissions(id);

@@ -82,9 +82,14 @@ const ConfigPanel = () => {
                       <Label>Label*</Label>
                       <Input
                         value={field.label}
-                        onChange={(e) =>
-                          updateField(field.id, { label: e.target.value })
-                        }
+                        onChange={(e) => {
+                          updateField(field.id, { label: e.target.value });
+                        }}
+                        onBlur={(e) => {
+                          if (e.target.value.trim().length === 0) {
+                            updateField(field.id, { label: "Untitled field" });
+                          }
+                        }}
                       />
                     </div>
                     {"placeholder" in field && (
@@ -241,7 +246,9 @@ const ConfigPanel = () => {
         ))}
       </div>
       <div className="w-full flex justify-end">
-        <Button variant={"link"} onClick={resetFields}>Clear all</Button>
+        <Button variant={"link"} onClick={resetFields}>
+          Clear all
+        </Button>
       </div>
     </div>
   );
