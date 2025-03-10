@@ -2,7 +2,7 @@
 import React from "react";
 import { CustomButton } from "./CustomButton";
 import Pill from "./Pill";
-import { handleCSVExport } from "@/helpers/export";
+import { exportToCSV, exportToXLSX } from "@/helpers/export";
 
 type JsonData = {
   [x: string]: string | string[];
@@ -60,8 +60,13 @@ const ExportSelector = ({ fileName, data }: exportInterface) => {
   const handleExport = (type: supportedExportTypes) => {
     switch (type) {
       case "csv":
-        handleCSVExport(data, fileName);
+        exportToCSV(data, fileName);
+        break;
+      case "xlsx":
+        exportToXLSX(data, fileName);
+        break;
     }
+    setIsOpen(false);
   };
   return (
     <div ref={selectRef} className="relative">
@@ -92,7 +97,6 @@ const ExportSelector = ({ fileName, data }: exportInterface) => {
           {dataTypes.map((type) => (
             <button
               onClick={() => {
-                console.log(data);
                 handleExport(type.format);
               }}
               key={type.format}

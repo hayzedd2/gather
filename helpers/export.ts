@@ -1,32 +1,48 @@
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+
 type JsonData = {
   [x: string]: string | string[];
 }[];
 
-interface ExportCSVProps {
-  data: JsonData;
-  filename?: string;
-}
-const convertToCSV = (jsonData: JsonData): string => {
-  if (!jsonData.length) return "";
-  const headers = Object.keys(jsonData[0]).join(",") + "\n";
-  const rows = jsonData
-    .map((row) =>
-      Object.values(row)
-        .map((value) => `"${String(value).replace(/"/g, '""')}"`) // Escape quotes
-        .join(",")
-    )
-    .join("\n");
-  return headers + rows;
+export const exportToCSV = (data: JsonData, filename: string): void => {
+  // Get all unique keys across all responses
+  const allKeys = new Set<string>();
+  data.forEach((response) => {
+    Object.keys(response).forEach((key) => allKeys.add(key));
+  });
+
+  // Create header row
+  const headers = Array.from(allKeys);
+  let csvContent = headers.join(",") + "\n";
+
+  // Create data rows
+  data.forEach((response) => {
+    const row = headers.map((header) => {
+      const value = response[header] === undefined ? "-" : response[header];
+      const cellValue =
+        typeof value === "string"
+          ? `"${value.replace(/"/g, '""')}"`
+          : String(value);
+      return cellValue;
+    });
+    csvContent += row.join(",") + "\n";
+  });
+
+  // Create and download the CSV file
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  saveAs(blob, `${filename}.csv`);
 };
 
-export const handleCSVExport = (data: JsonData, filename: string) => {
-  if (data.length === 0) return;
-  const csvData = convertToCSV(data);
-  const blob = new Blob([csvData], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
+export const exportToXLSX = (data: JsonData, filename: string): void => {
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  // Create a workbook with the worksheet
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Form Responses");
+
+  const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  const blob = new Blob([excelBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+  saveAs(blob, `${filename}.xlsx`);
 };
