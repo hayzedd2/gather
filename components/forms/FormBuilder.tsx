@@ -22,7 +22,7 @@ const FormBuilder = () => {
   const { settingFields } = useSettingsFormStore();
   const { fields } = useFormBuilder();
   const isMobile = useIsMobile();
-  const { mutate, isPending, isSuccess } = useCreateform();
+  const { mutate, isPending } = useCreateform();
   const onPublishForm = () => {
     if (fields.length == 0) {
       toast.warning("Add at least one form field");
@@ -67,7 +67,7 @@ const FormBuilder = () => {
             <CustomButton
               onClick={onPublishForm}
               type="submit"
-              className="flex gap-1"
+              className="flex gap-1 items-center"
               disabled={isPending}
             >
               {isPending && <SvgLoading />}

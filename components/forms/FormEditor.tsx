@@ -13,6 +13,8 @@ import { useFormBuilder } from "@/hooks/useFormBuilder";
 import { useEditForm } from "@/hooks/useEditForm";
 import { Button } from "../ui/button";
 import { SvgLoading } from "../reusable-comps/SvgLoading";
+import { TextShimmer } from "../reusable-comps/TextShimmer";
+import { CustomButton } from "../reusable-comps/CustomButton";
 
 const FormEditor = ({ id }: { id: string }) => {
   const [view, setView] = React.useState<viewT>("configure");
@@ -49,10 +51,17 @@ const FormEditor = ({ id }: { id: string }) => {
         </div>
         <div className="w-full  sticky bottom-0 z-10  mt-auto bg-[#fafafa] p-4">
           <div className="flex w-full justify-end">
-            <Button onClick={onEditForm} type="submit" disabled={isPending}>
+            <CustomButton
+              onClick={onEditForm}
+              type="submit"
+              className="flex gap-1 items-center"
+              disabled={isPending}
+            >
               {isPending && <SvgLoading />}
-              <p className="mt-[0.2rem]">Make changes</p>
-            </Button>
+              <p className="mt-[0.2rem]">
+                <TextShimmer duration={1}>Make changes</TextShimmer>
+              </p>
+            </CustomButton>
           </div>
         </div>
       </div>
