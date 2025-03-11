@@ -102,17 +102,24 @@ export const POST = async (
     if (!id) {
       return Response.json({ message: "Form ID is required" }, { status: 400 });
     }
-    // const countryRes = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/ip`);
-    // const { country = "Unknown" } = await countryRes.json();
+    const countryRes = await fetch(`${process.env.APP_URL}/api/ip`);
+    const { country = "Unknown" } = await countryRes.json();
     const data = await req.json();
     await prismaDb.submission.create({
       data: {
         formId: id,
         data,
-        country: "Nigeria",
+        country,
       },
     });
-    // await updateAnalytics(id, "Nigeria");
+    try {
+      await updateAnalytics(id, country);
+    } catch (analyticsError) {
+      console.error(
+        "Analytics update failed, but submission was saved:",
+        analyticsError
+      );
+    }
     return Response.json(
       { message: "Successfully submitted form" },
       { status: 200 }
