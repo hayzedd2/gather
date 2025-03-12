@@ -8,6 +8,12 @@ interface SearchByProps {
   onSelectSearchBy: (s: string) => void;
 }
 
+const concatSearch = (search: string, maxLength: number) => {
+  return search.trim().length > maxLength
+    ? search.slice(0, maxLength).concat("...")
+    : search;
+};
+
 const SearchSelector = ({
   defaultValue,
   searchByOptions,
@@ -38,7 +44,7 @@ const SearchSelector = ({
         aria-expanded={isOpen}
         className="flex gap-1 text-[13px] font-[500] text-[#595959]"
       >
-        {defaultValue}
+        {concatSearch(defaultValue, 20)}
         <svg
           className={`h-5 mt-0.5 w-5 transition-transform duration-200 ${
             isOpen ? "transform rotate-180" : ""
@@ -71,7 +77,7 @@ const SearchSelector = ({
                    hover:bg-[#f0f0f0]
                w-full font-[500] rounded-[0.5rem] px-3 flex justify-between items-center   h-8 text-left text-sm text-[#595959]"
             >
-              {s}
+              {concatSearch(s, 20)}
               {s == defaultValue && <CheckIcon size={14} />}
             </button>
           ))}

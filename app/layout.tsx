@@ -19,7 +19,9 @@ export const metadata: Metadata = {
     "data collection", 
     "questionnaires", 
     "feedback forms",
-    "Google Forms alternative"
+    "Google Forms alternative",
+    "gather forms",
+    "gather"
   ],
   authors: [
     { 

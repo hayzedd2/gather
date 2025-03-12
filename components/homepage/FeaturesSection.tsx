@@ -35,7 +35,7 @@ const FeaturesSection = () => {
       icon: <ShieldCheckIcon size={35} className="icon-blue mb-2" />,
       title: "Secure Submissions",
       description:
-        "Data encryption, CAPTCHA protection, and GDPR compliance to keep your form data safe and secure.",
+        "Form submissions are safeguarded with strong security measures.",
     },
     {
       icon: <CableIcon size={35} className="icon-violet mb-2" />,
@@ -66,7 +66,7 @@ const FeaturesSection = () => {
             questionnaires in seconds.
           </h6>
         </div>
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-6 mt-12 ">
+        <div className="grid gri-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  mt-12">
           {features.map((f, i) => (
             <div
               key={i}
