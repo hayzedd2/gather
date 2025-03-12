@@ -18,7 +18,7 @@ const PreviewSection = () => {
           Create a form now
         </Link>
       </div>
-      <div className="bg-white rounded-xl px-4 mx-4 relative  min-h-[300px]">
+      <div className="bg-white rounded-xl  mx-2 px-2  relative  min-h-[300px]">
         <DemoForm />
       </div>
     </section>

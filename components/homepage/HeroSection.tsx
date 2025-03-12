@@ -13,7 +13,7 @@ const HeroSection = () => {
             Build beautiful forms in minutes
           </StaggerText>
 
-          <h6 className="text-muted-foreground mb-2 text-[15px] font-[500] max-w-[500px] mx-auto text-center">
+          <h6 className="text-muted-foreground mb-2 text-[15px] font-[500] max-w-[350px] md:max-w-[400px] mx-auto text-center">
             Create beautiful forms and share them anywhere. It's super fast, you
             don't need to know how to code.
           </h6>

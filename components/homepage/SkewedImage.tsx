@@ -7,7 +7,7 @@ const SkewedImage = () => {
   const [currentDeg, setCurrentDeg] = useState(22);
 
   return (
-    <div  className="mb-5 mt-[-5px]">
+    <div  className="mb-5 ">
       <Image
         onMouseEnter={() => setCurrentDeg(20)}
         onMouseLeave={() => setCurrentDeg(30)}

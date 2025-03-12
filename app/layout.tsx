@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Gather",
     images: [
       {
-        url: "/hero.png", 
+        url: "/og-image.png", 
         width: 1200,
         height: 630,
         alt: "Gather form builder interface with analytics dashboard"
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Gather | Create Forms & Collect Responses",
     description: "The easiest way to build forms, collect responses, and analyze data.",
-    images: ["/hero.png"],  
+    images: ["/og-image.png"],  
     creator: "@xylogeist_",
   },
   icons: {
