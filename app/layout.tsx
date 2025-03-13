@@ -11,35 +11,39 @@ const newsReader = Newsreader({
 
 export const metadata: Metadata = {
   title: "Gather | Create Forms & Collect Responses Easily",
-  description: "Build professional forms, surveys, and questionnaires in minutes. Gather responses, analyze results, and make data-driven decisions with our intuitive form builder.",
+  description:
+    "Build professional forms, surveys, and questionnaires in minutes. Gather responses, analyze results, and make data-driven decisions with our intuitive form builder.",
+
   keywords: [
-    "form builder", 
-    "online forms", 
-    "surveys", 
-    "data collection", 
-    "questionnaires", 
+    "form builder",
+    "online forms",
+    "surveys",
+    "data collection",
+    "questionnaires",
     "feedback forms",
     "Google Forms alternative",
     "gather forms",
-    "gather"
+    "gather",
   ],
+
   authors: [
-    { 
-      name: "Azeez alhameen" 
-    }
+    {
+      name: "Azeez alhameen",
+    },
   ],
   openGraph: {
     title: "Gather | The Simple Way to Create Forms & Collect Data",
-    description: "Build beautiful forms in minutes, collect responses, and analyze data with our powerful yet easy-to-use form builder.",
+    description:
+      "Build beautiful forms in minutes, collect responses, and analyze data with our powerful yet easy-to-use form builder.",
     url: "https://trygather.vercel.app",
     siteName: "Gather",
     images: [
       {
-        url: "/og-image.png", 
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Gather form builder interface with analytics dashboard"
-      }
+        alt: "Gather form builder interface with analytics dashboard",
+      },
     ],
     locale: "en_US",
     type: "website",
@@ -47,17 +51,18 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Gather | Create Forms & Collect Responses",
-    description: "The easiest way to build forms, collect responses, and analyze data.",
-    images: ["/og-image.png"],  
+    description:
+      "The easiest way to build forms, collect responses, and analyze data.",
+    images: ["/og-image.png"],
     creator: "@xylogeist_",
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-icon.png",
+    icon: "/gather-logo.png",
+    apple: "/gather-logo.png.png",
   },
   category: "Productivity",
   creator: "Alhameen",
-  metadataBase: new URL("https://trygather.vercel.app"), 
+  metadataBase: new URL("https://trygather.vercel.app"),
 };
 
 export default function RootLayout({
@@ -69,9 +74,8 @@ export default function RootLayout({
     <QueryProvider>
       <html lang="en">
         <body className={`${newsReader.className} antialiased`}>
-      
-         {children}
-      
+          {children}
+
           <Toaster richColors />
         </body>
       </html>

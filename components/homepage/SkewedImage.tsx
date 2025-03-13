@@ -14,7 +14,7 @@ const SkewedImage = () => {
         style={{
           transform: `perspective(1000px) rotateX(${currentDeg}deg) rotateY(0deg)`,
         }}
-        className="rounded-[12px]  border skewed"
+        className="rounded-[12px] border skewed"
         src={"/hero.png"}
         width={1000}
         height={200}

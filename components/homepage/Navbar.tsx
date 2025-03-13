@@ -4,6 +4,7 @@ import { UserMenu } from "../reusable-comps/UserMenu";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 
 const Navbar = async () => {
@@ -15,14 +16,15 @@ const Navbar = async () => {
 
   return (
     <nav className="max-w-7xl mb-3 flex justify-between items-center  mx-auto p-4">
-      <div className="logo">
+      <div className="logo flex items-center gap-1">
+        <Image src={"/gather-logo.png"} alt="logo" width={32} height={32}/>
         <Link href={"/"}>
-          <h1 className="font-[500] text-[1.4rem]">Gather</h1>
+          <h1 className="font-[600] mt-[4px] text-[1.3rem]">Gather</h1>
         </Link>
       </div>
 
       {sessions && sessions.user ? (
-        <ul className="flex gap-5 items-center text-[15px] font-[500]">
+        <ul className="flex gap-4 items-center text-[15px] font-[400]">
           <li>
             <Link href={"/forms"}>My forms</Link>
           </li>

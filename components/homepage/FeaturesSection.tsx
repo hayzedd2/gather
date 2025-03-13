@@ -57,7 +57,7 @@ const FeaturesSection = () => {
     <section>
       <div className="my-12 items-center">
         <div className="w-full flex-col flex items-center justify-center">
-          <StaggerText className="text-center flex items-center justify-center leading-[2rem] text-[2rem] font-[600]">
+          <StaggerText className="md:text-[2.5rem] text-[1.8rem] mx-auto max-w-[300px] md:max-w-[450px] items-center justify-center leading-[2rem] md:leading-[3rem] text-center font-[500]">
             Powerful Features, Simple to Use
           </StaggerText>
 
@@ -66,7 +66,7 @@ const FeaturesSection = () => {
             questionnaires in seconds.
           </h6>
         </div>
-        <div className="grid gri-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  mt-10">
           {features.map((f, i) => (
             <div
               key={i}

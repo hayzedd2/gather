@@ -112,11 +112,10 @@ model FormAnalytics {
 
 model CountryData {
   id              String        @id @default(cuid())
-  formAnalyticsId String        @unique
+  formAnalyticsId String        
   formAnalytics   FormAnalytics @relation(fields: [formAnalyticsId], references: [id])
   country         String
   count           Int           @default(0)
-
   @@unique([formAnalyticsId, country])
   @@index([formAnalyticsId])
 }

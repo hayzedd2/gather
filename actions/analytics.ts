@@ -3,7 +3,8 @@ import { prismaDb } from "@/lib/db";
 export const updateAnalytics = async (formId: string, country: string) => {
   const now = new Date();
   const today = new Date(now);
-  today.setMinutes(0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
   try {
     const formAnalytics = await prismaDb.formAnalytics.upsert({
       where: { formId },
@@ -16,43 +17,59 @@ export const updateAnalytics = async (formId: string, country: string) => {
       },
     });
 
-    await prismaDb.countryData.upsert({
+
+    // Find or create country data entry
+    const existingCountryData = await prismaDb.countryData.findFirst({
       where: {
-        formAnalyticsId_country: {
-          formAnalyticsId: formAnalytics.id,
-          country,
-        },
-      },
-      update: {
-        count: { increment: 1 },
-      },
-      create: {
         formAnalyticsId: formAnalytics.id,
         country,
-        count: 1,
       },
     });
 
-    await prismaDb.dailySubmissions.upsert({
-      where: {
-        formAnalyticsId_date: {
+    if (existingCountryData) {
+      await prismaDb.countryData.update({
+        where: { id: existingCountryData.id },
+        data: { count: { increment: 1 } },
+      });
+    } else {
+      await prismaDb.countryData.create({
+        data: {
           formAnalyticsId: formAnalytics.id,
-          date: today,
+          country,
+          count: 1,
         },
-      },
-      update: {
-        count: { increment: 1 },
-      },
-      create: {
+      });
+    }
+
+    // Find or create daily submission entry
+    const existingDailySubmission = await prismaDb.dailySubmissions.findFirst({
+      where: {
         formAnalyticsId: formAnalytics.id,
         date: today,
-        count: 1,
       },
     });
+
+    if (existingDailySubmission) {
+      await prismaDb.dailySubmissions.update({
+        where: { id: existingDailySubmission.id },
+        data: { count: { increment: 1 } },
+      });
+    } else {
+      await prismaDb.dailySubmissions.create({
+        data: {
+          formAnalyticsId: formAnalytics.id,
+          date: today,
+          count: 1,
+        },
+      });
+    }
+
+    return formAnalytics;
   } catch (error) {
     console.error("Error in updateAnalytics:", error);
     throw error;
   }
 };
 
-// This code is actually beans
+
+// this code is actually beans

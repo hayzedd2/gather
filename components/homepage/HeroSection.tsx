@@ -7,9 +7,9 @@ import Link from "next/link";
 const HeroSection = () => {
   return (
     <section id="#">
-      <div className="flex flex-col w-full items-center justify-center ">
+      <div className="flex mt-8 md:mt-0 flex-col w-full items-center justify-center ">
         <div className="hero mt-10 flex flex-col items-center">
-          <StaggerText className="md:text-[3rem] text-[2rem] mx-auto max-w-[350px] md:max-w-[450px] items-center justify-center leading-[2rem] md:leading-[3.4rem] text-center font-[600]">
+          <StaggerText className="md:text-[3rem] text-[2rem] mx-auto max-w-[300px] md:max-w-[400px] items-center justify-center leading-[2rem] md:leading-[3rem] text-center font-[500]">
             Build beautiful forms in minutes
           </StaggerText>
 
