@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Azeez alhameen",
+      url :"https://www.alhameen.xyz"
     },
   ],
   openGraph: {
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Gather form builder interface with analytics dashboard",
+        alt: "Gather homepage",
       },
     ],
     locale: "en_US",

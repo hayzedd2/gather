@@ -83,7 +83,7 @@ const TemplateCard = ({
         open={isPreviewOpen}
         onOpenChange={() => setIsPreviewOpen(!isPreviewOpen)}
       >
-        <SheetContent className="flex flex-col p-0 min-w-[500px] overflow-y-auto">
+        <SheetContent className="flex flex-col p-0  w-[350px] md:min-w-[500px] overflow-y-auto">
           <div className="flex-grow overflow-y-auto p-6">
             <SheetHeader>
               <SheetTitle className="text-[1.6rem]">{title}</SheetTitle>

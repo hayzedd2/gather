@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, PencilIcon } from "lucide-react";
 import SingleFormOptionsTab from "./SingleFormOptionsTab";
 import { getRelativeTime } from "@/helpers/getRelativeTime";
 import SharedLink from "../reusable-comps/SharedLink";
@@ -47,14 +47,14 @@ const SingleFormHeader = ({ id }: { id: string }) => {
         <div className="flex flex-wrap gap-1">
           <SharedLink link={generateShareableLink(form.id)} />
           <div className="flex gap-3 items-center justify-end ">
+            {" "}
             <Link href={`/forms/${id}/edit`}>
-              <Button variant={"outline"} size={"md"}>
-                Edit form
+              <Button variant={"outline"} size={"icon"}>
+                <PencilIcon />
               </Button>
             </Link>
           </div>
         </div>
-
       </div>
       <SingleFormOptionsTab id={form.id} />
     </div>

@@ -2,7 +2,6 @@ import {
   BotIcon,
   CableIcon,
   ChartNoAxesColumn,
-  ChartNoAxesCombinedIcon,
   HammerIcon,
   PlugIcon,
   ScrollTextIcon,
@@ -70,9 +69,9 @@ const FeaturesSection = () => {
           {features.map((f, i) => (
             <div
               key={i}
-              className="card light-shadow rounded-[14px] p-[0.3rem]"
+              className="card light-shadow rounded-[14px] p-[0.2rem]"
             >
-              <div className="bg-[#f9f9f9] border rounded-[13px]  p-6 h-full">
+              <div className="bg-[#f9f9f9] border rounded-[13px]  p-5 h-full">
                 {f.icon}
                 <div className="mt-7">
                   <h3 className="text-[1.2rem]  font-[600]">
