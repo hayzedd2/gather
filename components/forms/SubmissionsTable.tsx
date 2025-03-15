@@ -25,7 +25,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight, SearchIcon } from "lucide-react";
 import { CustomButton } from "../reusable-comps/CustomButton";
@@ -36,7 +36,15 @@ import { toast } from "sonner";
 import { SvgLoading } from "../reusable-comps/SvgLoading";
 import ExportSelector from "../reusable-comps/ExportSelector";
 import SearchSelector from "./SearchSelector";
+import { format } from "date-fns";
 
+function isISODate(value: any): boolean {
+  return (
+    typeof value === "string" &&
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value) &&
+    !isNaN(Date.parse(value))
+  );
+}
 export function SubmissionsTable({ id }: { id: string }) {
   const { data: form, isPending } = useGetSingleFormSubmissions(id);
   const { mutate: deleteSubmissions, isPending: isDeleting } =
@@ -49,6 +57,9 @@ export function SubmissionsTable({ id }: { id: string }) {
   const [currentSearchFilter, setCurrentSearchFilter] = useState<string | null>(
     null
   );
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
   const columns = useMemo(() => {
     // Only create columns if form data is available
     if (!form) return [];
@@ -92,6 +103,9 @@ export function SubmissionsTable({ id }: { id: string }) {
           cell: (info) => {
             const value = info.getValue();
             if (Array.isArray(value)) return value.join(", ");
+            if (isISODate(value)) {
+              return format(value, "PPP");
+            }
             if (typeof value === "boolean") return value ? "Yes" : "No";
             if (typeof value === "string" && value.length > maxLength) {
               return (

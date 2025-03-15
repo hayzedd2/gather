@@ -10,6 +10,7 @@ export const useGetSingleFormSubmissions = (id: string) => {
         const error = await res.json();
         throw new Error(error.message);
       }
+    
       return res.json();
     },
     retry: false,

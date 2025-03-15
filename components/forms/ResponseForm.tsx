@@ -32,8 +32,17 @@ import { SvgLoading } from "../reusable-comps/SvgLoading";
 import { toast } from "sonner";
 import SuccessMessage from "../reusable-comps/SuccessMessage";
 import { Slider } from "../ui/slider";
-import { Star } from "lucide-react";
+import { CalendarIcon, Star } from "lucide-react";
 import { Switch } from "../ui/switch";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Calendar } from "../ui/calendar";
+import { getDateDisableLogic } from "@/helpers/getDateDisableLogic";
 
 const ResponseForm = ({
   id,
@@ -64,17 +73,14 @@ const ResponseForm = ({
     }
 
     try {
-      mutate(
-        data,
-        {
-          onSuccess: () => {
-            toast.success("Your response is submitted succesfully");
-            setHasSubmitted(true);
-            setSliderValues({});
-            form.reset();
-          },
-        }
-      );
+      mutate(data, {
+        onSuccess: () => {
+          toast.success("Your response is submitted succesfully");
+          setHasSubmitted(true);
+          setSliderValues({});
+          form.reset();
+        },
+      });
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
@@ -344,6 +350,60 @@ const ResponseForm = ({
                                 })}
                               </RadioGroup>
                             </FormControl>
+                            <FormDescription>
+                              {c.description && c.description}
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                    {c.type == "date" && (
+                      <FormField
+                        control={form.control}
+                        name={c.id}
+                        render={({ field }) => (
+                          <FormItem className="space-y-3">
+                            <FormLabel>
+                              {c.label}
+                              {c.required && "*"}
+                            </FormLabel>
+
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "w-full pl-3 text-left font-normal",
+                                      !field.value && "text-muted-foreground"
+                                    )}
+                                  >
+                                    {field.value ? (
+                                      format(field.value, "PPP")
+                                    ) : (
+                                      <span>Pick a date</span>
+                                    )}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent
+                                className="w-auto p-0"
+                                align="start"
+                              >
+                                <Calendar
+                                  mode="single"
+                                  selected={field.value}
+                                  onSelect={field.onChange}
+                                  disabled={getDateDisableLogic(
+                                    c.dateRestriction
+                                  )}
+                                  initialFocus
+                                />
+                              </PopoverContent>
+                            </Popover>
+
                             <FormDescription>
                               {c.description && c.description}
                             </FormDescription>

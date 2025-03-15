@@ -109,20 +109,15 @@ export function generateZodSchema(config: FormField[]) {
 
         break;
       case "date":
-        fieldSchema = z.coerce.date({
-          invalid_type_error: `${
-            field.label || "This field"
-          } must be a valid date`,
-        });
-
         if (field.required) {
-          fieldSchema = (fieldSchema as z.ZodDate).refine(
-            (date) => date !== null,
-            {
-              message: `${field.label || "This field"} is required`,
-            }
-          );
+          fieldSchema = z.date({
+            required_error: `${field.label || "This field"} is required`,
+            invalid_type_error: "Please select a valid date",
+          });
+        } else {
+          fieldSchema = z.date().optional();
         }
+        break;
 
       default:
         fieldSchema = z.string();
