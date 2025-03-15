@@ -80,15 +80,23 @@ export interface RatingField extends BaseField {
 
 export interface SliderField extends BaseField {
   type: "slider";
-  defaultValue:number
+  defaultValue: number;
   baseNumber: number;
   maxNumber: number;
   steps: number;
 }
-export interface SwitchField extends BaseField{
-  type:"switch"
-  defaultCheckedValue:boolean
+export interface SwitchField extends BaseField {
+  type: "switch";
+  defaultCheckedValue: boolean;
 }
+
+export type dateRestrictionFormats = "none" | "disableFuture" | "disablePast";
+
+export interface DateField extends BaseField {
+  type: "date";
+  dateRestriction: dateRestrictionFormats;
+}
+
 export type FormField =
   | TextField
   | NumberField
@@ -99,7 +107,8 @@ export type FormField =
   | TextareaField
   | RatingField
   | SliderField
-| SwitchField
+  | SwitchField
+  | DateField;
 
 export type FieldType = FormField["type"];
 
@@ -139,8 +148,7 @@ export interface FormSettingProps {
   description: string;
   buttonCtaText?: string | undefined;
   saveAsTemplate: boolean;
-  successMessage?:string
-  
+  successMessage?: string;
 }
 
 export interface FormSettingsControllerProps {
@@ -167,7 +175,7 @@ export interface FormResponseProps {
   description: string;
   buttonText: string;
   formConfig: [];
- 
+
   viewCount: number;
   _count: Record<"submissions", number>;
 }
@@ -178,7 +186,7 @@ export interface GetFormSubmissionProps {
   submissions: {
     [x: string]: string | string[];
   }[];
-  title:string
+  title: string;
 }
 
 export interface ResponseFormProps {
@@ -187,7 +195,7 @@ export interface ResponseFormProps {
   title: string;
   buttonText: string;
   formConfig: FormField[];
-  successMessage:string | null
+  successMessage: string | null;
 }
 
 export interface CountryAnalyticsDataProps {

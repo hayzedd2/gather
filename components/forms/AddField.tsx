@@ -6,6 +6,11 @@ import { FileDigit, List, MailPlus, Type, WrapText } from "lucide-react";
 import GetIconType from "@/helpers/GetIconType";
 import { createDefaultValues } from "@/helpers/createDefaultValues";
 
+type FieldsT = {
+  key: FieldType;
+  label: string;
+  about: string;
+};
 const AddField = () => {
   const addField = useFormBuilder((state) => state.addField);
   const handleAddField = (type: FieldType) => {
@@ -16,7 +21,7 @@ const AddField = () => {
       label: `New ${type} Field`,
     });
   };
-  const fieldsToAdd = [
+  const fieldsToAdd: FieldsT[] = [
     {
       key: "text",
       label: "Text",
@@ -66,6 +71,11 @@ const AddField = () => {
       key: "switch",
       label: "Switch",
       about: "True or false input",
+    },
+    {
+      key: "date",
+      label: "Date picker",
+      about: "Date picker field",
     },
   ];
 

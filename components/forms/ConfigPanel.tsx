@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useFormBuilder } from "@/hooks/useFormBuilder";
-import { FieldType } from "@/types/type";
+import { dateRestrictionFormats, FieldType } from "@/types/type";
 import GetIconType from "@/helpers/GetIconType";
 import EmptyFormPreview from "./EmptyFormPreview";
 import OptionsEditor from "./OptionsEditor";
@@ -102,7 +102,7 @@ const ConfigPanel = () => {
                               placeholder: e.target.value,
                             })
                           }
-                     />
+                        />
                       </div>
                     )}
                   </div>
@@ -157,6 +157,38 @@ const ConfigPanel = () => {
                           <RadioGroupItem value="false" id="r2" />
                           <Label htmlFor="r2" className="pt-[3px]">
                             False
+                          </Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
+                  )}
+                  {field.type == "date" && (
+                    <div className="space-y-2">
+                      <Label>Date restriction</Label>
+                      <RadioGroup
+                        onValueChange={(v) =>
+                          updateField(field.id, {
+                            dateRestriction: v as dateRestrictionFormats,
+                          })
+                        }
+                        defaultValue={field.dateRestriction}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="none" id="r1" />
+                          <Label htmlFor="r1" className="pt-[3px]">
+                            None
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="disableFuture" id="r2" />
+                          <Label htmlFor="r2" className="pt-[3px]">
+                            Disable future dates
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="disablePast" id="r2" />
+                          <Label htmlFor="r2" className="pt-[3px]">
+                            Disable past dates
                           </Label>
                         </div>
                       </RadioGroup>

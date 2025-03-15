@@ -3,6 +3,7 @@ import React from "react";
 import {
   AtSign,
   Binary,
+  CalendarIcon,
   CircleCheckBig,
   FileDigit,
   FileText,
@@ -47,6 +48,10 @@ const GetIconType = ({ type, size }: IconTypeProps) => {
       );
     case "switch":
       return <ToggleLeft size={size ? size : 18} className="icon-violet" />;
+
+    case "date":
+      return <CalendarIcon size={size ? size : 18} className="icon-blue" />;
+
     default:
       return <FileType size={18} />;
   }

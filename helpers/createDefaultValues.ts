@@ -1,4 +1,4 @@
-import { FieldType } from "@/types/type";
+import { dateRestrictionFormats, FieldType } from "@/types/type";
 
 export const createDefaultValues = (type: FieldType) => {
   const baseField = {
@@ -39,6 +39,11 @@ export const createDefaultValues = (type: FieldType) => {
       return {
         ...baseField,
         defaultCheckedValue: false,
+      };
+    case "date":
+      return {
+        ...baseField,
+        dateRestriction: "none" as dateRestrictionFormats,
       };
     default:
       return baseField;
