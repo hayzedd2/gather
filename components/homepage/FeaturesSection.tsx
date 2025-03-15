@@ -3,7 +3,6 @@ import {
   CableIcon,
   ChartNoAxesColumn,
   HammerIcon,
-  PlugIcon,
   ScrollTextIcon,
   ShieldCheckIcon,
 } from "lucide-react";

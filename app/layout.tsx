@@ -49,14 +49,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Gather | Create Forms & Collect Responses",
-    description:
-      "The easiest way to build forms, collect responses, and analyze data.",
-    images: ["/og-image.png"],
-    creator: "@xylogeist_",
-  },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title: "Gather | Create Forms & Collect Responses",
+  //   description:
+  //     "The easiest way to build forms, collect responses, and analyze data.",
+  //   images: ["/og-image.png"],
+  //   creator: "@xylogeist_",
+  // },
   icons: {
     icon: "/gather-logo.png",
     apple: "/gather-logo.png.png",

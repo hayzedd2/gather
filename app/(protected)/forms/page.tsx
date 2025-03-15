@@ -10,7 +10,7 @@ const page = async () => {
     <div>
       <Navbar />
       <div className="p-4 mb-5 max-w-5xl mx-auto">
-        <div className="w-full items-start flex justify-between ">
+        <div className="w-full items-start flex flex-wrap justify-between ">
           <div className="flex flex-col">
             <h3 className="font-[600] text-[1.6rem]">My forms</h3>
             <h6 className="mt-[-4px]">Manage your forms and submissions.</h6>

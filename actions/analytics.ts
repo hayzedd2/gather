@@ -3,7 +3,8 @@ import { prismaDb } from "@/lib/db";
 export const updateAnalytics = async (formId: string, country: string) => {
   const now = new Date();
   const today = new Date(now);
-  today.setHours(0, 0, 0, 0);
+  today.setMinutes(0, 0, 0);
+  console.log(today)
 
   try {
     const formAnalytics = await prismaDb.formAnalytics.upsert({
