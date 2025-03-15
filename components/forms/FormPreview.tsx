@@ -16,17 +16,29 @@ import { FormField } from "@/types/type";
 import { Textarea } from "../ui/textarea";
 import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Star } from "lucide-react";
+import { CalendarIcon, Star } from "lucide-react";
 import { Slider } from "../ui/slider";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch } from "../ui/switch";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { getDateDisableLogic } from "@/helpers/getDateDisableLogic";
 
 const FormPreview = () => {
   const fields = useFormBuilder((state) => state.fields);
   const [sliderValues, setSliderValues] = useState<Record<string, number>>({});
-
+  const [dateValues, setDateValues] = useState<Record<string, Date>>({});
   const handleSliderChange = (id: string, value: number) => {
     setSliderValues((prev) => ({ ...prev, [id]: value }));
+  };
+  const handleDateChange = (id: string, date: Date) => {
+    setDateValues((prev) => ({ ...prev, [id]: date }));
   };
   const settingsFields = useSettingsFormStore((s) => s.settingFields);
   const renderField = (field: FormField) => {
@@ -115,9 +127,6 @@ const FormPreview = () => {
         );
 
       case "slider":
-        // useEffect(() => {
-        //   setSliderVal([field.defaultValue]);
-        // }, [field.defaultValue]);
         return (
           <Slider
             value={[sliderValues[field.id] || field.defaultValue]}
@@ -132,6 +141,36 @@ const FormPreview = () => {
         );
       case "switch":
         return <Switch defaultChecked={field.defaultCheckedValue} />;
+      case "date":
+        return (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-full justify-start text-left font-normal",
+                  !dateValues[field.id] && "text-muted-foreground"
+                )}
+              >
+                {dateValues[field.id] ? (
+                  format(dateValues[field.id], "PPP")
+                ) : (
+                  <span>Pick a date</span>
+                )}
+                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={dateValues[field.id]}
+                onSelect={(d) => handleDateChange(field.id, d!)}
+                initialFocus
+                disabled={getDateDisableLogic(field.dateRestriction)}
+              />
+            </PopoverContent>
+          </Popover>
+        );
       case "radio-group":
         return (
           <RadioGroup className="gap-3">

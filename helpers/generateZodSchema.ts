@@ -94,11 +94,7 @@ export function generateZodSchema(config: FormField[]) {
         break;
       case "switch":
         fieldSchema = z.coerce.boolean();
-        // if(field.required){
-        //   fieldSchema = (fieldSchema as ZodBoolean).refine(value => value, {
-        //     message: `${field.label || "This field"} is required`
-        //   })
-        // }
+
         break;
 
       case "checkbox-group":
@@ -112,6 +108,21 @@ export function generateZodSchema(config: FormField[]) {
         }
 
         break;
+      case "date":
+        fieldSchema = z.coerce.date({
+          invalid_type_error: `${
+            field.label || "This field"
+          } must be a valid date`,
+        });
+
+        if (field.required) {
+          fieldSchema = (fieldSchema as z.ZodDate).refine(
+            (date) => date !== null,
+            {
+              message: `${field.label || "This field"} is required`,
+            }
+          );
+        }
 
       default:
         fieldSchema = z.string();
