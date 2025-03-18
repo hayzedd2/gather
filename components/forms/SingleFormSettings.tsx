@@ -115,7 +115,7 @@ const SingleFormSettings = ({
                         filling
                       </FormDescription>
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field} disabled={isPending}/>
                       </FormControl>
 
                       <FormMessage />
@@ -134,7 +134,7 @@ const SingleFormSettings = ({
                         Used to describe your form to your users
                       </FormDescription>
                       <FormControl>
-                        <Textarea {...field} />
+                        <Textarea {...field} disabled={isPending} />
                       </FormControl>
 
                       <FormMessage />
@@ -154,7 +154,7 @@ const SingleFormSettings = ({
                         they are doing
                       </FormDescription>
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field} disabled={isPending} />
                       </FormControl>
 
                       <FormMessage />
@@ -174,7 +174,7 @@ const SingleFormSettings = ({
                       submit the form.
                       </FormDescription>
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field}  disabled={isPending}/>
                       </FormControl>
 
                       <FormMessage />
@@ -187,7 +187,7 @@ const SingleFormSettings = ({
                   className=" disabled:bg-[#f2f2f2] "
                   variant={"outline"}
                   size={"md"}
-                  disabled={!isDirty || isPending}
+                  disabled={isPending}
                 >
                   {isPending && <SvgLoading />}
                   <span className="mt-[0.2rem]">

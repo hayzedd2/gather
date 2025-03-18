@@ -1,5 +1,5 @@
 import { FormField } from "@/types/type";
-import { z, ZodBoolean, ZodString } from "zod";
+import { z, ZodString } from "zod";
 
 export function generateZodSchema(config: FormField[]) {
   const schemaObject: Record<string, z.ZodType<any>> = {};

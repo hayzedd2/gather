@@ -1,9 +1,10 @@
 import { SingleFormSettingsSchema } from "@/schema";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { z } from "zod";
 
 export const useUpdateFormSettings = (id: string) => {
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (values: z.infer<typeof SingleFormSettingsSchema>) => {
       const response = await fetch(`/api/forms/${id}/settings`, {
@@ -22,6 +23,9 @@ export const useUpdateFormSettings = (id: string) => {
     },
     onSuccess: async () => {
       toast.success("Settings updated");
+      await queryClient.invalidateQueries({
+        queryKey: ["singledata", id]
+      });
     },
     onError(error) {
       toast.error(error.message);

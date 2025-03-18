@@ -1,4 +1,6 @@
-import { useReducer } from "react";
+"use client"
+
+import { useState } from "react";
 import { motion } from "motion/react";
 import { Plus, X } from "lucide-react";
 import { toast } from "sonner";
@@ -14,59 +16,38 @@ type OptionsEditorProps = {
   field: SelectField | RadioGroupField | CheckboxGroupField;
 };
 
-type Action =
-  | { type: "ADD" }
-  | { type: "UPDATE"; index: number; label: string }
-  | { type: "REMOVE"; index: number };
-
-
-const optionsReducer = (options: FieldOption[], action: Action) => {
-  switch (action.type) {
-    case "ADD":
-      return [
-        ...options,
-        { label: "New option", value: `option-${crypto.randomUUID()}` },
-      ];
-    case "UPDATE":
-      return options.map((opt, i) =>
-        i === action.index
-          ? { ...opt, label: action.label.trim() || "Untitled field" }
-          : opt
-      );
-    case "REMOVE":
-      return options.length > 1
-        ? options.filter((_, i) => i !== action.index)
-        : options;
-    default:
-      return options;
-  }
-};
-
 const OptionsEditor = ({ field }: OptionsEditorProps) => {
   const updateField = useFormBuilder((s) => s.updateField);
-  const [options, dispatch] = useReducer(optionsReducer, field.options);
+  const [options, setOptions] = useState<FieldOption[]>(field.options);
 
-  // Sync state with form builder
   const updateOptions = (newOptions: FieldOption[]) => {
+    setOptions(newOptions);
     updateField(field.id, { options: newOptions });
+  };
+
+  const addOption = () => {
+    const newOption = { label: "New option", value: `option-${crypto.randomUUID()}` };
+    updateOptions([...options, newOption]);
+  };
+
+  const updateOptionLabel = (index: number, label: string) => {
+    const newOptions = options.map((opt, i) =>
+      i === index ? { ...opt, label } : opt
+    );
+    updateOptions(newOptions);
+  };
+
+  const removeOption = (index: number) => {
+    if (options.length > 1) {
+      updateOptions(options.filter((_, i) => i !== index));
+    }
   };
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <Label>Options</Label>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => {
-            dispatch({ type: "ADD" });
-            updateOptions([
-              ...options,
-              { label: "New option", value: `option-${crypto.randomUUID()}` },
-            ]);
-          }}
-          className="flex items-center gap-1"
-        >
+        <Button size="sm" variant="outline" onClick={addOption} className="flex items-center gap-1">
           <Plus size={14} /> Add Option
         </Button>
       </div>
@@ -76,28 +57,16 @@ const OptionsEditor = ({ field }: OptionsEditorProps) => {
           <motion.div key={option.value} className="flex items-center gap-2">
             <Input
               value={option.label}
-              onChange={(e) =>
-                dispatch({ type: "UPDATE", index, label: e.target.value })
-              }
+              onChange={(e) => updateOptionLabel(index, e.target.value)}
               onBlur={() => {
                 if (!option.label.trim()) {
-                  toast.warning(
-                    "Field cannot be empty, setting it to 'Untitled field'"
-                  );
+                  toast.warning("Field cannot be empty, setting it to 'Untitled field'");
+                  updateOptionLabel(index, "Untitled field");
                 }
-                updateOptions(options);
               }}
-              onKeyDown={(e) => e.key === "Enter" && updateOptions(options)}
+              onKeyDown={(e) => e.key === "Enter" && updateOptions([...options])}
             />
-
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => {
-                dispatch({ type: "REMOVE", index });
-                updateOptions(options.filter((_, i) => i !== index));
-              }}
-            >
+            <Button size="sm" variant="ghost" onClick={() => removeOption(index)}>
               <X size={14} />
             </Button>
           </motion.div>
