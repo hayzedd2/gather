@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "npm install --force && prisma generate && next build",
+    "build": "npx prisma generate && next build",
     "start": "next start",
     "test": "jest",
     "test:watch": "jest --watch",
