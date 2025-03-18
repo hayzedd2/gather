@@ -7,6 +7,7 @@ export function generateZodSchema(config: FormField[]) {
     let fieldSchema: z.ZodType<any>;
     switch (field.type) {
       case "text":
+
       case "textarea":
         fieldSchema = z.string();
         if (field.required) {
@@ -109,13 +110,18 @@ export function generateZodSchema(config: FormField[]) {
 
         break;
       case "date":
+        fieldSchema = z.string();
         if (field.required) {
-          fieldSchema = z.date({
-            required_error: `${field.label || "This field"} is required`,
-            invalid_type_error: "Please select a valid date",
-          });
-        } else {
-          fieldSchema = z.date().optional();
+          fieldSchema = z.string().refine(
+            (val) => {
+              if (val === "") return false;
+              const parsed = new Date(val);
+              return !isNaN(parsed.getTime());
+            },
+            {
+              message: "Please select a valid date",
+            }
+          );
         }
         break;
 

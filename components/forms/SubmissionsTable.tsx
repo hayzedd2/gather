@@ -57,9 +57,6 @@ export function SubmissionsTable({ id }: { id: string }) {
   const [currentSearchFilter, setCurrentSearchFilter] = useState<string | null>(
     null
   );
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
   const columns = useMemo(() => {
     // Only create columns if form data is available
     if (!form) return [];
@@ -168,6 +165,7 @@ export function SubmissionsTable({ id }: { id: string }) {
                   {
                     onSuccess: (data) => {
                       toast.success(data.deletedCount + " " + data.message);
+                      table.resetRowSelection()
                     },
                     onError(error) {
                       toast.error(error.message);
@@ -177,7 +175,7 @@ export function SubmissionsTable({ id }: { id: string }) {
               }}
             >
               {isDeleting && <SvgLoading />}
-              <span> Delete rows</span>
+              <span className="mt-[-1px]"> Delete rows</span>
             </CustomButton>
           </div>
         </div>

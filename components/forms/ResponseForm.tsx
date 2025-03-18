@@ -394,8 +394,16 @@ const ResponseForm = ({
                               >
                                 <Calendar
                                   mode="single"
-                                  selected={field.value}
-                                  onSelect={field.onChange}
+                                  selected={
+                                    field.value
+                                      ? new Date(field.value)
+                                      : undefined
+                                  }
+                                  onSelect={(date) => {
+                                    field.onChange(
+                                      date ? date.toISOString() : ""
+                                    );
+                                  }}
                                   disabled={getDateDisableLogic(
                                     c.dateRestriction
                                   )}

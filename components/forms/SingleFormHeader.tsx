@@ -44,13 +44,13 @@ const SingleFormHeader = ({ id }: { id: string }) => {
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           <SharedLink link={generateShareableLink(form.id)} />
           <div className="flex gap-3 items-center justify-end ">
             {" "}
             <Link href={`/forms/${id}/edit`}>
-              <Button variant={"outline"} size={"icon"}>
-                <PencilIcon />
+              <Button className="w-7 h-7 mt-1" variant={"outline"} size={"icon"}>
+                <PencilIcon  size={14}/>
               </Button>
             </Link>
           </div>
