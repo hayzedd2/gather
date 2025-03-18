@@ -3,6 +3,7 @@ import { Newsreader } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import QueryProvider from "@/providers/QueryProvider";
+import { Analytics } from "@vercel/analytics/react"
 
 const newsReader = Newsreader({
   variable: "--font-news-reader",
@@ -78,6 +79,7 @@ export default function RootLayout({
           {children}
 
           <Toaster richColors />
+          <Analytics/>
         </body>
       </html>
     </QueryProvider>
