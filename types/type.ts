@@ -94,6 +94,7 @@ export type dateRestrictionFormats = "none" | "disableFuture" | "disablePast";
 
 export interface DateField extends BaseField {
   type: "date";
+  datePickerPlaceholder:string
   dateRestriction: dateRestrictionFormats;
 }
 

@@ -9,6 +9,11 @@ import SharedLink from "../reusable-comps/SharedLink";
 import { generateShareableLink } from "@/helpers/generateShareableLink";
 import { useGetSingleForm } from "@/hooks/useGetSingleForm";
 import SingleFormViewSkeleton from "./SingleFormViewSkeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const SingleFormHeader = ({ id }: { id: string }) => {
   const { data: form, isPending } = useGetSingleForm(id);
@@ -49,9 +54,20 @@ const SingleFormHeader = ({ id }: { id: string }) => {
           <div className="flex gap-3 items-center justify-end ">
             {" "}
             <Link href={`/forms/${id}/edit`}>
-              <Button className="w-7 h-7 mt-1" variant={"outline"} size={"icon"}>
-                <PencilIcon  size={14}/>
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    className="w-7 h-7 mt-1"
+                    variant={"outline"}
+                    size={"icon"}
+                  >
+                    <PencilIcon size={14} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Edit form</p>
+                </TooltipContent>
+              </Tooltip>
             </Link>
           </div>
         </div>

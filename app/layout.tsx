@@ -3,7 +3,8 @@ import { Newsreader } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import QueryProvider from "@/providers/QueryProvider";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const newsReader = Newsreader({
   variable: "--font-news-reader",
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Azeez alhameen",
-      url :"https://www.alhameen.xyz"
+      url: "https://www.alhameen.xyz",
     },
   ],
   openGraph: {
@@ -74,14 +75,16 @@ export default function RootLayout({
 }>) {
   return (
     <QueryProvider>
-      <html lang="en">
-        <body className={`${newsReader.className} antialiased`}>
-          {children}
+      <TooltipProvider delayDuration={0}>
+        <html lang="en">
+          <body className={`${newsReader.className} antialiased`}>
+            {children}
 
-          <Toaster richColors />
-          <Analytics/>
-        </body>
-      </html>
+            <Toaster richColors />
+            <Analytics />
+          </body>
+        </html>
+      </TooltipProvider>
     </QueryProvider>
   );
 }

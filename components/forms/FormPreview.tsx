@@ -18,7 +18,7 @@ import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { CalendarIcon, Star } from "lucide-react";
 import { Slider } from "../ui/slider";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Switch } from "../ui/switch";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -152,10 +152,10 @@ const FormPreview = () => {
                   !dateValues[field.id] && "text-muted-foreground"
                 )}
               >
-                {dateValues[field.id] ? (
+              {dateValues[field.id] ? (
                   format(dateValues[field.id], "PPP")
                 ) : (
-                  <span>Pick a date</span>
+                  <span>{field.datePickerPlaceholder}</span>
                 )}
                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
               </Button>

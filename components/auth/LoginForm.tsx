@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { useFormHelpers } from "@/hooks/useFormHelpers";
 import { SvgLoading } from "../reusable-comps/SvgLoading";
 import { FormError } from "../forms/FormError";
+import { toast } from "sonner";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -43,6 +44,7 @@ const LoginForm = () => {
 
   const handleLogin = async (values: z.infer<typeof LoginSchema>) => {
     try {
+      setShowPassword(false)
       const { email, password } = values;
       await signIn.email({
         email,
@@ -58,6 +60,7 @@ const LoginForm = () => {
           onSuccess() {
             setLoading(false);
             router.push("/forms");
+            toast.success("Login successful!");
           },
           onError: (ctx) => {
             setLoading(false);

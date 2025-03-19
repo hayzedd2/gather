@@ -44,6 +44,7 @@ export const createDefaultValues = (type: FieldType) => {
       return {
         ...baseField,
         dateRestriction: "none" as dateRestrictionFormats,
+        datePickerPlaceholder: "Pick a date"
       };
     default:
       return baseField;

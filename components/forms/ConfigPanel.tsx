@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Star, Trash2 } from "lucide-react";
+import { CircleHelp, Star, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +11,11 @@ import { dateRestrictionFormats, FieldType } from "@/types/type";
 import GetIconType from "@/helpers/GetIconType";
 import EmptyFormPreview from "./EmptyFormPreview";
 import OptionsEditor from "./OptionsEditor";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const ConfigPanel = () => {
@@ -22,7 +27,7 @@ const ConfigPanel = () => {
   }
 
   return (
-    <div className="rounded-lg flex-col flex gap-2 pb-14">
+    <div className="rounded-lg flex-col flex gap-2 ">
       <div className="font-[500] flex items-center gap-2 text-[1.3rem] text-regular">
         <div className="flex flex-col">
           <h4>Form configuration</h4>
@@ -37,7 +42,7 @@ const ConfigPanel = () => {
           <div
             key={field.id}
             className={`${
-              !selectedField || selectedField !== field.id ? "p-3" : "py-8 px-4"
+              !selectedField || selectedField !== field.id ? "p-3" : "py-6 px-4"
             } flex flex-col w-full bg-white rounded-lg`}
           >
             <div
@@ -102,6 +107,42 @@ const ConfigPanel = () => {
                               placeholder: e.target.value,
                             })
                           }
+                        />
+                      </div>
+                    )}
+                    {"datePickerPlaceholder" in field && (
+                      <div className="w-full">
+                        <Label>
+                          <div className="flex gap-1 items-center">
+                            Date picker placeholder
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <CircleHelp className="text-muted-foreground size-3" />
+                              </TooltipTrigger>
+                              <TooltipContent className="max-w-[300px] text-center">
+                                <p className="text-[13px]">
+                                  This is the label shown in the date picker. It
+                                  defaults to `Pick a date` if not edited.
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </div>
+                        </Label>
+                        <Input
+                          className="mt-2"
+                          value={field.datePickerPlaceholder || ""}
+                          onChange={(e) =>
+                            updateField(field.id, {
+                              datePickerPlaceholder: e.target.value,
+                            })
+                          }
+                          onBlur={(e) => {
+                            if (e.target.value.trim().length === 0) {
+                              updateField(field.id, {
+                                datePickerPlaceholder: "Pick a date",
+                              });
+                            }
+                          }}
                         />
                       </div>
                     )}

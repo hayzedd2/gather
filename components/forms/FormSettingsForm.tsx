@@ -96,7 +96,7 @@ const FormSettingsForm = () => {
               name="buttonCtaText"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Button CTA text</FormLabel>
+                  <FormLabel>Button label</FormLabel>
                   <FormControl>
                     <Input placeholder="e.g Submit complaint" {...field} />
                   </FormControl>

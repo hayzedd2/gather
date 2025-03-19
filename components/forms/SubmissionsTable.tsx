@@ -93,6 +93,24 @@ export function SubmissionsTable({ id }: { id: string }) {
           enableColumnFilter: true,
           filterFn: (row, columnId, filterValue) => {
             const cellValue = row.getValue(columnId);
+            if (isISODate(cellValue)) {
+              const formattedDate = format(
+                cellValue as any,
+                "PPP"
+              ).toLowerCase();
+              return formattedDate.includes(String(filterValue).toLowerCase());
+            }
+
+            if (Array.isArray(cellValue)) {
+              return cellValue
+                .join(", ")
+                .toLowerCase()
+                .includes(String(filterValue).toLowerCase());
+            }
+            if (typeof cellValue === "boolean") {
+              const boolString = cellValue ? "yes" : "no";
+              return boolString.includes(String(filterValue).toLowerCase());
+            }
             return String(cellValue)
               .toLowerCase()
               .includes(String(filterValue).toLowerCase());
@@ -165,7 +183,7 @@ export function SubmissionsTable({ id }: { id: string }) {
                   {
                     onSuccess: (data) => {
                       toast.success(data.deletedCount + " " + data.message);
-                      table.resetRowSelection()
+                      table.resetRowSelection();
                     },
                     onError(error) {
                       toast.error(error.message);
