@@ -30,7 +30,6 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { useSendFormResponse } from "@/hooks/useSendFormResponse";
 import { SvgLoading } from "../reusable-comps/SvgLoading";
 import { toast } from "sonner";
-import SuccessMessage from "../reusable-comps/SuccessMessage";
 import { Slider } from "../ui/slider";
 import { CalendarIcon, Star } from "lucide-react";
 import { Switch } from "../ui/switch";
@@ -75,7 +74,7 @@ const ResponseForm = ({
     try {
       mutate(data, {
         onSuccess: () => {
-          toast.success("Your response is submitted succesfully");
+          toast.success("Your response was submitted succesfully");
           setHasSubmitted(true);
           setSliderValues({});
           form.reset();
