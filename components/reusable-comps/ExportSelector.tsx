@@ -2,12 +2,19 @@
 import React from "react";
 import { CustomButton } from "./CustomButton";
 import Pill from "./Pill";
-import { exportToCSV, exportToXLSX } from "@/helpers/export";
+import { exportToCSV, exportToJson, exportToXLSX } from "@/helpers/export";
 
 type JsonData = {
   [x: string]: string | string[];
 }[];
-type supportedExportTypes = "csv" | "xlsx" | "pdf" | "json" |"csv-some" | "xlsx-some"| "json-some";
+type supportedExportTypes =
+  | "csv"
+  | "xlsx"
+  | "pdf"
+  | "json"
+  | "csv-some"
+  | "xlsx-some"
+  | "json-some";
 interface dataTypeInterface {
   label: string;
   format: supportedExportTypes;
@@ -16,7 +23,7 @@ interface dataTypeInterface {
 interface exportInterface {
   fileName: string;
   data: JsonData;
-  selectedData : JsonData
+  selectedData: JsonData;
 }
 
 const dataTypes: dataTypeInterface[] = [
@@ -43,19 +50,25 @@ const dataTypes: dataTypeInterface[] = [
   {
     label: "Export selected to .csv",
     format: "csv-some",
-    isSupported: false,
+    isSupported: true,
   },
   {
     label: "Export selected to .xlsx",
     format: "xlsx-some",
-    isSupported: false,
+    isSupported: true,
   },
   {
     label: "Export selected to .json",
     format: "json-some",
-    isSupported: false,
+    isSupported: true,
   },
 ];
+// const checkDisabled = (format: string): boolean => {
+//   if (format.includes("some")) {
+//     return true;
+//   }
+//   return false;
+// };
 const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const selectRef = React.useRef<HTMLDivElement>(null);
@@ -80,11 +93,15 @@ const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
         break;
       case "xlsx":
         exportToXLSX(data, fileName);
+      case "json":
+        exportToJson(data, fileName);
         break;
       case "csv-some":
-        exportToCSV(selectedData, fileName)
+        exportToCSV(selectedData, fileName);
       case "xlsx-some":
-        exportToXLSX(selectedData, fileName)
+        exportToXLSX(selectedData, fileName);
+      case "json-some":
+        exportToJson(selectedData, fileName);
     }
     setIsOpen(false);
   };
@@ -113,13 +130,13 @@ const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
         </svg>
       </CustomButton>
       {isOpen && (
-        <div className="shadow-md bg-white p-1 min-w-[200px] rounded-xl z-50  top-10 left-0 absolute">
+        <div className="shadow-md bg-white p-1 min-w-[250px] rounded-xl z-50  top-10 left-0 absolute">
           {dataTypes.map((type) => (
             <button
               onClick={() => {
                 handleExport(type.format);
               }}
-              disabled={type.format.includes("some") && selectedData.length == 0}
+              // disabled={checkDisabled(type.format)}
               key={type.format}
               className={`${
                 type.isSupported
