@@ -1,5 +1,6 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { json } from "stream/consumers";
 
 type JsonData = {
   [x: string]: string | string[];
@@ -46,7 +47,11 @@ export const exportToXLSX = (data: JsonData, filename: string): void => {
   });
   saveAs(blob, `${filename}.xlsx`);
 };
-
+export const exportToJson = (data: JsonData, filename: string)=>{
+  const jsonData = JSON.stringify(data, null, 2)
+  const blob = new Blob([jsonData], { type: "data:text/json;charset=utf-8" });
+  saveAs(blob, `${filename}.json`);
+}
 // export const exportToPDF = (jsonData: FormResponse[]): void => {
 //     // Create new PDF document
 //     const doc = new jsPDF();

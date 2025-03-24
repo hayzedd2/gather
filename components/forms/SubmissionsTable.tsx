@@ -233,6 +233,9 @@ export function SubmissionsTable({ id }: { id: string }) {
 
         <div className="flex w-full items-end gap-2  justify-between md:justify-end">
           <ExportSelector
+            selectedData={table
+              .getFilteredSelectedRowModel()
+              .rows.map((row) => row.original.unique_form_submission_id)}
             data={form.submissions.map(
               ({ unique_form_submission_id, ...rest }) => rest
             )}
