@@ -235,7 +235,7 @@ export function SubmissionsTable({ id }: { id: string }) {
           <ExportSelector
             selectedData={table
               .getFilteredSelectedRowModel()
-              .rows.map((row) => row.original.unique_form_submission_id)}
+              .rows.map((row) => row.original)}
             data={form.submissions.map(
               ({ unique_form_submission_id, ...rest }) => rest
             )}
