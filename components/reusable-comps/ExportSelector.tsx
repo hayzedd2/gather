@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { CustomButton } from "./CustomButton";
 import Pill from "./Pill";
 import { exportToCSV, exportToJson, exportToXLSX } from "@/helpers/export";
@@ -63,15 +63,33 @@ const dataTypes: dataTypeInterface[] = [
     isSupported: true,
   },
 ];
-// const checkDisabled = (format: string): boolean => {
-//   if (format.includes("some")) {
-//     return true;
-//   }
-//   return false;
-// };
+
 const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const selectRef = React.useRef<HTMLDivElement>(null);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
+  const [dropdownDirection, setDropdownDirection] = React.useState<
+    "right" | "left"
+  >("right");
+  React.useEffect(() => {
+    const checkDropdownPosition = () => {
+      if (dropdownRef.current) {
+        const rect = dropdownRef.current.getBoundingClientRect();
+
+        // Check if dropdown exceeds right side of screen
+        if (rect.right > window.innerWidth) {
+          setDropdownDirection("left");
+        } else {
+          setDropdownDirection("right");
+        }
+      }
+    };
+    checkDropdownPosition();
+    window.addEventListener("resize", checkDropdownPosition);
+    return () => {
+      window.removeEventListener("resize", checkDropdownPosition);
+    };
+  }, [isOpen]);
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -130,19 +148,28 @@ const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
         </svg>
       </CustomButton>
       {isOpen && (
-        <div className="shadow-md bg-white p-1 min-w-[250px] rounded-xl z-50  top-10 left-0 absolute">
+        <div
+          ref={dropdownRef}
+          className={`shadow-md bg-white p-1 min-w-[250px] rounded-xl z-50  top-10 ${
+            dropdownDirection === "right" ? "left-0" : "right-0"
+          } absolute`}
+        >
           {dataTypes.map((type) => (
             <button
               onClick={() => {
                 handleExport(type.format);
               }}
-              // disabled={checkDisabled(type.format)}
+              disabled={
+                type.format.includes("-some")
+                  ? selectedData.length === 0
+                  : false
+              }
               key={type.format}
               className={`${
                 type.isSupported
                   ? "hover:bg-[#f0f0f0]"
                   : "cursor-default flex gap-1 items-center"
-              } w-full font-[500] disabled:cursor-default rounded-[0.5rem] px-3   h-8 text-left text-sm text-[#595959]`}
+              } w-full font-[500] disabled:opacity-50 disabled:cursor-not-allowed rounded-[0.5rem] px-3 h-8 text-left text-sm text-[#595959]`}
             >
               {type.label}
               {!type.isSupported && <Pill s="Soon" />}
