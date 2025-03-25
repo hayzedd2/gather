@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { CustomButton } from "./CustomButton";
 import Pill from "./Pill";
 import { exportToCSV, exportToJson, exportToXLSX } from "@/helpers/export";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 type JsonData = {
   [x: string]: string | string[];
@@ -67,29 +68,6 @@ const dataTypes: dataTypeInterface[] = [
 const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const selectRef = React.useRef<HTMLDivElement>(null);
-  const dropdownRef = React.useRef<HTMLDivElement>(null);
-  const [dropdownDirection, setDropdownDirection] = React.useState<
-    "right" | "left"
-  >("right");
-  React.useEffect(() => {
-    const checkDropdownPosition = () => {
-      if (dropdownRef.current) {
-        const rect = dropdownRef.current.getBoundingClientRect();
-
-        // Check if dropdown exceeds right side of screen
-        if (rect.right > window.innerWidth) {
-          setDropdownDirection("left");
-        } else {
-          setDropdownDirection("right");
-        }
-      }
-    };
-    checkDropdownPosition();
-    window.addEventListener("resize", checkDropdownPosition);
-    return () => {
-      window.removeEventListener("resize", checkDropdownPosition);
-    };
-  }, [isOpen]);
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -124,35 +102,39 @@ const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
     setIsOpen(false);
   };
   return (
-    <div ref={selectRef} className="relative">
-      <CustomButton
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-        className="flex"
+    <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenu.Trigger
+        asChild
+        className="outline-none focus:border-none border-none"
       >
-        Export data
-        <svg
-          className={`h-5 w-5 transition-transform duration-200 ${
-            isOpen ? "transform rotate-180" : ""
-          }`}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </CustomButton>
-      {isOpen && (
-        <div
-          ref={dropdownRef}
-          className={`shadow-md bg-white p-1 min-w-[250px] rounded-xl z-50  top-10 ${
-            dropdownDirection === "right" ? "left-0" : "right-0"
-          } absolute`}
+        <CustomButton aria-expanded={isOpen} className="flex">
+          Export data
+          <svg
+            className={`h-5 w-5 transition-transform duration-200 ${
+              isOpen ? "transform rotate-180" : ""
+            }`}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </CustomButton>
+      </DropdownMenu.Trigger>
+
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
+          className={`shadow-md bg-white p-1 w-[250px] rounded-xl z-50
+          `}
+          sideOffset={10}
+          align="start"
+          alignOffset={0}
+          avoidCollisions={true}
         >
           {dataTypes.map((type) => (
             <button
@@ -175,9 +157,9 @@ const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
               {!type.isSupported && <Pill s="Soon" />}
             </button>
           ))}
-        </div>
-      )}
-    </div>
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
   );
 };
 

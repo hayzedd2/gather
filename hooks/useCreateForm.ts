@@ -7,8 +7,10 @@ import { useFormBuilder } from "./useFormBuilder";
 
 export const useCreateform = () => {
   const router = useRouter();
-  const { saveFields, resetSettingsFields } = useSettingsFormStore();
-  const { setFields, resetFields } = useFormBuilder();
+  const resetSettingsFields = useSettingsFormStore(
+    (s) => s.resetSettingsFields
+  );
+  const resetFields = useFormBuilder((s) => s.resetFields);
   return useMutation({
     mutationFn: async (values: FormPayloadProps) => {
       const response = await fetch("/api/forms", {
@@ -28,9 +30,12 @@ export const useCreateform = () => {
     onSuccess: async (data) => {
       toast.success("Your form was published sucessfully:)");
       router.push(`/forms/${data.id}/submissions`);
-      resetFields()
-      resetSettingsFields()
 
+      // I hope this solves my hook rendering issue
+      setTimeout(() => {
+        resetFields();
+        resetSettingsFields();
+      }, 0);
     },
     onError(error) {
       toast.error(error.message);
