@@ -68,20 +68,6 @@ const dataTypes: dataTypeInterface[] = [
 const ExportSelector = ({ fileName, data, selectedData }: exportInterface) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const selectRef = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        selectRef.current &&
-        !selectRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
   const handleExport = (type: supportedExportTypes) => {
     switch (type) {
       case "csv":
